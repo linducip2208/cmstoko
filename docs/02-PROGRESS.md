@@ -43,13 +43,13 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
   - empty-state component missing @props → spilled title/description into invalid HTML attributes.
   - Header nav categories cached 5 min + CategoryObserver invalidation.
   - ShopController mojibake fixed; price filter separator.
-- Tests: +34 (TrackOrder 5, Seo 10, OrderNotification 3, AuditAndSettings 7, ConcurrencyAdversarial 6, CartDrawer 3) → 89 passing.
+- Tests: +34 (TrackOrder 5, Seo 10, OrderNotification 3, AuditAndSettings 7, ConcurrencyAdversarial 6, CartDrawer 3) + ApiTest(9) → 98 passing. Sanctum migrations published; personal_access_tokens table.
+- API v1 details: `routes/api.php` (prefix /api/v1). Public catalog read endpoints (throttle 60/min) + auth/token (throttle 5/min) + auth:me/refresh/revoke + orders (ownership-filtered), addresses, wishlist. API Resources: Product/Category/Brand/Collection/Order/Address/Profile/Wishlist. Product has approvedReviews() relation for real rating aggregates; OrderResource excludes notes/refunds. Auth guard resets needed between in-process test requests (see ApiTest::resetAuth).
 
 ## NEXT QUEUE (in order)
-1. B11 API: Sanctum, /api/v1 (products/categories/brands read, auth, account, wishlist, orders), resources + rate limiting + tests.
-2. B6 REMAINDER: flash sales (server-validated pricing), banners, cart rules, newsletter admin listing.
-3. B9/B8: theme presets (settings-driven CSS var overrides), menu builder, media library, blog.
-4. B15 hostile audit round 2 (render key pages, mobile widths, a11y pass) + docs finalization (README/INSTALLATION/etc).
+1. B6 REMAINDER: flash sales (server-validated pricing), banners, cart rules, newsletter admin listing + safe unsubscribe.
+2. B9/B8: theme presets (settings-driven CSS var overrides), menu builder, media library, blog.
+3. B15 hostile audit round 2 (mobile widths via rendered DOM checks, a11y pass) + docs finalization (README/INSTALLATION/etc).
 
 ## Batch log (session 2 delta)
 | Item | Status | Evidence |
@@ -59,6 +59,7 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
 | B13 events/mail | DONE | OrderNotificationTest(3) |
 | B12 settings/audit/CSV | DONE (core) | AuditAndSettingsTest(7) |
 | B14 concurrency/adversarial | DONE (core) | ConcurrencyAdversarialTest(6) — variant oversell, price authority, duplicate submit, coupon double-spend, return over-cap, refund over-cap |
+| B11 API v1 | DONE (core) | Sanctum tokens; ApiTest(9): catalog, token issue/revoke/rate-limit, orders ownership (IDOR), wishlist; docs/API.md |
 
 ## Batch log
 | Batch | Status | Evidence |

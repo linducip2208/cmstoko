@@ -77,7 +77,20 @@ class Product extends Model
 
     public function activeVariants(): HasMany
     {
-        return $this->hasMany(ProductVariant::class)->where('is_active', true)->orderBy('position');
+        return $this->variants()->where('is_active', true);
+    }
+
+    /**
+     * Approved reviews only — the source for all public rating aggregates.
+     */
+    public function approvedReviews(): HasMany
+    {
+        return $this->reviews()->where('status', Review::STATUS_APPROVED);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function collections(): BelongsToMany

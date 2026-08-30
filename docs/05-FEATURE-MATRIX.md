@@ -33,7 +33,7 @@ Legend: DONE | PARTIAL | TODO
 | Search | PARTIAL | SQL LIKE across name/sku/brand/category; driver contract TODO |
 | Filters | DONE | category tree, brand, price, stock, sort |
 | SEO | DONE (core) | meta renderer, canonical/OG/Twitter, schema.org (Org/WebSite/Breadcrumb/Product+AggregateRating), sitemap.xml, robots.txt, noindex filtered pages, redirect manager + admin |
-| API | TODO | services are shared/domain-ready |
+| API | DONE (core) | /api/v1: public catalog, Sanctum auth, orders/wishlist/addresses; IDOR-tested; docs/API.md |
 | Reports | PARTIAL | sales page + widgets + CSV (orders, kartu stok); settings UI + audit log done; more reports TODO |
 | Events/Notifications | DONE (core) | OrderPlaced/Paid/Shipped/Completed/Cancelled queued mails; WhatsApp stub TODO |
 | Tests | PARTIAL | 89 passing (RBAC/security/webhook/inventory/catalog/fulfillment/journey/track/drawer/notifications/audit-settings/concurrency/SEO); API suites TODO |
