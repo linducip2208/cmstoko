@@ -43,6 +43,12 @@
 ## SEO (session 2)
 - seo_redirects (source unique, destination, status_code 301|302, is_active, hit_count, last_hit_at)
 - audit_logs (user_id/user_name, action, subject_type+id, before/after json redacted, ip, user_agent)
+- flash_sales (starts/ends, is_active) → flash_sale_products (product_id, flash_price, stock_limit)
+- newsletter_subscribers + token unique, source
+- menus (location header|footer) → menu_items (parent_id self, target_type custom|category|brand|page, target_id, url)
+- personal_access_tokens (Sanctum)
+- blog_categories / blog_posts (status, published_at, seo) / blog_tags / blog_post_tag
+- media (file_name randomized, mime, size, w/h, title/alt/caption, uploaded_by)
 
 ## Statuses (orders)
 pending → paid → processing/ready_to_ship → (partially_shipped) → shipped → completed → (partially_refunded) → refunded; cancel allowed until shipped.

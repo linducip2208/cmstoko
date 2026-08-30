@@ -23,10 +23,10 @@ Legend: DONE | PARTIAL | TODO
 | Coupons | DONE | fixed/percent, window, atomic max_uses |
 | Flash sale | TODO | — |
 | CMS pages | DONE | sanitized rich content, statuses |
-| Blog | TODO | — |
-| Menus | TODO | header nav derives from categories; menu builder TODO |
-| Media | TODO | uploads validated; no library UI |
-| Settings | DONE | cached key-value w/ groups (branding/header/footer/policies/payments) |
+| Blog | DONE (core) | posts/cats/tags, statuses+scheduling, sanitized rich content, Article schema, sitemap, admin |
+| Menus | DONE (core) | header/footer menus, nested items, entity targets, safe URLs, cached, admin builder |
+| Media | DONE (core) | hardened upload service (MIME/extension blocklist, SVG sanitize), library UI, metadata, in-use delete guard |
+| Settings | DONE | cached key-value w/ groups (branding/header/footer/policies/payments) + admin UI + audit |
 | Homepage builder | DONE | DB sections, schedule, conditional forms, reorder, replicate |
 | Theme system | DONE (core) | 7 presets (token overrides, one component system) + admin color overrides + instant activation |
 | Storefront redesign | DONE (core) | home/shop/PDP/cart/checkout/auth/portal/track/success rebuilt; cart drawer live |
@@ -36,4 +36,4 @@ Legend: DONE | PARTIAL | TODO
 | API | DONE (core) | /api/v1: public catalog, Sanctum auth, orders/wishlist/addresses; IDOR-tested; docs/API.md |
 | Reports | PARTIAL | sales page + widgets + CSV (orders, kartu stok); settings UI + audit log done; more reports TODO |
 | Events/Notifications | DONE (core) | OrderPlaced/Paid/Shipped/Completed/Cancelled queued mails; WhatsApp stub TODO |
-| Tests | PARTIAL | 89 passing (RBAC/security/webhook/inventory/catalog/fulfillment/journey/track/drawer/notifications/audit-settings/concurrency/SEO); API suites TODO |
+| Tests | PARTIAL | 131 passing (RBAC/security/webhook/inventory/catalog/fulfillment/journey/track/drawer/notifications/audit-settings/concurrency/SEO/API/flash/menu/blog/media/theme/newsletter); multi-process parallel suites TODO |

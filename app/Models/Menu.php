@@ -26,16 +26,45 @@ class Menu extends Model
     }
 
     /**
-     * Cached, fully-loaded active menu for a storefront location.
+     * Cached, fully-resolved active menu for a storefront location.
+     * Plain arrays only (unserialize-safety); URLs pre-resolved.
      */
-    public static function activeAt(string $location): ?static
+    public static function activeAt(string $location): ?array
     {
         return Cache::rememberForever("menus.{$location}", function () use ($location) {
-            return static::query()
+            $menu = static::query()
                 ->where('location', $location)
                 ->where('is_active', true)
-                ->with('items')
                 ->first();
+
+            if (! $menu) {
+                return null;
+            }
+
+            return $menu->items()
+                ->whereNull('parent_id')
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->map(fn (MenuItem $item) => [
+                    'label' => $item->label,
+                    'url' => $item->resolvedUrl(),
+                    'open_in_new' => $item->open_in_new,
+                    'children' => $item->children()
+                        ->where('is_active', true)
+                        ->orderBy('sort_order')
+                        ->get()
+                        ->map(fn (MenuItem $child) => [
+                            'label' => $child->label,
+                            'url' => $child->resolvedUrl(),
+                            'open_in_new' => $child->open_in_new,
+                        ])
+                        ->values()
+                        ->all(),
+                ])
+                ->filter(fn (array $item) => $item['url'] !== null)
+                ->values()
+                ->all();
         });
     }
 

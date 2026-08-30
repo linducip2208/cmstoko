@@ -5,9 +5,20 @@ use App\Support\Settings;
 $storeName = Settings::get('store.name', config('shop.name', 'TokoKita'));
 $announcement = Settings::get('header.announcement_enabled', true) ? Settings::get('header.announcement') : null;
 
-// Cached for 5 minutes; invalidated by the Category observer.
+// Cached plain arrays (never Eloquent models — unserialize-safety), 5 min TTL,
+// invalidated by the Category observer.
 $rootCategories = Illuminate\Support\Facades\Cache::remember('nav.root_categories', now()->addMinutes(5), function () {
-    return App\Models\Category::active()->root()->with('activeChildren')->orderBy('sort_order')->orderBy('name')->get();
+    return App\Models\Category::active()->root()->with('activeChildren')->orderBy('sort_order')->orderBy('name')
+        ->get()
+        ->map(fn ($category) => [
+            'name' => $category->name,
+            'slug' => $category->slug,
+            'children' => $category->activeChildren->map(fn ($child) => [
+                'name' => $child->name,
+                'slug' => $child->slug,
+            ])->all(),
+        ])
+        ->all();
 });
 
 // CMS-driven navigation; falls back to category-based nav when no menu is defined.
@@ -76,67 +87,63 @@ $whatsapp = Settings::get('store.whatsapp');
                         </a>
 
                         @if ($headerMenu)
-                            @foreach ($headerMenu->items as $item)
-                                @if ($url = $item->resolvedUrl())
-                                    @if ($item->children->isNotEmpty())
-                                        <div class="group relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                                            <button type="button" class="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
-                                                x-bind:aria-expanded="open.toString()">
-                                                {{ $item->label }}
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5 opacity-60" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" /></svg>
-                                            </button>
-                                            <div x-cloak x-show="open" x-transition.opacity.duration.150ms
-                                                 class="absolute left-0 top-full w-56 pt-2">
-                                                <div class="card overflow-hidden p-2 shadow-card">
-                                                    @foreach ($item->children as $child)
-                                                        @if ($childUrl = $child->resolvedUrl())
-                                                            <a href="{{ $childUrl }}" @if($child->open_in_new) target="_blank" rel="noopener" @endif wire:navigate
-                                                               class="block rounded-md px-3 py-2 text-sm text-ink-2 hover:bg-surface-2 hover:text-ink">
-                                                                {{ $child->label }}
-                                                            </a>
-                                                        @endif
-                                                    @endforeach
-                                                </div>
+                            @foreach ($headerMenu as $item)
+                                @if ($item['children'] !== [])
+                                    <div class="group relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                                        <button type="button" class="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
+                                            x-bind:aria-expanded="open.toString()">
+                                            {{ $item['label'] }}
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5 opacity-60" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" /></svg>
+                                        </button>
+                                        <div x-cloak x-show="open" x-transition.opacity.duration.150ms
+                                             class="absolute left-0 top-full w-56 pt-2">
+                                            <div class="card overflow-hidden p-2 shadow-card">
+                                                @foreach ($item['children'] as $child)
+                                                    <a href="{{ $child['url'] }}" @if($child['open_in_new']) target="_blank" rel="noopener" @endif wire:navigate
+                                                       class="block rounded-md px-3 py-2 text-sm text-ink-2 hover:bg-surface-2 hover:text-ink">
+                                                        {{ $child['label'] }}
+                                                    </a>
+                                                @endforeach
                                             </div>
                                         </div>
-                                    @else
-                                        <a href="{{ $url }}" @if($item->open_in_new) target="_blank" rel="noopener" @endif wire:navigate
-                                           class="rounded-md px-3 py-2 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
-                                            {{ $item->label }}
-                                        </a>
-                                    @endif
+                                    </div>
+                                @else
+                                    <a href="{{ $item['url'] }}" @if($item['open_in_new']) target="_blank" rel="noopener" @endif wire:navigate
+                                       class="rounded-md px-3 py-2 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
+                                        {{ $item['label'] }}
+                                    </a>
                                 @endif
                             @endforeach
                         @else
-                            @forelse ($rootCategories->take(4) as $category)
-                            @if ($category->activeChildren->isNotEmpty())
+                            @forelse (array_slice($rootCategories, 0, 4) as $category)
+                            @if ($category['children'] !== [])
                                 <div class="group relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                                     <button type="button" class="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
                                         x-bind:aria-expanded="open.toString()">
-                                        {{ $category->name }}
+                                        {{ $category['name'] }}
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5 opacity-60" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" /></svg>
                                     </button>
 
                                     <div x-cloak x-show="open" x-transition.opacity.duration.150ms
                                          class="absolute left-0 top-full w-56 pt-2">
                                         <div class="card overflow-hidden p-2 shadow-card">
-                                            <a href="{{ route('shop', ['category' => $category->slug]) }}" wire:navigate
+                                            <a href="{{ route('shop', ['category' => $category['slug']]) }}" wire:navigate
                                                class="block rounded-md px-3 py-2 text-sm font-semibold text-ink hover:bg-surface-2">
-                                                Semua {{ $category->name }}
+                                                Semua {{ $category['name'] }}
                                             </a>
-                                            @foreach ($category->activeChildren as $child)
-                                                <a href="{{ route('shop', ['category' => $child->slug]) }}" wire:navigate
+                                            @foreach ($category['children'] as $child)
+                                                <a href="{{ route('shop', ['category' => $child['slug']]) }}" wire:navigate
                                                    class="block rounded-md px-3 py-2 text-sm text-ink-2 hover:bg-surface-2 hover:text-ink">
-                                                    {{ $child->name }}
+                                                    {{ $child['name'] }}
                                                 </a>
                                             @endforeach
                                         </div>
                                     </div>
                                 </div>
                             @else
-                                <a href="{{ route('shop', ['category' => $category->slug]) }}" wire:navigate
+                                <a href="{{ route('shop', ['category' => $category['slug']]) }}" wire:navigate
                                    class="rounded-md px-3 py-2 text-sm font-medium text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink">
-                                    {{ $category->name }}
+                                    {{ $category['name'] }}
                                 </a>
                             @endif
                         @empty
@@ -216,21 +223,17 @@ $whatsapp = Settings::get('store.whatsapp');
                     <a href="{{ route('home') }}" wire:navigate x-on:click="mobileNav = false" class="block rounded-md px-3 py-2.5 text-base font-medium text-ink hover:bg-surface-2">Beranda</a>
 
                     @if ($headerMenu)
-                        @foreach ($headerMenu->items as $item)
-                            @if ($url = $item->resolvedUrl())
-                                <a href="{{ $url }}" @if($item->open_in_new) target="_blank" rel="noopener" @endif wire:navigate x-on:click="mobileNav = false" class="block rounded-md px-3 py-2.5 text-base font-medium text-ink hover:bg-surface-2">{{ $item->label }}</a>
-                                @foreach ($item->children as $child)
-                                    @if ($childUrl = $child->resolvedUrl())
-                                        <a href="{{ $childUrl }}" wire:navigate x-on:click="mobileNav = false" class="block rounded-md pl-6 pr-3 py-2 text-sm text-ink-2 hover:bg-surface-2">{{ $child->label }}</a>
-                                    @endif
-                                @endforeach
-                            @endif
+                        @foreach ($headerMenu as $item)
+                            <a href="{{ $item['url'] }}" @if($item['open_in_new']) target="_blank" rel="noopener" @endif wire:navigate x-on:click="mobileNav = false" class="block rounded-md px-3 py-2.5 text-base font-medium text-ink hover:bg-surface-2">{{ $item['label'] }}</a>
+                            @foreach ($item['children'] as $child)
+                                <a href="{{ $child['url'] }}" wire:navigate x-on:click="mobileNav = false" class="block rounded-md pl-6 pr-3 py-2 text-sm text-ink-2 hover:bg-surface-2">{{ $child['label'] }}</a>
+                            @endforeach
                         @endforeach
                     @else
                         @foreach ($rootCategories as $category)
-                            <a href="{{ route('shop', ['category' => $category->slug]) }}" wire:navigate x-on:click="mobileNav = false" class="block rounded-md px-3 py-2.5 text-base font-medium text-ink hover:bg-surface-2">{{ $category->name }}</a>
-                            @foreach ($category->activeChildren as $child)
-                                <a href="{{ route('shop', ['category' => $child->slug]) }}" wire:navigate x-on:click="mobileNav = false" class="block rounded-md pl-6 pr-3 py-2 text-sm text-ink-2 hover:bg-surface-2">{{ $child->name }}</a>
+                            <a href="{{ route('shop', ['category' => $category['slug']]) }}" wire:navigate x-on:click="mobileNav = false" class="block rounded-md px-3 py-2.5 text-base font-medium text-ink hover:bg-surface-2">{{ $category['name'] }}</a>
+                            @foreach ($category['children'] as $child)
+                                <a href="{{ route('shop', ['category' => $child['slug']]) }}" wire:navigate x-on:click="mobileNav = false" class="block rounded-md pl-6 pr-3 py-2 text-sm text-ink-2 hover:bg-surface-2">{{ $child['name'] }}</a>
                             @endforeach
                         @endforeach
                     @endif
@@ -285,16 +288,15 @@ $whatsapp = Settings::get('store.whatsapp');
                     <ul class="mt-4 space-y-2.5 text-sm">
                         <li><a href="{{ route('shop') }}" wire:navigate class="text-ink-2 hover:text-ink">Semua Produk</a></li>
                         @if ($footerMenu)
-                            @foreach ($footerMenu->items as $item)
-                                @if ($url = $item->resolvedUrl())
-                                    <li><a href="{{ $url }}" @if($item->open_in_new) target="_blank" rel="noopener" @endif class="text-ink-2 hover:text-ink">{{ $item->label }}</a></li>
-                                @endif
+                            @foreach ($footerMenu as $item)
+                                <li><a href="{{ $item['url'] }}" @if($item['open_in_new']) target="_blank" rel="noopener" @endif class="text-ink-2 hover:text-ink">{{ $item['label'] }}</a></li>
                             @endforeach
                         @else
-                            @foreach ($rootCategories->take(3) as $category)
-                                <li><a href="{{ route('shop', ['category' => $category->slug]) }}" wire:navigate class="text-ink-2 hover:text-ink">{{ $category->name }}</a></li>
+                            @foreach (array_slice($rootCategories, 0, 3) as $category)
+                                <li><a href="{{ route('shop', ['category' => $category['slug']]) }}" wire:navigate class="text-ink-2 hover:text-ink">{{ $category['name'] }}</a></li>
                             @endforeach
                         @endif
+                        <li><a href="{{ route('blog') }}" wire:navigate class="text-ink-2 hover:text-ink">Blog</a></li>
                         <li><a href="{{ route('track-order') }}" wire:navigate class="text-ink-2 hover:text-ink">Lacak Pesanan</a></li>
                     </ul>
                 </div>
