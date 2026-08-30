@@ -78,6 +78,13 @@ class UserResource extends Resource
                             ->native(false)
                             ->required()
                             ->helperText('Super Admin memiliki akses penuh. Gunakan peran spesifik untuk operasional.'),
+                        Select::make('customer_group_id')
+                            ->label('Grup Pelanggan')
+                            ->options(fn () => \App\Models\CustomerGroup::where('slug', '!=', \App\Models\CustomerGroup::SLUG_GUEST)->orderBy('sort_order')->pluck('name', 'id'))
+                            ->searchable()
+                            ->native(false)
+                            ->helperText('Untuk pelanggan — menentukan aturan promosi yang berlaku (mis. VIP).')
+                            ->visible(fn ($get) => $get('role_id') == \App\Models\Role::where('slug', \App\Models\Role::CUSTOMER)->value('id')),
                     ]),
             ]);
     }
