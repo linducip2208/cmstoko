@@ -13,16 +13,10 @@ class SalesStats extends StatsOverviewWidget
 
     protected function getStats(): array
     {
-        $revenue = Order::whereIn('status', [
-            Order::STATUS_PAID,
-            Order::STATUS_PROCESSING,
-            Order::STATUS_SHIPPED,
-            Order::STATUS_COMPLETED,
-        ])->sum('total');
+        $revenue = Order::whereIn('status', Order::PAID_STATUSES)->sum('total');
 
-        $revenueToday = Order::whereDate('paid_at', today())
-            ->orWhereDate('created_at', today())
-            ->whereIn('status', [Order::STATUS_PAID, Order::STATUS_PROCESSING, Order::STATUS_SHIPPED, Order::STATUS_COMPLETED])
+        $revenueToday = Order::whereIn('status', Order::PAID_STATUSES)
+            ->where(fn ($q) => $q->whereDate('paid_at', today())->orWhereDate('created_at', today()))
             ->sum('total');
 
         return [

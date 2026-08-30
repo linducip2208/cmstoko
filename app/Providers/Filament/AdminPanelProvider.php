@@ -34,10 +34,17 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Indigo,
             ])
             ->navigationGroups([
-                'Katalog',
+                'Dasbor',
                 'Penjualan',
-            ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
+                'Katalog',
+                'Persediaan',
+                'Pelanggan',
+                'Pemasaran',
+                'Konten',
+                'Tampilan',
+                'Laporan',
+                'Pengaturan',
+            ])->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,

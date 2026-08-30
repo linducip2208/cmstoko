@@ -11,18 +11,15 @@ class CartBadge extends Component
     public int $count = 0;
 
     #[On('cart-updated')]
-    public function refreshCount(CartService $cart): void
+    public function refreshCount(): void
     {
-        $this->count = $cart->count();
-    }
-
-    public function mount(CartService $cart): void
-    {
-        $this->count = $cart->count();
+        $this->count = app(CartService::class)->count();
     }
 
     public function render()
     {
-        return view('livewire.cart-badge');
+        $this->count ??= 0;
+
+        return view('livewire.cart-badge', ['count' => $this->count ?: app(CartService::class)->count()]);
     }
 }

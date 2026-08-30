@@ -9,6 +9,9 @@ return [
     'flat_shipping_service' => 'Reguler',
     'flat_shipping_etd' => '2-4',
 
+    // Return request window (days after order creation). Content policy is CMS-configurable.
+    'return_window_days' => env('SHOP_RETURN_WINDOW_DAYS', 7),
+
     'midtrans' => [
         'server_key' => env('MIDTRANS_SERVER_KEY'),
         'client_key' => env('MIDTRANS_CLIENT_KEY'),

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
@@ -13,31 +14,35 @@ class CartService
 
     public const SESSION_COUPON = 'shop.coupon';
 
-    public function add(int $productId, int $qty = 1): void
+    /**
+     * Add a line. Key = product_id + optional variant, qty capped at 999.
+     */
+    public function add(int $productId, ?int $variantId = null, int $qty = 1): void
     {
         $cart = $this->raw();
-        $cart[$productId] = min(($cart[$productId] ?? 0) + max(1, $qty), 999);
+        $key = $this->key($productId, $variantId);
+        $cart[$key] = min(($cart[$key] ?? 0) + max(1, $qty), 999);
         Session::put(self::SESSION_CART, $cart);
     }
 
-    public function setQty(int $productId, int $qty): void
+    public function setQty(int $productId, ?int $variantId, int $qty): void
     {
         $cart = $this->raw();
 
         if ($qty <= 0) {
-            $this->remove($productId);
+            $this->remove($productId, $variantId);
 
             return;
         }
 
-        $cart[$productId] = min($qty, 999);
+        $cart[$this->key($productId, $variantId)] = min($qty, 999);
         Session::put(self::SESSION_CART, $cart);
     }
 
-    public function remove(int $productId): void
+    public function remove(int $productId, ?int $variantId = null): void
     {
         $cart = $this->raw();
-        unset($cart[$productId]);
+        unset($cart[$this->key($productId, $variantId)]);
         Session::put(self::SESSION_CART, $cart);
     }
 
@@ -47,6 +52,9 @@ class CartService
         $this->removeCoupon();
     }
 
+    /**
+     * @return Collection<int, array{key: string, product: Product, variant: ?ProductVariant, qty: int, price: int, subtotal: int}>
+     */
     public function items(): Collection
     {
         $cart = $this->raw();
@@ -55,21 +63,49 @@ class CartService
             return collect();
         }
 
-        $products = Product::active()->whereIn('id', array_keys($cart))->get();
+        $productIds = collect($cart)->keys()->map(fn (string $key) => (int) explode(':', $key)[0])->unique()->all();
 
-        return $products
-            ->map(fn (Product $product) => [
+        $products = Product::active()->with(['brand', 'category', 'variants.attributeValues.option'])->whereIn('id', $productIds)->get()->keyBy('id');
+
+        $lines = collect();
+
+        foreach ($cart as $key => $qty) {
+            [$productId, $variantId] = array_pad(explode(':', $key), 2, null);
+            $product = $products->get((int) $productId);
+
+            if (! $product) {
+                continue; // deleted product drops out of the cart silently
+            }
+
+            $variant = null;
+
+            if ($variantId !== null && $variantId !== '' && $variantId !== '0') {
+                $variant = $product->variants->firstWhere('id', (int) $variantId);
+                $variant = $variant && $variant->is_active ? $variant : null;
+
+                if (! $variant) {
+                    continue; // variant no longer purchasable
+                }
+            }
+
+            $price = $variant ? $variant->effectivePrice() : $product->effectivePrice();
+
+            $lines->push([
+                'key' => $key,
                 'product' => $product,
-                'qty' => (int) $cart[$product->id],
-                'price' => $product->effectivePrice(),
-                'subtotal' => $product->effectivePrice() * (int) $cart[$product->id],
-            ])
-            ->values();
+                'variant' => $variant,
+                'qty' => (int) $qty,
+                'price' => $price,
+                'subtotal' => $price * (int) $qty,
+            ]);
+        }
+
+        return $lines->values();
     }
 
     public function count(): int
     {
-        return array_sum($this->raw());
+        return (int) array_sum($this->raw());
     }
 
     public function subtotal(): int
@@ -121,14 +157,26 @@ class CartService
 
     public function weight(): int
     {
-        return (int) $this->items()->sum(fn (array $item) => $item['product']->weight * $item['qty']);
+        return (int) $this->items()->sum(fn (array $item) => ($item['variant']->weight ?? $item['product']->weight) * $item['qty']);
     }
 
     /**
-     * @return array<int, int>
+     * @return array<string, int>
      */
     public function raw(): array
     {
-        return array_map('intval', (array) Session::get(self::SESSION_CART, []));
+        $cart = (array) Session::get(self::SESSION_CART, []);
+        $out = [];
+
+        foreach ($cart as $key => $qty) {
+            $out[(string) $key] = max(1, (int) $qty);
+        }
+
+        return $out;
+    }
+
+    protected function key(int $productId, ?int $variantId): string
+    {
+        return $variantId ? "{$productId}:{$variantId}" : (string) $productId;
     }
 }

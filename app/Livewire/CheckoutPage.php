@@ -5,13 +5,19 @@ namespace App\Livewire;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\StockMovement;
 use App\Services\CartService;
+use App\Services\InventoryService;
 use App\Services\PaymentService;
 use App\Services\ShippingService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
+use InvalidArgumentException;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use RuntimeException;
 
 #[Title('Checkout - TokoKita')]
 class CheckoutPage extends Component
@@ -115,6 +121,15 @@ class CheckoutPage extends Component
 
     public function applyCoupon(CartService $cart): void
     {
+        if (RateLimiter::tooManyAttempts('coupon:'.session()->getId(), 8)) {
+            $this->couponSuccess = false;
+            $this->couponMessage = 'Terlalu banyak percobaan kupon. Coba lagi nanti.';
+
+            return;
+        }
+
+        RateLimiter::hit('coupon:'.session()->getId(), 120);
+
         $this->couponSuccess = $cart->setCoupon($this->couponCode);
         $this->couponMessage = $this->couponSuccess
             ? 'Kupon berhasil dipakai.'
@@ -171,6 +186,14 @@ class CheckoutPage extends Component
 
     public function placeOrder(CartService $cart, PaymentService $payment, ShippingService $shipping)
     {
+        if (RateLimiter::tooManyAttempts('checkout:'.session()->getId(), 12)) {
+            $this->addError('order', 'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.');
+
+            return;
+        }
+
+        RateLimiter::hit('checkout:'.session()->getId(), 120);
+
         if ($cart->count() === 0) {
             return $this->redirect(route('cart'), navigate: true);
         }
@@ -185,73 +208,128 @@ class CheckoutPage extends Component
             return;
         }
 
-        $order = DB::transaction(function () use ($cart, $validated, $selected) {
-            $items = $cart->items();
-            $subtotal = $cart->subtotal();
-            $discount = $cart->discount();
-            $coupon = $cart->coupon();
-            $shippingCost = $selected ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
+        try {
+            $order = DB::transaction(function () use ($cart, $validated, $selected, $payment) {
+                $inventory = app(InventoryService::class);
 
-            foreach ($items as $item) {
-                $product = $item['product'];
+                $items = $cart->items();
 
-                if ($product->stock < $item['qty']) {
-                    $this->addError('stock', "Stok {$product->name} tinggal {$product->stock}.");
-
-                    return null;
+                if ($items->isEmpty()) {
+                    throw new RuntimeException('Keranjang kosong.');
                 }
-            }
 
-            $order = Order::create([
-                'user_id' => auth()->id(),
-                'customer_name' => $validated['customer_name'],
-                'customer_email' => $validated['customer_email'],
-                'customer_phone' => $validated['customer_phone'],
-                'province_id' => $validated['province_id'] ?? null,
-                'city_id' => $validated['city_id'] ?? null,
-                'province_name' => $validated['province_name_manual'] ?? optional($this->provinces->firstWhere('id', $this->province_id))->name,
-                'city_name' => $validated['city_name_manual'] ?? optional($this->cities->firstWhere('id', $this->city_id))->name,
-                'address' => $validated['address'],
-                'postal_code' => $validated['postal_code'],
-                'notes' => $validated['notes'],
-                'subtotal' => $subtotal,
-                'discount' => $discount,
-                'shipping_cost' => $shippingCost,
-                'total' => max(0, $subtotal - $discount + $shippingCost),
-                'coupon_code' => $coupon?->code,
-                'weight' => $cart->weight(),
-                'shipping_courier' => $selected['description'] ?? null,
-                'shipping_service' => $selected['service'] ?? config('shop.flat_shipping_service'),
-                'shipping_etd' => $selected['etd'] ?? config('shop.flat_shipping_etd'),
-                'status' => Order::STATUS_PENDING,
-                'payment_method' => $payment->configured() ? 'midtrans' : 'manual_transfer',
-            ]);
+                // Lock product + variant rows to serialize concurrent purchases.
+                $variantIds = $items->pluck('variant.id')->filter();
 
-            foreach ($items as $item) {
-                $order->items()->create([
-                    'product_id' => $item['product']->id,
-                    'product_name' => $item['product']->name,
-                    'product_image' => $item['product']->coverImage(),
-                    'price' => $item['price'],
-                    'quantity' => $item['qty'],
-                    'subtotal' => $item['subtotal'],
+                $variantLocks = $variantIds->isNotEmpty()
+                    ? ProductVariant::whereIn('id', $variantIds)->lockForUpdate()->get()->keyBy('id')
+                    : collect();
+
+                $locked = Product::whereIn('id', $items->pluck('product.id'))
+                    ->lockForUpdate()
+                    ->get()
+                    ->keyBy('id');
+
+                // Re-validate stock against locked rows (variants take priority).
+                foreach ($items as $item) {
+                    $variant = $item['variant'] ? $variantLocks->get($item['variant']->id) : null;
+                    $available = $variant ? $variant->stock : $locked[$item['product']->id]->stock;
+
+                    if ($available < $item['qty']) {
+                        throw new RuntimeException("Stok {$item['product']->name} tinggal {$available}.");
+                    }
+                }
+
+                $subtotal = $cart->subtotal();
+                $discount = $cart->discount();
+                $coupon = $cart->coupon();
+                $shippingCost = $selected ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
+
+                $order = Order::create([
+                    'user_id' => auth()->id(),
+                    'customer_name' => $validated['customer_name'],
+                    'customer_email' => $validated['customer_email'],
+                    'customer_phone' => $validated['customer_phone'],
+                    'province_id' => $validated['province_id'] ?? null,
+                    'city_id' => $validated['city_id'] ?? null,
+                    'province_name' => $validated['province_name_manual'] ?? optional($this->provinces->firstWhere('id', $this->province_id))->name,
+                    'city_name' => $validated['city_name_manual'] ?? optional($this->cities->firstWhere('id', $this->city_id))->name,
+                    'address' => $validated['address'],
+                    'postal_code' => $validated['postal_code'],
+                    'notes' => $validated['notes'],
+                    'subtotal' => $subtotal,
+                    'discount' => $discount,
+                    'shipping_cost' => $shippingCost,
+                    'total' => max(0, $subtotal - $discount + $shippingCost),
+                    'coupon_code' => $coupon?->code,
+                    'weight' => $cart->weight(),
+                    'shipping_courier' => $selected['description'] ?? null,
+                    'shipping_service' => $selected['service'] ?? config('shop.flat_shipping_service'),
+                    'shipping_etd' => $selected['etd'] ?? config('shop.flat_shipping_etd'),
+                    'status' => Order::STATUS_PENDING,
+                    'payment_method' => $payment->configured() ? 'midtrans' : 'manual_transfer',
                 ]);
 
-                Product::whereKey($item['product']->id)->decrement('stock', $item['qty']);
-            }
+                foreach ($items as $item) {
+                    $variant = $item['variant'];
 
-            if ($coupon) {
-                Coupon::whereKey($coupon->id)->increment('used_count');
-            }
+                    $order->items()->create([
+                        'product_id' => $item['product']->id,
+                        'variant_id' => $variant?->id,
+                        'variant_label' => $variant?->attributeValues->map(fn ($v) => $v->option->label)->implode(' / '),
+                        'product_name' => $item['product']->name,
+                        'product_image' => $item['product']->coverImage(),
+                        'price' => $item['price'],
+                        'quantity' => $item['qty'],
+                        'subtotal' => $item['price'] * $item['qty'],
+                    ]);
 
-            return $order;
-        });
+                    try {
+                        $inventory->deduct(
+                            $item['product']->id,
+                            $variant?->id,
+                            $item['qty'],
+                            StockMovement::TYPE_SALE,
+                            $order,
+                            'Pesanan '.$order->order_number,
+                        );
+                    } catch (InvalidArgumentException $e) {
+                        throw new RuntimeException($e->getMessage());
+                    }
+                }
+
+                if ($coupon) {
+                    // Atomic usage increment capped at max_uses.
+                    $affected = Coupon::whereKey($coupon->id)
+                        ->where(fn ($q) => $q->whereNull('max_uses')->orWhereColumn('used_count', '<', 'max_uses'))
+                        ->increment('used_count');
+
+                    if ($affected === 0) {
+                        throw new RuntimeException('Kuota kupon sudah habis.');
+                    }
+                }
+
+                $order->histories()->create([
+                    'from' => null,
+                    'to' => Order::STATUS_PENDING,
+                    'note' => 'Pesanan dibuat',
+                ]);
+
+                return $order;
+            });
+        } catch (RuntimeException $e) {
+            $this->addError('stock', $e->getMessage());
+
+            return;
+        }
 
         if (! $order) {
             return;
         }
 
         $cart->clear();
+
+        session()->push('shop.orders', $order->order_number);
 
         if ($payment->configured()) {
             $token = $payment->snapToken($order->load('items'));

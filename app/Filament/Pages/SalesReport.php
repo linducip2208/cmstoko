@@ -7,9 +7,10 @@ use App\Models\OrderItem;
 use BackedEnum;
 use Carbon\CarbonInterface;
 use Filament\Pages\Page;
+use Filament\Schemas\Contracts\HasSchemas;
 use UnitEnum;
 
-class SalesReport extends Page
+class SalesReport extends Page implements HasSchemas
 {
     public string $view = 'filament.pages.sales-report';
 
@@ -17,9 +18,14 @@ class SalesReport extends Page
 
     protected static ?string $navigationLabel = 'Laporan Penjualan';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Penjualan';
+    protected static string|UnitEnum|null $navigationGroup = 'Laporan';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasPermission('reports.view') ?? false;
+    }
 
     public string $range = '30';
 
@@ -35,12 +41,8 @@ class SalesReport extends Page
 
     protected function paidOrders()
     {
-        return Order::whereIn('status', [
-            Order::STATUS_PAID,
-            Order::STATUS_PROCESSING,
-            Order::STATUS_SHIPPED,
-            Order::STATUS_COMPLETED,
-        ])->where('created_at', '>=', $this->from());
+        return Order::whereIn('status', Order::PAID_STATUSES)
+            ->where('created_at', '>=', $this->from());
     }
 
     public function revenue(): int
@@ -62,7 +64,7 @@ class SalesReport extends Page
     {
         return OrderItem::query()
             ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->whereIn('orders.status', [Order::STATUS_PAID, Order::STATUS_PROCESSING, Order::STATUS_SHIPPED, Order::STATUS_COMPLETED])
+            ->whereIn('orders.status', Order::PAID_STATUSES)
             ->where('orders.created_at', '>=', $this->from())
             ->selectRaw('order_items.product_name, SUM(order_items.quantity) as total_qty, SUM(order_items.subtotal) as total_revenue')
             ->groupBy('order_items.product_name')

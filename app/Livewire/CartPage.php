@@ -19,37 +19,46 @@ class CartPage extends Component
     #[On('cart-updated')]
     public function refreshCart(): void {}
 
-    public function updatedQty(int $itemId, int $qty, CartService $cart): void
+    public function setQty(string $key, int $qty, CartService $cart): void
     {
-        $cart->setQty($itemId, $qty);
-        $this->refreshCouponAfterChange($cart);
-    }
-
-    public function increment(int $productId, CartService $cart): void
-    {
-        $cart->add($productId, 1);
+        [$productId, $variantId] = $this->splitKey($key);
+        $cart->setQty($productId, $variantId, $qty);
         $this->refreshCouponAfterChange($cart);
         $this->dispatch('cart-updated');
     }
 
-    public function decrement(int $productId, CartService $cart): void
+    public function increment(string $key, CartService $cart): void
     {
         $items = collect($cart->items());
-        $row = $items->first(fn ($item) => $item['product']->id === $productId);
+        $row = $items->first(fn ($item) => $item['key'] === $key);
 
         if ($row) {
-            $cart->setQty($productId, $row['qty'] - 1);
+            [$productId, $variantId] = $this->splitKey($key);
+            $cart->setQty($productId, $variantId, $row['qty'] + 1);
             $this->refreshCouponAfterChange($cart);
             $this->dispatch('cart-updated');
         }
     }
 
-    public function removeItem(int $productId, CartService $cart): void
+    public function decrement(string $key, CartService $cart): void
     {
-        $cart->remove($productId);
+        $items = collect($cart->items());
+        $row = $items->first(fn ($item) => $item['key'] === $key);
+
+        if ($row) {
+            [$productId, $variantId] = $this->splitKey($key);
+            $cart->setQty($productId, $variantId, $row['qty'] - 1);
+            $this->refreshCouponAfterChange($cart);
+            $this->dispatch('cart-updated');
+        }
+    }
+
+    public function removeItem(string $key, CartService $cart): void
+    {
+        [$productId, $variantId] = $this->splitKey($key);
+        $cart->remove($productId, $variantId);
         $this->refreshCouponAfterChange($cart);
         $this->dispatch('cart-updated');
-        $this->dispatch('cart-notify', message: 'Produk dihapus dari keranjang.', type: 'success');
     }
 
     public function applyCoupon(CartService $cart): void
@@ -76,6 +85,13 @@ class CartPage extends Component
         if ($cart->coupon()) {
             $cart->setCoupon($cart->coupon()->code);
         }
+    }
+
+    protected function splitKey(string $key): array
+    {
+        [$productId, $variantId] = array_pad(explode(':', $key), 2, null);
+
+        return [(int) $productId, $variantId !== null && $variantId !== '' ? (int) $variantId : null];
     }
 
     public function render(CartService $cart)

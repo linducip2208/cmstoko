@@ -1,0 +1,6 @@
+<?php
+
+use App\Support\Settings;
+
+$storeName = Settings::get('store.name', config('shop.name', 'TokoKita'));
+$announcement = Settings::get('header.announcement_enabled', true) ? Settings::get('header.announcement') : null;

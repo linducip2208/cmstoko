@@ -1,58 +1,73 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# cmstoko
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Toko online / commerce CMS berbasis **Laravel 13 + Filament 5 + Livewire 4 + Tailwind CSS 4** dengan storefront editorial dan panel admin lengkap (RBAC, katalog varian, inventaris, pengiriman, pembayaran Midtrans, CMS beranda builder).
 
-## About Laravel
+> Status: pengembangan aktif. Lihat `docs/02-PROGRESS.md` untuk peta pengerjaan dan `docs/01-MASTER-PLAN.md` untuk rencana.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Storefront**
+- Beranda dinamis dari section builder (hero, product grid, kategori, banner, newsletter, CTA — dapat dijadwalkan)
+- Katalog dengan filter (kategori bertingkat, merek, harga, stok) + sorting + pencarian
+- Halaman produk: galeri, varian live (harga/stok/SKU), wishlist, ulasan termoderasi + rating agregat nyata
+- Keranjang + checkout (ongkir RajaOngkir atau flat, kupon, Midtrans Snap atau transfer manual)
+- Akun pelanggan: pesanan + linimasa, ulasan terverifikasi, alamat, wishlist, pengembalian (RMA)
+- CMS pages (Tentang, S&K, Privasi) + identitas toko dari settings (tanpa hard-code)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Admin**
+- RBAC: 11 peran bawaan (Super Admin … Customer Support, Customer) × 104 izin granular
+- Katalog: produk (simple/configurable) + generator varian otomatis, atribut, merek, kategori bertingkat, koleksi (manual/rule-based)
+- Persediaan: kartu stok (ledger pergerakan), penyesuaian stok, gudang
+- Penjualan: pesanan (state machine + linimasa), invoice, kirim sebagian/penuh + resi, refund, pengembalian
+- Pengguna & peran, laporan penjualan, homepage builder
 
-## Learning Laravel
+**Kualitas**
+- Idempotensi webhook Midtrans (signature + amount + ledger), anti-oversell (row locks + conditional decrement), kupon atomik
+- Uang = integer IDR di semua tempat
+- 55 automated tests (RBAC, checkout race, webhook, inventory, catalog, fulfillment, journey pelanggan)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Menjalankan
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+cp .env.example .env          # isi DB + MIDTRANS_SERVER_KEY (opsional) + RAJAONGKIR_API_KEY (opsional)
+php artisan key:generate
+php artisan migrate --seed    # membuat data + akun demo
+npm install && npm run build
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Akun demo (setelah seed):
+- Admin: `admin@tokokita.test` / `password` → panel `/admin`
+- Pelanggan: `customer@tokokita.test` / `password`
 
-## Contributing
+Tanpa `RAJAONGKIR_API_KEY`, ongkir memakai tarif flat (checkout tetap jalan). Tanpa `MIDTRANS_SERVER_KEY`, pesanan memakai alur transfer manual dengan instruksi dari settings.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Struktur domain
 
-## Code of Conduct
+```
+app/
+  Contracts/PaymentGateway.php      # kontrak gateway pembayaran
+  Services/                         # CartService, InventoryService, OrderFulfillmentService,
+    Payments/                       # PaymentManager, MidtransGateway, ManualTransferGateway
+  Shop/SectionResolver.php          # sumber konten section beranda
+  Policies/Concerns/AuthorizesByPermission.php
+  Livewire/                         # AddToCart (buy-box varian), CartPage, CheckoutPage, CartBadge
+resources/css/app.css               # design tokens (@theme) + primitif
+docs/                               # audit, plan, progress, db map, decisions, dst.
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Testing
 
-## Security Vulnerabilities
+```bash
+php artisan test
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Suite mencakup RBAC, akses panel, race stok/kupon, webhook Midtrans (replay/amount/regresi), ledger inventaris, varian & koleksi, state machine pesanan, invoice/kirim/refund, dan perjalanan pelanggan end-to-end.
 
-## License
+## Dokumentasi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- `docs/00-MASTER-AUDIT.md` — audit forensik awal
+- `docs/01-MASTER-PLAN.md` — rencana batch
+- `docs/02-PROGRESS.md` — status berjalan (baca ini dulu saat melanjutkan)
+- `docs/04-DATABASE-MAP.md`, `docs/05-FEATURE-MATRIX.md`, `docs/13-DECISIONS.md`, `docs/15-KNOWN-LIMITATIONS.md`

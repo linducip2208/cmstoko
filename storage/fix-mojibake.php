@@ -1,0 +1,41 @@
+<?php
+
+// Byte-level mojibake repair for blade files.
+$map = [
+    "\xC3\xA2\xC2\x80\xC2\x94" => "\xE2\x80\x94", // —
+    "\xC3\xA2\xC2\x80\xC2\x93" => "\xE2\x80\x93", // –
+    "\xC3\xA2\xC2\x80\xC2\x99" => "\xE2\x80\x99", // '
+    "\xC3\xA2\xC2\x80\xC2\x9C" => "\xE2\x80\x9C", // "
+    "\xC3\xA2\xC2\x80\xC2\x9D" => "\xE2\x80\x9D", // "
+    "\xC3\xA2\xC2\x80\xC2\xA6" => "\xE2\x80\xA6", // …
+    "\xC3\xA2\xC2\x86\xC2\x92" => "\xE2\x86\x92", // →
+    "\xC3\xA2\xC2\x86\xC2\x90" => "\xE2\x86\x90", // ←
+    "\xC3\xA2\xC2\x86\xC2\x91" => "\xE2\x86\x91", // ↑
+    "\xC3\xA2\xC2\x86\xC2\x93" => "\xE2\x86\x93", // ↓
+    "\xC3\x82\xC2\xB7" => "\xC2\xB7", // ·
+    "\xC3\xA2\xC2\x80\xC2\xB9" => "\xE2\x80\xB9",
+    "\xC3\xA2\xC2\x80\xC2\xBA" => "\xE2\x80\xBA",
+    "\xC3\xA2\xC2\x80\xC2\xB9\xC2\x81" => "\xE2\x80\xB9",
+    "\xC2\x81\xC2\x9A" => "", // stray
+    "\xC3\xA2\xC2\x80\xC2\xB9\xC2\x81\xC2\x86" => "",
+];
+
+$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/../resources/views'));
+$fixed = 0;
+
+foreach ($iterator as $file) {
+    if ($file->getExtension() !== 'php') {
+        continue;
+    }
+
+    $path = $file->getPathname();
+    $content = file_get_contents($path);
+    $new = strtr($content, $map);
+
+    if ($new !== $content) {
+        file_put_contents($path, $new);
+        $fixed++;
+    }
+}
+
+echo "fixed $fixed blade files\n";

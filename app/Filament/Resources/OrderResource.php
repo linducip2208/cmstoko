@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\Orders\OrderResource\Pages;
 use App\Models\Order;
+use App\Models\Shipment;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
@@ -134,8 +135,62 @@ class OrderResource extends Resource
                             ->formatStateUsing(fn ($state) => 'Rp '.number_format((int) $state, 0, ',', '.'))
                             ->weight('bold')
                             ->size(TextEntry\TextEntrySize::Large),
+                        TextEntry::make('refunded')
+                            ->label('Sudah Dikembalikan')
+                            ->formatStateUsing(fn (Order $record) => 'Rp '.number_format($record->refundedAmount(), 0, ',', '.'))
+                            ->visible(fn (Order $record) => $record->refundedAmount() > 0),
                     ])
                     ->columns(5),
+                Section::make('Riwayat Pengiriman')
+                    ->schema([
+                        RepeatableEntry::make('shipments')
+                            ->label('')
+                            ->schema([
+                                TextEntry::make('shipment_number')
+                                    ->label('Nomor')
+                                    ->badge(),
+                                TextEntry::make('courier')
+                                    ->label('Kurir')
+                                    ->formatStateUsing(fn (?string $state, Shipment $record) => strtoupper((string) $state).' — '.$record->service),
+                                TextEntry::make('tracking_number')
+                                    ->label('Resi')
+                                    ->placeholder('-')
+                                    ->copyable(),
+                                TextEntry::make('status')
+                                    ->label('Status')
+                                    ->badge()
+                                    ->color(fn (Shipment $record) => match ($record->status) {
+                                        Shipment::STATUS_DELIVERED => 'success',
+                                        Shipment::STATUS_CANCELLED => 'danger',
+                                        default => 'info',
+                                    }),
+                                TextEntry::make('shipped_at')
+                                    ->label('Dikirim')
+                                    ->dateTime('d M Y H:i'),
+                            ])
+                            ->columns(5)
+                            ->visible(fn (Order $record) => $record->shipments()->exists()),
+                    ])
+                    ->compact()
+                    ->visible(fn (Order $record) => $record->shipments()->exists()),
+                Section::make('Linimasa Pesanan')
+                    ->schema([
+                        RepeatableEntry::make('histories')
+                            ->label('')
+                            ->schema([
+                                TextEntry::make('created_at')
+                                    ->label('Waktu')
+                                    ->dateTime('d M Y H:i'),
+                                TextEntry::make('to')
+                                    ->label('Status')
+                                    ->badge()
+                                    ->formatStateUsing(fn (string $state) => Order::STATUSES[$state] ?? $state),
+                                TextEntry::make('note')
+                                    ->label('Keterangan')
+                                    ->placeholder('—'),
+                            ])
+                            ->columns(3),
+                    ]),
             ]);
     }
 
@@ -217,10 +272,7 @@ class OrderResource extends Resource
                 default => 'primary',
             })
             ->requiresConfirmation()
-            ->visible(fn (Order $record) => $record->status !== $status && ! in_array($record->status, [Order::STATUS_COMPLETED, Order::STATUS_CANCELLED]))
-            ->action(fn (Order $record) => $record->forceFill([
-                'status' => $status,
-                'paid_at' => $status === Order::STATUS_PAID ? now() : $record->paid_at,
-            ])->save());
+            ->visible(fn (Order $record) => $record->canTransitionTo($status))
+            ->action(fn (Order $record) => $record->transitionTo($status, 'Diubah oleh admin', auth()->id()));
     }
 }

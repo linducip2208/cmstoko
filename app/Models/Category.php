@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
@@ -13,23 +14,19 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'slug', 'description', 'image', 'is_active', 'sort_order',
+        'parent_id', 'name', 'slug', 'description', 'short_description', 'image',
+        'icon', 'cover_image', 'is_active', 'sort_order', 'seo',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'seo' => 'array',
     ];
 
     protected static function booted(): void
     {
         static::creating(function (Category $category) {
             if (blank($category->slug)) {
-                $category->slug = static::uniqueSlug($category->name);
-            }
-        });
-
-        static::updating(function (Category $category) {
-            if ($category->isDirty('name') && blank($category->getOriginal('slug'))) {
                 $category->slug = static::uniqueSlug($category->name);
             }
         });
@@ -48,6 +45,21 @@ class Category extends Model
         return $slug;
     }
 
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id')->orderBy('sort_order');
+    }
+
+    public function activeChildren(): HasMany
+    {
+        return $this->children()->where('is_active', true);
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
@@ -58,8 +70,25 @@ class Category extends Model
         return $this->hasMany(Product::class)->where('is_active', true);
     }
 
+    /** All descendant category ids including self. */
+    public function descendantIds(): array
+    {
+        $ids = [$this->id];
+
+        foreach ($this->children as $child) {
+            $ids = array_merge($ids, $child->descendantIds());
+        }
+
+        return $ids;
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeRoot(Builder $query): Builder
+    {
+        return $query->whereNull('parent_id');
     }
 }

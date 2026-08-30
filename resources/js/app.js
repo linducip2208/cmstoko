@@ -2,7 +2,7 @@ document.documentElement.classList.add('js');
 
 function initReveal(root) {
     const els = (root ?? document).querySelectorAll('.reveal:not(.is-visible)');
-    if (!('IntersectionObserver' in window)) {
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         els.forEach((el) => el.classList.add('is-visible'));
         return;
     }
@@ -15,7 +15,7 @@ function initReveal(root) {
                 }
             });
         },
-        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        { threshold: 0.1, rootMargin: '0px 0px -6% 0px' },
     );
     els.forEach((el) => observer.observe(el));
 }

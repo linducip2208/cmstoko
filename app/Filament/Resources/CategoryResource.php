@@ -50,6 +50,7 @@ class CategoryResource extends Resource
                     ->disk('public')
                     ->directory('categories')
                     ->maxSize(2048)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/avif'])
                     ->columnSpanFull(),
                 Toggle::make('is_active')
                     ->label('Aktif')
