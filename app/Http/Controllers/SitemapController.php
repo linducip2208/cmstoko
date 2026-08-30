@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CmsPage;
@@ -66,6 +67,17 @@ class SitemapController extends Controller
                 'lastmod' => $page->updated_at?->toAtomString(),
                 'changefreq' => 'monthly',
                 'priority' => '0.5',
+            ];
+        }
+
+        $urls[] = ['loc' => route('blog'), 'changefreq' => 'daily', 'priority' => '0.6'];
+
+        foreach (BlogPost::published()->get(['id', 'slug', 'updated_at']) as $post) {
+            $urls[] = [
+                'loc' => route('blog.show', $post->slug),
+                'lastmod' => $post->updated_at?->toAtomString(),
+                'changefreq' => 'monthly',
+                'priority' => '0.6',
             ];
         }
 

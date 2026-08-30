@@ -34,6 +34,23 @@ class Seo
         ];
     }
 
+    /**
+     * Strip script blocks (incl. their content) + tags for safe meta descriptions.
+     */
+    public static function safeText(?string $html, int $limit = 320): ?string
+    {
+        if ($html === null) {
+            return null;
+        }
+
+        $html = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', ' ', $html);
+        $html = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', ' ', $html);
+
+        $text = trim(preg_replace('/\s+/', ' ', strip_tags((string) $html)));
+
+        return $text === '' ? null : mb_substr($text, 0, $limit);
+    }
+
     public static function entityMeta(string $defaultTitle, ?array $entitySeo, ?string $fallbackDescription, string $canonical, ?string $image = null, ?string $robots = null, array $schema = []): array
     {
         $metaTitle = $entitySeo['meta_title'] ?? null;
@@ -102,7 +119,7 @@ class Seo
         return static::entityMeta(
             defaultTitle: $product->name,
             entitySeo: $product->seo,
-            fallbackDescription: $product->short_description ?: mb_substr(strip_tags((string) $product->description), 0, 160),
+            fallbackDescription: static::safeText($product->short_description ?: $product->description, 160),
             canonical: route('product.show', $product->slug),
             image: $product->coverImage(),
             schema: array_values(array_filter($schema)),
@@ -153,7 +170,7 @@ class Seo
         return static::entityMeta(
             defaultTitle: $page->title,
             entitySeo: $page->seo,
-            fallbackDescription: mb_substr(strip_tags((string) $page->content), 0, 160),
+            fallbackDescription: static::safeText((string) $page->content, 160),
             canonical: route('pages.show', $page->slug),
         );
     }
