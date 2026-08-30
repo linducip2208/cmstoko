@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#eef0f4"/>
+  <circle cx="400" cy="460" r="150" fill="#d6d9e0"/>
+  <text x="400" y="820" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#9aa0ac" text-anchor="middle">TokoKita</text>
+</svg>
