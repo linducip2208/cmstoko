@@ -28,6 +28,14 @@ $whatsapp = Settings::get('store.whatsapp');
     @stack('meta')
     <link rel="icon" href="{{ Settings::get('store.favicon') ?? asset('favicon.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        /* Active theme preset — overrides design tokens (last declaration wins) */
+        :root {
+            @foreach (\App\Support\Theme::vars() as $var => $value)
+                {{ $var }}: {{ $value }};
+            @endforeach
+        }
+    </style>
     @livewireStyles
     @stack('styles')
     <script>document.documentElement.classList.add('js');</script>

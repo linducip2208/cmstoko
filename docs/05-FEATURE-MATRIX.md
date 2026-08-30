@@ -28,7 +28,7 @@ Legend: DONE | PARTIAL | TODO
 | Media | TODO | uploads validated; no library UI |
 | Settings | DONE | cached key-value w/ groups (branding/header/footer/policies/payments) |
 | Homepage builder | DONE | DB sections, schedule, conditional forms, reorder, replicate |
-| Theme system | TODO | tokens centralized; presets TODO |
+| Theme system | DONE (core) | 7 presets (token overrides, one component system) + admin color overrides + instant activation |
 | Storefront redesign | DONE (core) | home/shop/PDP/cart/checkout/auth/portal/track/success rebuilt; cart drawer live |
 | Search | PARTIAL | SQL LIKE across name/sku/brand/category; driver contract TODO |
 | Filters | DONE | category tree, brand, price, stock, sort |
