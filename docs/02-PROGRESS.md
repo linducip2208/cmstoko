@@ -50,7 +50,10 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
 - B5-BLOG DONE: blog_categories/blog_tags/blog_posts/blog_post_tag tables, BlogPost published scope + renderableContent sanitizer + relatedPosts, BlogController (/blog w/ kategori/tag/q filters, /blog/{slug}), BlogPostResource + BlogCategoryResource admin (rich editor limited toolbar, publish action, draft badge count), Article + Breadcrumb schema, sitemap integration, footer blog link. BlogTest(6) incl. XSS sanitize + draft/scheduled hidden.
 - B7-MEDIA LIBRARY DONE: media table (file_name random, original_name, path, disk, mime, extension, size, w/h, title/alt/caption, uploaded_by), MediaService (real finfo MIME check, extension blocklist php/exe/js/html, SVG sanitize script/on*/javascript:, 5MB cap, safe random filenames), MediaResource admin (temp-disk multi-upload → service persist, metadata edit, grid table, delete blocked when in-use by products/categories/brands/blog/cms — basename LIKE match), 'temp' disk added. MediaTest(8).
 - Seo::safeText added (strips script/style content for meta descriptions); blog/cms/product fallback descriptions sanitized.
-- Tests: 131 passing.
+- B6-FAQ/TESTIMONIALS DONE: faqs + testimonials tables (rating opsional — hanya render jika diisi), Faq/Testimonial models + admin resources, section types 'faq' (grup + limit) & 'testimonials' pada homepage builder, partials. FaqTestimonialTest(4).
+- FIX KRITIS cache: nav kategori & menu aktif pernah menyimpan Eloquent Collection di file cache → "incomplete object" 500 di web context. Kini nav + menu cache payload plain array (aturan: tidak pernah cache model Eloquent).
+- README.md final (mendeskripsikan platform, bukan boilerplate).
+- Tests: 135 passing. HTTP smoke: / /produk /blog /keranjang /lacak 200.
 - API v1 details: `routes/api.php` (prefix /api/v1). Public catalog read endpoints (throttle 60/min) + auth/token (throttle 5/min) + auth:me/refresh/revoke + orders (ownership-filtered), addresses, wishlist. API Resources: Product/Category/Brand/Collection/Order/Address/Profile/Wishlist. Product has approvedReviews() relation for real rating aggregates; OrderResource excludes notes/refunds. Auth guard resets needed between in-process test requests (see ApiTest::resetAuth).
 
 ## NEXT QUEUE (in order)
