@@ -1,12 +1,9 @@
 # 15 — KNOWN LIMITATIONS (honest list)
-- Search is SQL LIKE-based; predictive suggestions + driver contract (Meilisearch/Typesense) future work.
-- Cart rules engine + customer groups UI not yet built (flash sales, coupons v2, newsletter admin done).
-- Media: no on-the-fly responsive variants/WebP conversion/srcset generation; uploads hardened + validated only.
-- FAQ/testimonials entities not built (homepage sections cover trust bar; testimonials absent).
-- Concurrency tests exercise interleaved sequential races (locks + conditional updates); no multi-process parallel harness yet.
-- RajaOngkir remains Starter-shaped (province/city + cost); no tracking or international.
-- Returns: window check uses config shop.return_window_days; return reason catalog fixed.
-- Multi-warehouse: schema ready, operations currently target default warehouse only.
-- Menu nesting: admin supports parent+children (one level); deep nesting requires direct edits.
-- WhatsApp notification channel stub not built (emails cover order lifecycle).
-- Visual QA performed via rendered DOM/HTML assertions (automated tests) — human screenshot review at 320–1920px recommended before go-live.
+- Search default SQL LIKE dengan kontrak SearchEngine siap-swap; driver Meilisearch/Typesense belum ditulis.
+- Media: belum ada konversi responsif otomatis (srcset/WebP) — upload hardening & metadata sudah.
+- Concurrency test interleaved sequential; belum ada harness multi-proses paralel.
+- RajaOngkir tetap Starter (provinsi/kota + cost); tanpa tracking/international.
+- Menu builder: satu level nesting di UI; lebih dalam butuh edit langsung.
+- WhatsApp channel = stub (log + endpoint opsional); butuh kredensial provider untuk aktif.
+- Retur: katalog alasan fixed; window dari config.
+- Visual QA via assertion DOM otomatis; review screenshot manusia (320–1920px) disarankan sebelum go-live.

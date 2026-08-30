@@ -53,7 +53,11 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
 - B6-FAQ/TESTIMONIALS DONE: faqs + testimonials tables (rating opsional — hanya render jika diisi), Faq/Testimonial models + admin resources, section types 'faq' (grup + limit) & 'testimonials' pada homepage builder, partials. FaqTestimonialTest(4).
 - FIX KRITIS cache: nav kategori & menu aktif pernah menyimpan Eloquent Collection di file cache → "incomplete object" 500 di web context. Kini nav + menu cache payload plain array (aturan: tidak pernah cache model Eloquent).
 - README.md final (mendeskripsikan platform, bukan boilerplate).
-- Tests: 135 passing. HTTP smoke: / /produk /blog /keranjang /lacak 200.
+- CUSTOMER GROUPS + CART RULES DONE: customer_groups (Retail/VIP/Guest seeded; users.customer_group_id; existing customers → Retail), cart_rules (kondisi JSON: min/max subtotal, produk/kategori-ancestor/merek/jumlah; aksi percent/fixed/free_shipping; grup targeting — Guest = tanpa akun; stacking dibatasi subtotal; kuota atomic), evaluasi server-side dalam transaksi checkout + consume + record orders.applied_rules/rule_discount, ringkasan checkout menampilkan promo & gratis ongkir, CartRuleResource + CustomerGroupResource admin. CartRuleTest(7).
+- SEARCH ABSTRACTION DONE: App\Contracts\SearchEngine + DatabaseSearchEngine (LIKE), bound di container; ShopController via contract; endpoint /pencarian/saran (throttle 30/mnt) produk/kategori/merek; header search predictive (Alpine debounce). SearchTest(5).
+- Homepage section 'blog_posts' (published only, filter kategori) + WhatsAppChannel stub (log/optional endpoint, tanpa kredensial wajib).
+- DOCS FINAL: README, INSTALLATION, DEPLOYMENT, ARCHITECTURE, CMS-GUIDE, STORE-ADMIN-GUIDE, PAYMENT, SHIPPING, THEME-DEVELOPMENT, SECURITY, API.
+- Tests: 148 passing.
 - API v1 details: `routes/api.php` (prefix /api/v1). Public catalog read endpoints (throttle 60/min) + auth/token (throttle 5/min) + auth:me/refresh/revoke + orders (ownership-filtered), addresses, wishlist. API Resources: Product/Category/Brand/Collection/Order/Address/Profile/Wishlist. Product has approvedReviews() relation for real rating aggregates; OrderResource excludes notes/refunds. Auth guard resets needed between in-process test requests (see ApiTest::resetAuth).
 
 ## NEXT QUEUE (in order)
