@@ -207,6 +207,17 @@ class HomepageSectionResource extends Resource
                             ->disabled(),
                         TextInput::make('config.padding')->label('Padding')->default('compact')->maxLength(10)->hidden(),
                     ],
+                    'faq' => [
+                        TextInput::make('config.overline')->label('Eyebrow')->maxLength(40)->default('FAQ'),
+                        TextInput::make('config.group')->label('Grup Pertanyaan')->maxLength(80)->helperText('Kosong = tampilkan semua grup'),
+                        TextInput::make('config.limit')->label('Jumlah Pertanyaan')->numeric()->default(8)->minValue(1)->maxValue(20),
+                        TextInput::make('config.padding')->label('Padding')->default('normal')->maxLength(10)->hidden(),
+                    ],
+                    'testimonials' => [
+                        TextInput::make('config.overline')->label('Eyebrow')->maxLength(40)->default('Testimoni'),
+                        TextInput::make('config.limit')->label('Jumlah Testimoni')->numeric()->default(6)->minValue(1)->maxValue(12),
+                        TextInput::make('config.padding')->label('Padding')->default('normal')->maxLength(10)->hidden(),
+                    ],
                     default => [],
                 })
                 ->columns(2)

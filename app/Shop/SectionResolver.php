@@ -21,6 +21,8 @@ class SectionResolver
             'config' => $section->config ?? [],
             'products' => $this->products($section),
             'categories' => $this->categories($section),
+            'faqs' => $this->faqs($section),
+            'testimonials' => $this->testimonials($section),
         ];
     }
 
@@ -71,6 +73,33 @@ class SectionResolver
             ->withCount('activeProducts')
             ->orderBy('sort_order')
             ->limit($limit)
+            ->get();
+    }
+
+    protected function faqs(HomepageSection $section): SupportCollection
+    {
+        if ($section->type !== 'faq') {
+            return collect();
+        }
+
+        $query = \App\Models\Faq::active()->orderBy('sort_order');
+
+        if ($group = $section->config('group')) {
+            $query->where('group', $group);
+        }
+
+        return $query->limit((int) $section->config('limit', 8))->get();
+    }
+
+    protected function testimonials(HomepageSection $section): SupportCollection
+    {
+        if ($section->type !== 'testimonials') {
+            return collect();
+        }
+
+        return \App\Models\Testimonial::active()
+            ->orderBy('sort_order')
+            ->limit((int) $section->config('limit', 6))
             ->get();
     }
 }

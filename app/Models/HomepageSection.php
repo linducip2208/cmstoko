@@ -16,6 +16,8 @@ class HomepageSection extends Model
         'trust_bar' => 'Bar Kepercayaan (pengaturan)',
         'newsletter' => 'Buletin (Newsletter)',
         'cta' => 'Seruan Aksi (CTA)',
+        'faq' => 'Pertanyaan Umum (FAQ)',
+        'testimonials' => 'Testimoni',
     ];
 
     protected $fillable = [
