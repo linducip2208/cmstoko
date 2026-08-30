@@ -29,11 +29,11 @@ Legend: DONE | PARTIAL | TODO
 | Settings | DONE | cached key-value w/ groups (branding/header/footer/policies/payments) |
 | Homepage builder | DONE | DB sections, schedule, conditional forms, reorder, replicate |
 | Theme system | TODO | tokens centralized; presets TODO |
-| Storefront redesign | DONE (core) | home/shop/PDP/cart/checkout/auth/portal rebuilt; track-order & order-success restyle TODO |
+| Storefront redesign | DONE (core) | home/shop/PDP/cart/checkout/auth/portal/track/success rebuilt; cart drawer live |
 | Search | PARTIAL | SQL LIKE across name/sku/brand/category; driver contract TODO |
 | Filters | DONE | category tree, brand, price, stock, sort |
-| SEO | PARTIAL | seo JSON columns everywhere; meta renderer/sitemap/schema/redirects TODO |
+| SEO | DONE (core) | meta renderer, canonical/OG/Twitter, schema.org (Org/WebSite/Breadcrumb/Product+AggregateRating), sitemap.xml, robots.txt, noindex filtered pages, redirect manager + admin |
 | API | TODO | services are shared/domain-ready |
-| Reports | PARTIAL | sales page + widgets; CSV/other reports TODO |
-| Events/Notifications | PARTIAL | password resets only; order lifecycle mails TODO |
-| Tests | PARTIAL | 55 passing (RBAC/security/webhook/inventory/catalog/fulfillment/journey); concurrency/API suites TODO |
+| Reports | PARTIAL | sales page + widgets + CSV (orders, kartu stok); settings UI + audit log done; more reports TODO |
+| Events/Notifications | DONE (core) | OrderPlaced/Paid/Shipped/Completed/Cancelled queued mails; WhatsApp stub TODO |
+| Tests | PARTIAL | 89 passing (RBAC/security/webhook/inventory/catalog/fulfillment/journey/track/drawer/notifications/audit-settings/concurrency/SEO); API suites TODO |

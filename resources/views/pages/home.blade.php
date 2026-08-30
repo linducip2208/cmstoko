@@ -1,4 +1,5 @@
-<x-layouts.app>
+<x-layouts.app :title="$seo['title']">
+    <x-seo.meta :seo="$seo" />
     @forelse ($sections as $data)
         @php $section = $data['section']; @endphp
         <x-sections.renderer :section="$section" :config="$data['config']" :products="$data['products']" :categories="$data['categories']" />

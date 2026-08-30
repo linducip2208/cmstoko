@@ -10,6 +10,6 @@ class CmsPageController extends Controller
     {
         $page = CmsPage::published()->where('slug', $slug)->firstOrFail();
 
-        return view('pages.cms', ['page' => $page]);
+        return view('pages.cms', ['page' => $page, 'seo' => \App\Support\Seo::forPage($page)]);
     }
 }

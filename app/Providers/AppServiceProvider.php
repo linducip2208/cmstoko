@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPermissionGates();
+
+        \App\Models\Role::observe(\App\Observers\RoleObserver::class);
+        \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
     }
 
     protected function registerPermissionGates(): void

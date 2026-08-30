@@ -27,6 +27,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', HomeController::class)->name('home');
 
+Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
+
+Route::get('/robots.txt', \App\Http\Controllers\RobotsController::class)->name('robots');
+
 Route::get('/produk', ShopController::class)->name('shop');
 
 Route::get('/produk/{slug}', [ProductController::class, 'show'])->name('product.show');

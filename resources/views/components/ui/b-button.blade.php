@@ -1,3 +1,4 @@
+@props(['type' => 'button', 'variant' => 'primary', 'size' => 'md'])
 @php
     $variantClasses = match ($variant ?? 'primary') {
         'accent' => 'btn-accent',

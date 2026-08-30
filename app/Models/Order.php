@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class Order extends Model
 {
     use HasFactory;
+    use Notifiable;
 
     public const STATUS_PENDING = 'pending';
 
@@ -195,6 +197,14 @@ class Order extends Model
         return static::STATUSES[$this->status] ?? ucfirst($this->status);
     }
 
+    /**
+     * Mail channel target: the customer attached to the order (guest or member).
+     */
+    public function routeNotificationForMail($notification): array
+    {
+        return [$this->customer_email => $this->customer_name];
+    }
+
     public function isPending(): bool
     {
         return $this->status === self::STATUS_PENDING;
@@ -239,6 +249,8 @@ class Order extends Model
             'note' => $note,
             'user_id' => $userId,
         ]);
+
+        \App\Events\OrderStatusChanged::dispatch($this, $from, $to);
 
         return $this;
     }

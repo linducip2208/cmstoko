@@ -1,4 +1,5 @@
-<x-layouts.app>
+<x-layouts.app :title="$seo['title']">
+    <x-seo.meta :seo="$seo" />
     @php
         $images = collect($product->images ?? [])->filter()->values();
         $inWishlist = auth()->check() && auth()->user()->wishlistProducts->contains('id', $product->id);

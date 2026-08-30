@@ -18,4 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        // SEO redirect manager: safe cached 404 resolution.
+        $exceptions->render(function (Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, Request $request) {
+            return \App\Support\Redirects::responseFor($request);
+        });
     })->create();

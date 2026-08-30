@@ -91,7 +91,9 @@ class CartService
             $price = $variant ? $variant->effectivePrice() : $product->effectivePrice();
 
             $lines->push([
-                'key' => $key,
+                // Force string: PHP casts numeric-string array keys to int,
+                // which breaks strict key comparisons in cart UIs.
+                'key' => (string) $key,
                 'product' => $product,
                 'variant' => $variant,
                 'qty' => (int) $qty,

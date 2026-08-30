@@ -46,6 +46,39 @@
             <section class="card p-6">
                 <h2 class="text-sm font-semibold text-ink">Alamat Pengiriman</h2>
 
+                @if ($savedAddresses->isNotEmpty())
+                    <fieldset class="mt-4">
+                        <legend class="label">Kirim ke alamat tersimpan</legend>
+                        <div class="grid gap-2 sm:grid-cols-2">
+                            @foreach ($savedAddresses as $address)
+                                <label class="flex cursor-pointer items-start gap-3 rounded-md border p-3.5 transition-colors {{ $addressId === $address->id ? 'border-ink bg-surface-2' : 'border-line hover:border-line-strong' }}">
+                                    <input type="radio" name="saved_address" value="{{ $address->id }}"
+                                           wire:click="applyAddress({{ $address->id }})"
+                                           @checked($addressId === $address->id)
+                                           class="mt-0.5 h-4 w-4 accent-accent">
+                                    <span class="min-w-0">
+                                        <span class="block text-sm font-semibold text-ink">
+                                            {{ $address->label }}
+                                            @if ($address->is_default)
+                                                <span class="badge ml-1 bg-accent-soft text-accent-ink">Utama</span>
+                                            @endif
+                                        </span>
+                                        <span class="mt-0.5 block truncate text-xs text-ink-3">{{ $address->name }} · {{ $address->phone }}</span>
+                                        <span class="mt-0.5 block text-xs leading-relaxed text-ink-3">{{ $address->address }}, {{ $address->city_name }}</span>
+                                    </span>
+                                </label>
+                            @endforeach
+                            <label class="flex cursor-pointer items-start gap-3 rounded-md border p-3.5 transition-colors {{ $addressId === null ? 'border-ink bg-surface-2' : 'border-line hover:border-line-strong' }}">
+                                <input type="radio" name="saved_address" value="new"
+                                       wire:click="useNewAddress"
+                                       @checked($addressId === null)
+                                       class="mt-0.5 h-4 w-4 accent-accent">
+                                <span class="text-sm font-semibold text-ink">Alamat baru / lain</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                @endif
+
                 @if ($useApiShipping)
                     <div class="mt-4 grid gap-4 sm:grid-cols-2">
                         <div>

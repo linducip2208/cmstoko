@@ -153,6 +153,12 @@ class OrderFulfillmentService
                 }
             }
 
+            \App\Support\Audit::record(
+                'refund.create',
+                subject: $refund,
+                after: ['order' => $order->order_number, 'amount' => $amount, 'reason' => $reason],
+            );
+
             $fresh = $order->fresh();
             $remaining = $fresh->refundableAmount();
 

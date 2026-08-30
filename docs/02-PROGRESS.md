@@ -29,15 +29,36 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
 ## IN PROGRESS
 - Nothing mid-flight; next batch not started.
 
+## SESSION 2 ADDITIONS (2026-08-30, later)
+- B9 TAIL DONE: header cart drawer (Livewire CartDrawer: variant-aware, qty/remove, coupon, savings, focus-trap/Esc/scroll-lock/ARIA, empty+loading states, auto-open on add), track-order rebuilt (guest email verification — wrong email = not-found, timeline, shipments w/ resi, payment instructions from settings), order-success rebuilt (status+payment state, next steps, transfer instructions from settings, shipping summary, CTAs), checkout saved-address prefill (default address autofill, radio selector, "alamat baru" reset, guest checkout preserved).
+- Latent bug fixed: `x-ui.badge` multi-line match inside `{{ }}` broke Blade compiler (never used before). a-button/b-button given proper @props.
+- B10 SEO DONE: `App\Support\Seo` (meta payloads + entity seo JSON meta_title/meta_description), `x-seo.meta` renderer (description/robots/canonical/OG/Twitter/JSON-LD), schema.org Organization + WebSite(+SearchAction) + BreadcrumbList + Product (Offer + AggregateRating ONLY from real approved reviews), sitemap.xml (cached 1h, active/published only), robots.txt route, filtered shop pages noindex.
+- B10 redirect manager DONE: seo_redirects table + SeoRedirect model (cached lookup, flushed on save) + 404 render hook in bootstrap/app.php (safe: internal paths only, scheme whitelist, external hosts blocked, self/loop/chain>3 blocked, hit_count/last_hit_at tracked) + Filament SeoRedirectResource (SEO group) + SeoRedirectPolicy (redirects.*).
+- Layout: base description meta only when explicit (no dupes); pages pass :title + x-seo.meta.
+- B13 EVENTS/NOTIFICATIONS DONE: OrderPlaced + OrderStatusChanged events (Dispatchable), OrderStatusMail queued notification (placed/paid/shipped/completed/cancelled; transfer instructions in placed mail; resi in shipped mail; Order::routeNotificationForMail targets guest+member email), listeners auto-discovered (Laravel 11+ discovers Listeners — do NOT also Event::listen manually, it double-sends), dispatched from checkout + Order::transitionTo.
+- B12 ADMIN DONE (core): ManageSettings Filament page (Store/Header/Footer/SEO/Policies/Payments tabs, FileUploads, bank accounts repeater, settings.update gated, audit on save, cache flush); audit_logs table + Audit support (redacts password/token/secret/key values recursively, never throws) + AuditLogResource (read-only, audit-logs.view gated); wired into settings.save, InventoryService::adjust, OrderFulfillmentService::refund, RoleObserver; CSV exports (SalesReport orders + StockMovements kartu stok, streamed w/ cursor + BOM via App\Support\Csv).
+- AUDIT FIXES (hostile pass 1):
+  - CRITICAL cart bug: PHP casts numeric-string array keys to int → `$item['key']` was int but UI passed string → ALL cart qty buttons (page + drawer) silently no-op'd for simple products. Fixed in CartService::items() ('key' => (string) $key).
+  - Return over-return: return quantity now capped against previously requested quantities (rejected/cancelled excluded) across attempts.
+  - empty-state component missing @props → spilled title/description into invalid HTML attributes.
+  - Header nav categories cached 5 min + CategoryObserver invalidation.
+  - ShopController mojibake fixed; price filter separator.
+- Tests: +34 (TrackOrder 5, Seo 10, OrderNotification 3, AuditAndSettings 7, ConcurrencyAdversarial 6, CartDrawer 3) → 89 passing.
+
 ## NEXT QUEUE (in order)
-1. B9 tail: cart drawer in header (component + Livewire), track-order view restyle (old view remains), order-success restyle, checkout: address book integration (saved addresses prefill).
-2. B10 SEO: meta manager (per-entity `seo` JSON already on products/categories/brands/collections/pages), layout `@stack('meta')` renderer, canonical/OG/Twitter tags, sitemap.xml route, robots.txt, schema.org (Product, BreadcrumbList, Organization, Article), redirect manager (seo_redirects table + middleware).
-3. B11 API: Sanctum install, /api/v1 routes (products/categories/brands/collections read, auth, account, wishlist, orders), resources + rate limiting + tests.
-4. B12 ADMIN: reports +CSV export (sales/products/inventory/customers), settings UI page, dashboard widgets (use Order::PAID_STATUSES), audit log table for sensitive actions (orders.refund, inventory.adjust, users/roles changes, settings.update).
-5. B13 EVENTS/NOTIFICATIONS: OrderPlaced/PaymentReceived/OrderShipped events + mail templates + queue; WhatsApp-ready notification channel stub.
-6. B14 TESTS: concurrency (parallel final-stock), API tests, flash sale/campaign tests after B6 remainder.
-7. B6 REMAINDER: flash sales (flash_sales + products + countdown, server-validated pricing), banners table, cart rules (conditions JSON), newsletter admin listing.
-8. B15 hostile audit + visual second pass + docs finalization (README, INSTALLATION, DEPLOYMENT, CMS-GUIDE, STORE-ADMIN-GUIDE, API, PAYMENT, SHIPPING, THEME-DEVELOPMENT).
+1. B11 API: Sanctum, /api/v1 (products/categories/brands read, auth, account, wishlist, orders), resources + rate limiting + tests.
+2. B6 REMAINDER: flash sales (server-validated pricing), banners, cart rules, newsletter admin listing.
+3. B9/B8: theme presets (settings-driven CSS var overrides), menu builder, media library, blog.
+4. B15 hostile audit round 2 (render key pages, mobile widths, a11y pass) + docs finalization (README/INSTALLATION/etc).
+
+## Batch log (session 2 delta)
+| Item | Status | Evidence |
+|------|--------|----------|
+| B9 tail (drawer/track/success/addresses) | DONE | CartDrawerTest, TrackOrderTest, HTTP 200 smoke |
+| B10 SEO + redirects | DONE | SeoTest(10) |
+| B13 events/mail | DONE | OrderNotificationTest(3) |
+| B12 settings/audit/CSV | DONE (core) | AuditAndSettingsTest(7) |
+| B14 concurrency/adversarial | DONE (core) | ConcurrencyAdversarialTest(6) — variant oversell, price authority, duplicate submit, coupon double-spend, return over-cap, refund over-cap |
 
 ## Batch log
 | Batch | Status | Evidence |
@@ -60,7 +81,7 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
 | B15 audit | TODO | — |
 
 ## Verification commands
-- `php artisan test` (55 passing)
+- `php artisan test` (89 passing)
 - `npm run build`
 - `php artisan serve` + smoke pages: /, /produk (+filters), /produk/{slug}, /keranjang, /checkout (302 empty cart), /masuk, /daftar, /lupa-kata-sandi, /lacak, /halaman/{slug}, /pesanan/{n} (404 unknown), /akun (302 guest), /admin (403 customer)
 - `storage\strip-bom.ps1` after any Set-Content writes (BOM killer)

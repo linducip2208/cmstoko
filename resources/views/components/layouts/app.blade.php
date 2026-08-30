@@ -1,11 +1,15 @@
 <?php
 
-use App\Models\Category;
 use App\Support\Settings;
 
 $storeName = Settings::get('store.name', config('shop.name', 'TokoKita'));
 $announcement = Settings::get('header.announcement_enabled', true) ? Settings::get('header.announcement') : null;
-$rootCategories = Category::active()->root()->with('activeChildren')->orderBy('sort_order')->orderBy('name')->get();
+
+// Cached for 5 minutes; invalidated by the Category observer.
+$rootCategories = Illuminate\Support\Facades\Cache::remember('nav.root_categories', now()->addMinutes(5), function () {
+    return App\Models\Category::active()->root()->with('activeChildren')->orderBy('sort_order')->orderBy('name')->get();
+});
+
 $whatsapp = Settings::get('store.whatsapp');
 ?>
 <!DOCTYPE html>
@@ -15,7 +19,9 @@ $whatsapp = Settings::get('store.whatsapp');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? $storeName }}</title>
-    <meta name="description" content="{{ $metaDescription ?? Settings::get('store.tagline') }}">
+    @if (! empty($metaDescription))
+        <meta name="description" content="{{ $metaDescription }}">
+    @endif
     @if ($canonical ?? null)
         <link rel="canonical" href="{{ $canonical }}">
     @endif
@@ -124,9 +130,9 @@ $whatsapp = Settings::get('store.whatsapp');
                         <a href="{{ route('login') }}" wire:navigate class="hidden rounded-md px-3 py-2 text-sm font-medium text-ink-2 transition-colors hover:text-ink sm:block">Masuk</a>
                     @endauth
 
-                    <a href="{{ route('cart') }}" wire:navigate class="icon-btn" aria-label="Keranjang belanja">
+                    <button type="button" class="icon-btn" x-on:click="$dispatch('open-cart-drawer')" aria-label="Buka keranjang belanja">
                         @livewire('cart-badge')
-                    </a>
+                    </button>
 
                     <button type="button" class="icon-btn lg:hidden" x-on:click="mobileNav = true" aria-label="Buka menu">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="h-5 w-5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
@@ -189,6 +195,8 @@ $whatsapp = Settings::get('store.whatsapp');
     <main id="content">
         {{ $slot }}
     </main>
+
+    <livewire:cart-drawer />
 
     <!-- ===== FOOTER ===== -->
     <footer class="mt-24 border-t border-line bg-surface">

@@ -83,6 +83,39 @@ class SalesReport extends Page implements HasSchemas
         $this->dispatch('$refresh');
     }
 
+    public function getHeaderActions(): array
+    {
+        return [
+            \Filament\Actions\Action::make('export')
+                ->label('Export CSV')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('gray')
+                ->action(function () {
+                    $from = $this->from();
+
+                    return \App\Support\Csv::streamDownload(
+                        'laporan-penjualan-'.now()->format('Ymd-His').'.csv',
+                        ['Nomor Pesanan', 'Tanggal', 'Pelanggan', 'Email', 'Status', 'Subtotal', 'Diskon', 'Ongkir', 'Total'],
+                        Order::whereIn('status', Order::PAID_STATUSES)
+                            ->where('created_at', '>=', $from)
+                            ->orderBy('created_at')
+                            ->cursor()
+                            ->map(fn (Order $order) => [
+                                $order->order_number,
+                                $order->created_at->format('Y-m-d H:i'),
+                                $order->customer_name,
+                                $order->customer_email,
+                                $order->status,
+                                $order->subtotal,
+                                $order->discount,
+                                $order->shipping_cost,
+                                $order->total,
+                            ]),
+                    );
+                }),
+        ];
+    }
+
     public function title(): string
     {
         return 'Laporan Penjualan';

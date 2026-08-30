@@ -106,6 +106,7 @@ class AddToCart extends Component
         $this->added = true;
 
         $this->dispatch('cart-updated');
+        $this->dispatch('cart-added');
     }
 
     public function render()

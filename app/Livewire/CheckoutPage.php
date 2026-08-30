@@ -58,6 +58,10 @@ class CheckoutPage extends Component
 
     public Collection $cities;
 
+    public Collection $addresses;
+
+    public ?int $addressId = null;
+
     public bool $useApiShipping = false;
 
     public function mount(CartService $cart, ShippingService $shipping): void
@@ -73,11 +77,76 @@ class CheckoutPage extends Component
             $this->customer_name = $user->name;
             $this->customer_email = $user->email;
             $this->customer_phone = (string) $user->phone;
+            $this->addresses = $user->addresses()->orderByDesc('is_default')->orderBy('id')->get();
+
+            // Prefill from the default saved address.
+            if ($default = $this->addresses->firstWhere('is_default', true) ?? $this->addresses->first()) {
+                $this->applyAddress($default->id);
+            }
+        } else {
+            $this->addresses = collect();
         }
 
         $this->useApiShipping = $shipping->hasApi();
         $this->provinces = $this->useApiShipping ? $shipping->provinces() : collect();
         $this->cities = collect();
+
+        // Re-run option loading after potential saved-address prefill.
+        if ($this->useApiShipping && $this->city_id) {
+            $this->loadShippingOptions($shipping, $cart);
+        } elseif (! $this->useApiShipping) {
+            $this->loadShippingOptions($shipping, $cart);
+        }
+    }
+
+    /**
+     * Fill the checkout form from a saved address (ownership enforced).
+     */
+    public function applyAddress(int $id): void
+    {
+        $address = auth()->user()?->addresses()->whereKey($id)->first();
+
+        if (! $address) {
+            return;
+        }
+
+        $this->addressId = $address->id;
+        $this->customer_name = $address->name;
+        $this->customer_phone = (string) $address->phone;
+        $this->province_id = $address->province_id !== null ? (int) $address->province_id : null;
+        $this->city_id = $address->city_id !== null ? (int) $address->city_id : null;
+        $this->province_name_manual = (string) $address->province_name;
+        $this->city_name_manual = (string) $address->city_name;
+        $this->postal_code = (string) $address->postal_code;
+        $this->address = (string) $address->address;
+
+        if ($this->useApiShipping) {
+            $shipping = app(ShippingService::class);
+            $this->cities = $this->province_id ? $shipping->cities($this->province_id) : collect();
+        }
+
+        $this->loadShippingOptions(app(ShippingService::class), app(CartService::class));
+    }
+
+    /**
+     * Switch to a fresh manual address.
+     */
+    public function useNewAddress(): void
+    {
+        $this->addressId = null;
+        $this->province_id = null;
+        $this->city_id = null;
+        $this->province_name_manual = '';
+        $this->city_name_manual = '';
+        $this->postal_code = '';
+        $this->address = '';
+        $this->cities = collect();
+        $this->shippingOptions = [];
+        $this->service = '';
+
+        if (! $this->useApiShipping) {
+            $this->loadShippingOptions(app(ShippingService::class), app(CartService::class));
+        }
     }
 
     public function updatedProvinceId(ShippingService $shipping): void
@@ -331,6 +400,8 @@ class CheckoutPage extends Component
 
         session()->push('shop.orders', $order->order_number);
 
+        \App\Events\OrderPlaced::dispatch($order);
+
         if ($payment->configured()) {
             $token = $payment->snapToken($order->load('items'));
 
@@ -352,6 +423,9 @@ class CheckoutPage extends Component
             'discount' => $cart->discount(),
             'coupon' => $cart->coupon(),
             'weight' => $cart->weight(),
+            'savedAddresses' => auth()->check()
+                ? auth()->user()->addresses()->orderByDesc('is_default')->orderBy('id')->get()
+                : collect(),
         ])->layout('components.layouts.app');
     }
 }

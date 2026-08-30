@@ -1,4 +1,5 @@
-<x-layouts.app>
+<x-layouts.app :title="$seo['title']">
+    <x-seo.meta :seo="$seo" />
     <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:py-16">
         <article>
             <header class="mb-10">

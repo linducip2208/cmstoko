@@ -1,3 +1,4 @@
+@props(['href' => '#', 'variant' => 'primary', 'size' => 'md'])
 @php
     $variantClasses = match ($variant ?? 'primary') {
         'accent' => 'btn-accent',
@@ -6,6 +7,6 @@
         default => 'btn-primary',
     };
 @endphp
-<a {{ $attributes->merge(['class' => 'btn '.$variantClasses.' '.match ($size ?? 'md') { 'sm' => 'btn-sm', 'lg' => 'btn-lg', default => '' }]) }}>
+<a {{ $attributes->merge(['href' => $href, 'class' => 'btn '.$variantClasses.' '.match ($size ?? 'md') { 'sm' => 'btn-sm', 'lg' => 'btn-lg', default => '' }]) }}>
     {{ $slot }}
 </a>

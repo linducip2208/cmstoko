@@ -39,6 +39,11 @@ class ProductController extends Controller
             'reviews' => $reviews,
             'ratingAverage' => (float) ($ratingAggregate->average ?? 0),
             'ratingTotal' => (int) ($ratingAggregate->total ?? 0),
+            'seo' => \App\Support\Seo::forProduct(
+                $product,
+                (float) ($ratingAggregate->average ?? 0),
+                (int) ($ratingAggregate->total ?? 0),
+            ),
         ]);
     }
 }

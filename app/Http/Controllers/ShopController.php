@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Support\Settings;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -90,10 +91,32 @@ class ShopController extends Controller
             $activeFilters->put('Pencarian', $request->q);
         }
         if ($request->filled('min') || $request->filled('max')) {
-            $activeFilters->put('Harga', 'Rp '.number_format((int) $request->min, 0, ',', '.').' — '.number_format((int) $request->max, 0, ',', '.'));
+            $activeFilters->put('Harga', 'Rp '.number_format((int) $request->min, 0, ',', '.').' - '.number_format((int) $request->max, 0, ',', '.'));
         }
         if ($request->stock === 'in') {
             $activeFilters->put('Stok', 'Tersedia');
+        }
+
+        // SEO meta: category/brand landing gets entity meta; plain shop/search gets canonical-safe meta.
+        $isFiltered = collect(['min', 'max', 'stock', 'q', 'sort'])
+            ->contains(fn (string $param) => $request->filled($param));
+
+        $seo = match (true) {
+            $category !== null => \App\Support\Seo::forCategory($category),
+            $brand !== null => \App\Support\Seo::forBrand($brand),
+            default => \App\Support\Seo::meta(
+                title: 'Katalog',
+                description: $request->filled('q')
+                    ? 'Hasil pencarian "'.strip_tags((string) $request->q).'"'
+                    : Settings::get('store.tagline'),
+                canonical: $request->query() ? route('shop', $request->query()) : route('shop'),
+                robots: $request->query() ? 'noindex, follow' : null,
+            ),
+        };
+
+        // Canonical landing pages become noindex once the visitor filters them.
+        if ($isFiltered && ($category !== null || $brand !== null)) {
+            $seo['robots'] = 'noindex, follow';
         }
 
         return view('pages.shop', [
@@ -103,6 +126,7 @@ class ShopController extends Controller
             'category' => $category,
             'brand' => $brand,
             'activeFilters' => $activeFilters,
+            'seo' => $seo,
         ]);
     }
 }

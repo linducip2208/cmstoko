@@ -55,6 +55,14 @@ class ReturnController extends Controller
 
             $orderedIds = $order->items()->pluck('id', 'id');
 
+            // Quantities already requested (active) — the customer may never
+            // request to return more than they bought, across all attempts.
+            $alreadyRequested = ReturnItem::whereIn('order_item_id', $orderedIds->keys())
+                ->whereHas('returnRequest', fn ($q) => $q->whereNotIn('status', [ReturnRequest::STATUS_REJECTED, ReturnRequest::STATUS_CANCELLED]))
+                ->groupBy('order_item_id')
+                ->selectRaw('order_item_id, SUM(quantity) as total')
+                ->pluck('total', 'order_item_id');
+
             foreach ($validated['items'] as $line) {
                 if (! isset($orderedIds[$line['order_item_id']])) {
                     continue;
@@ -62,7 +70,9 @@ class ReturnController extends Controller
 
                 $item = $order->items()->whereKey($line['order_item_id'])->first();
 
-                $quantity = min((int) $line['quantity'], $item->quantity);
+                $remaining = $item->quantity - (int) ($alreadyRequested[$item->id] ?? 0);
+
+                $quantity = min((int) $line['quantity'], max(0, $remaining));
 
                 if ($quantity > 0) {
                     ReturnItem::create([

@@ -97,6 +97,13 @@ class InventoryService
             $this->baseQuery($productId, $variantId)->update(['stock' => $after]);
 
             $this->record($productId, $variantId, StockMovement::TYPE_ADJUSTMENT, $delta, $before, $after, null, $note, $userId);
+
+            \App\Support\Audit::record(
+                'inventory.adjust',
+                subject: $target,
+                before: ['stock' => $before],
+                after: ['stock' => $after, 'delta' => $delta, 'note' => $note],
+            );
         });
     }
 

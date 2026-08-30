@@ -1,3 +1,4 @@
+@props(['title' => '', 'description' => null])
 <div {{ $attributes->merge(['class' => 'flex flex-col items-center justify-center py-20 text-center']) }}>
     <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-surface-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="h-7 w-7 text-ink-3" aria-hidden="true">

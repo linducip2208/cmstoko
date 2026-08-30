@@ -1,12 +1,12 @@
-﻿# 15 — KNOWN LIMITATIONS (honest list)
-- Search is SQL LIKE-based (driver contract not yet added); Meilisearch/Typesense integration is future work.
-- No cart drawer yet (cart page only); track-order + order-success pages still use pre-redesign styling.
-- Theme presets (EDITORIAL/MINIMAL/…) not yet implemented — tokens are centralized but single palette; presets planned as settings-driven CSS var overrides.
-- No flash sales, banners table, cart rules, customer groups UI yet.
+# 15 — KNOWN LIMITATIONS (honest list)
+- Search is SQL LIKE-based; predictive suggestions + driver contract (Meilisearch/Typesense) future work.
+- Flash sales, banners table, cart rules, customer groups UI not yet built.
 - Blog, menus builder, media library, FAQ/testimonials entities not yet built (CMS pages + settings only).
-- No API yet; storefront and future API share services (CartService/InventoryService/OrderFulfillmentService) so API is low-risk to add.
-- No email notifications yet (Password resets work via framework; order lifecycle emails TODO).
+- No API yet (B11 next); storefront and future API share services (CartService/InventoryService/OrderFulfillmentService).
+- Theme presets not implemented — tokens centralized but single palette; presets planned as settings-driven CSS var overrides.
+- Concurrency tests exercise interleaved sequential races (locks + conditional updates); no multi-process parallel harness yet.
 - RajaOngkir remains Starter-shaped (province/city + cost); no tracking or international.
-- Returns: window check uses config shop.return_window_days; policy content is CMS-editable but return reason catalog fixed.
+- Returns: window check uses config shop.return_window_days; return reason catalog fixed.
 - Image optimization: uploads validated by MIME/size but no on-the-fly conversion/srcset generation.
 - Multi-warehouse: schema ready, operations currently target default warehouse only.
+- Newsletter admin listing + safe unsubscribe link TODO (endpoint exists, throttled).

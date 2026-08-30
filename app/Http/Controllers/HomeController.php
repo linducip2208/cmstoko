@@ -30,6 +30,6 @@ class HomeController extends Controller
                 return true;
             });
 
-        return view('pages.home', ['sections' => $resolved]);
+        return view('pages.home', ['sections' => $resolved, 'seo' => \App\Support\Seo::forHome()]);
     }
 }

@@ -1,4 +1,4 @@
-﻿# 04 — DATABASE MAP (current)
+# 04 — DATABASE MAP (current)
 
 ## Original tables (extended in place)
 - categories (+parent_id FK self, icon, cover_image, short_description, seo json)
@@ -38,7 +38,11 @@
 ## CMS / content
 - cms_pages (slug unique, status draft|scheduled|published|archived, published_at, seo json)
 - homepage_sections (type, config json, sort_order, is_active, starts_at/ends_at)
-- settings (key unique, value json, group) · newsletter_subscribers (email unique)
+- settings (key unique, value json, group) → newsletter_subscribers (email unique)
+
+## SEO (session 2)
+- seo_redirects (source unique, destination, status_code 301|302, is_active, hit_count, last_hit_at)
+- audit_logs (user_id/user_name, action, subject_type+id, before/after json redacted, ip, user_agent)
 
 ## Statuses (orders)
 pending → paid → processing/ready_to_ship → (partially_shipped) → shipped → completed → (partially_refunded) → refunded; cancel allowed until shipped.

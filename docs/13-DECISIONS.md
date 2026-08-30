@@ -1,4 +1,4 @@
-﻿# 13 — DECISIONS (adr-style, short)
+# 13 — DECISIONS (adr-style, short)
 1. Own RBAC (not spatie): permissions registry in config/permissions.php, policies via trait, super-admin Gate::before bypass. Reason: zero deps, Filament v5 policy-native.
 2. Filament v5 authorization = model policies; resources MUST NOT skipAuthorization. Navigation auto-hides via canAccess.
 3. Money stays int IDR everywhere. rupiah() only formats.
