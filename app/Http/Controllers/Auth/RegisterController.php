@@ -32,6 +32,8 @@ class RegisterController extends Controller
         $user = User::create([
             ...$validated,
             'role_id' => Role::where('slug', Role::CUSTOMER)->value('id'),
+            // New customers default to Retail (Guest group = checkout tanpa akun).
+            'customer_group_id' => \App\Models\CustomerGroup::where('slug', \App\Models\CustomerGroup::SLUG_RETAIL)->value('id'),
         ]);
 
         Auth::login($user);

@@ -258,9 +258,20 @@
                             @endif
                         </dd>
                     </div>
+                    @if ($taxAmount > 0)
+                        <div class="flex justify-between">
+                            <dt class="text-ink-2">
+                                Pajak
+                                @if ($taxBreakdown->isNotEmpty())
+                                    <span class="block text-xs font-normal text-ink-3">{{ $taxBreakdown->pluck('name')->implode(', ') }}</span>
+                                @endif
+                            </dt>
+                            <dd class="font-medium tabular-nums">{{ rupiah($taxAmount) }}</dd>
+                        </div>
+                    @endif
                     <div class="flex justify-between border-t border-line pt-3 text-base font-bold">
                         <dt>Total</dt>
-                        <dd class="tabular-nums">{{ rupiah(max(0, $subtotal - $discount - $ruleDiscount)) }}</dd>
+                        <dd class="tabular-nums">{{ rupiah(max(0, $subtotal - $discount - $ruleDiscount + $taxAmount)) }}</dd>
                     </div>
                     <p class="text-xs text-ink-3">Total akhir termasuk ongkir dikonfirmasi saat pembayaran.</p>
                 </dl>

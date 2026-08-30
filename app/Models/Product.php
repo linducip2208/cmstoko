@@ -26,7 +26,7 @@ class Product extends Model
     protected $fillable = [
         'category_id', 'brand_id', 'type', 'name', 'slug', 'sku', 'short_description', 'description',
         'price', 'sale_price', 'stock', 'weight', 'images', 'is_active', 'is_featured',
-        'seo', 'attribute_values', 'published_at',
+        'seo', 'attribute_values', 'published_at', 'tax_class_id',
     ];
 
     protected $casts = [
@@ -68,6 +68,11 @@ class Product extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function taxClass(): BelongsTo
+    {
+        return $this->belongsTo(TaxClass::class);
     }
 
     public function variants(): HasMany

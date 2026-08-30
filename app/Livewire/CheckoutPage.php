@@ -320,6 +320,18 @@ class CheckoutPage extends Component
                 $shippingCost = $selected ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
                 $effectiveShipping = $ruleResult['free_shipping'] ? 0 : $shippingCost;
 
+                // Tax: server-authoritative, on the discounted base + shipping.
+                $taxResult = app(\App\Services\TaxCalculator::class)->calculate(
+                    $items->map(fn ($item) => [
+                        'price' => $item['price'],
+                        'qty' => $item['qty'],
+                        'tax_class_id' => $item['variant']->product->tax_class_id ?? $item['product']->tax_class_id ?? null,
+                    ])->all(),
+                    $totalDiscount,
+                    $effectiveShipping,
+                    ['province_id' => $validated['province_id'] ?? null, 'city_id' => $validated['city_id'] ?? null],
+                );
+
                 $order = Order::create([
                     'user_id' => auth()->id(),
                     'customer_name' => $validated['customer_name'],
@@ -336,8 +348,10 @@ class CheckoutPage extends Component
                     'discount' => $discount,
                     'rule_discount' => $ruleResult['discount'],
                     'applied_rules' => $ruleResult['rules'],
+                    'tax_amount' => $taxResult['amount'],
+                    'tax_snapshot' => $taxResult['breakdown'],
                     'shipping_cost' => $effectiveShipping,
-                    'total' => max(0, $subtotal - $totalDiscount + $effectiveShipping),
+                    'total' => max(0, $subtotal - $totalDiscount + $effectiveShipping + $taxResult['amount']),
                     'coupon_code' => $coupon?->code,
                     'weight' => $cart->weight(),
                     'shipping_courier' => $selected['description'] ?? null,
@@ -429,8 +443,23 @@ class CheckoutPage extends Component
     {
         $ruleResult = \App\Models\CartRule::evaluate($cart->items(), $cart->subtotal(), auth()->user());
 
+        $items = $cart->items();
+        $totalDiscount = $cart->discount() + $ruleResult['discount'];
+        $previewShipping = $ruleResult['free_shipping'] ? 0 : (collect($this->shippingOptions)->firstWhere('service', $this->service)['cost'] ?? config('shop.flat_shipping_cost'));
+
+        $taxPreview = app(\App\Services\TaxCalculator::class)->calculate(
+            $items->map(fn ($item) => [
+                'price' => $item['price'],
+                'qty' => $item['qty'],
+                'tax_class_id' => $item['product']->tax_class_id ?? null,
+            ])->all(),
+            $totalDiscount,
+            (int) $previewShipping,
+            ['province_id' => $this->province_id, 'city_id' => $this->city_id],
+        );
+
         return view('livewire.checkout-page', [
-            'items' => $cart->items(),
+            'items' => $items,
             'subtotal' => $cart->subtotal(),
             'discount' => $cart->discount(),
             'coupon' => $cart->coupon(),
@@ -438,6 +467,8 @@ class CheckoutPage extends Component
             'ruleDiscount' => $ruleResult['discount'],
             'freeShipping' => $ruleResult['free_shipping'],
             'ruleNames' => collect($ruleResult['rules'])->pluck('name'),
+            'taxAmount' => $taxPreview['amount'],
+            'taxBreakdown' => collect($taxPreview['breakdown']),
             'savedAddresses' => auth()->check()
                 ? auth()->user()->addresses()->orderByDesc('is_default')->orderBy('id')->get()
                 : collect(),

@@ -79,6 +79,12 @@ class ProductResource extends Resource
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(60)
                                     ->helperText('Untuk produk varian, SKU diisi pada tiap varian.'),
+                                Select::make('tax_class_id')
+                                    ->label('Kelas Pajak')
+                                    ->options(fn () => \App\Models\TaxClass::orderBy('name')->pluck('name', 'id'))
+                                    ->searchable()
+                                    ->native(false)
+                                    ->helperText('Kosong = kelas default (mis. PPN). Pilih kelas tanpa tarif agar produk tidak kena pajak.'),
                                 TextInput::make('short_description')
                                     ->label('Deskripsi Singkat')
                                     ->maxLength(500)
