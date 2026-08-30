@@ -29,10 +29,19 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('TokoKita')
+            ->brandName(config('shop.name', 'TokoKita'))
             ->colors([
-                'primary' => Color::Indigo,
+                'primary' => Color::hex('#9a4a2b'), // terracotta — storefront accent
+                'gray' => Color::Stone,
             ])
+            ->font('Instrument Sans')
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->darkMode(true)
+            ->sidebarCollapsibleOnDesktop()
+            ->maxContentWidth('full')
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->navigationGroups([
                 'Dasbor',
                 'Penjualan',
@@ -42,9 +51,11 @@ class AdminPanelProvider extends PanelProvider
                 'Pemasaran',
                 'Konten',
                 'Tampilan',
+                'SEO',
                 'Laporan',
                 'Pengaturan',
-            ])->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
+            ])
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,

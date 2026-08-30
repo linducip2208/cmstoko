@@ -1,0 +1,114 @@
+/* ============================================================
+   CMSTOKO — Filament admin theme
+   Premium polish: aligns panel with storefront editorial system
+   (paper/ink/terracotta, Instrument Sans, quiet radii).
+   Tailwind v4 + Filament CSS variables.
+   ============================================================ */
+
+@import 'tailwindcss';
+
+@source '../../views';
+
+.fi-body {
+    /* Typography parity with storefront */
+    --font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Palette: ink surfaces on light, warm dark mode */
+    --primary-50: #f4e6de;
+    --primary-100: #ecd6c8;
+    --primary-200: #dcb49c;
+    --primary-300: #c98f6d;
+    --primary-400: #b36c46;
+    --primary-500: #9a4a2b;
+    --primary-600: #7c3a21;
+    --primary-700: #632e1a;
+    --primary-800: #4a2314;
+    --primary-900: #33180d;
+
+    /* Quieter radii — editorial character */
+    --radius-md: 0.5rem;
+    --radius-lg: 0.625rem;
+    --radius-xl: 0.875rem;
+
+    /* Tighter, more premium density */
+    --gap-xs: 0.25rem;
+    --gap-sm: 0.5rem;
+    --gap-md: 0.75rem;
+    --gap-lg: 1rem;
+    --gap-xl: 1.5rem;
+}
+
+/* Sidebar: ink-on-paper character */
+.fi-layout aside.fi-sidebar {
+    background: #faf8f4;
+}
+
+.dark .fi-layout aside.fi-sidebar {
+    background: #16181d;
+}
+
+.fi-sidebar-header {
+    border-bottom: 1px solid rgba(27, 24, 19, 0.06);
+}
+
+/* Brand: letter mark consistent with storefront header */
+.fi-topbar .fi-icon-btn,
+.fi-sidebar-header-branding {
+    letter-spacing: -0.02em;
+}
+
+/* Navigation items: calmer hover */
+.fi-sidebar-item {
+    border-radius: var(--radius-md);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.fi-sidebar-item-active {
+    font-weight: 600;
+}
+
+/* Sections: card feel like storefront */
+.fi-section-rounded .fi-section-header,
+.fi-tile {
+    border-radius: var(--radius-lg);
+}
+
+/* Tables: subtle header, zebra-free premium density */
+.fi-table th {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+}
+
+.fi-table tr:hover {
+    background: rgba(27, 24, 19, 0.02);
+}
+
+/* Buttons: match storefront btn feel */
+.fi-btn {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* Login: centered editorial card */
+.fi-simple-layout {
+    background:
+        radial-gradient(60rem 30rem at 70% -10%, rgba(154, 74, 43, 0.08), transparent),
+        #f6f4ef;
+}
+
+/* Focus ring: accent, consistent with storefront */
+.fi-input:focus,
+.fi-select-input:focus {
+    --tw-ring-color: rgba(154, 74, 43, 0.35);
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+    .fi-transition,
+    .fi-sidebar-item {
+        transition: none !important;
+    }
+}
