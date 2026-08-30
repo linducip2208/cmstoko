@@ -29,7 +29,7 @@ class DatabaseSearchEngine implements SearchEngine
         return [
             'products' => Product::active()
                 ->with('category:id,name,slug')
-                ->select('id', 'name', 'slug', 'price', 'sale_price', 'cover', 'images', 'category_id')
+                ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'category_id')
                 ->where(fn ($q) => $q->where('name', 'like', $like)->orWhere('sku', 'like', $like))
                 ->orderByDesc('is_featured')
                 ->limit($limit)
