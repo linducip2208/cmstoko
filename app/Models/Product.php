@@ -138,6 +138,34 @@ class Product extends Model
 
     public function effectivePrice(): int
     {
+        $base = $this->sale_price && $this->sale_price < $this->price
+            ? (int) $this->sale_price
+            : (int) $this->price;
+
+        // Flash sales are server-authoritative: active sales (by clock) lower
+        // the price; the moment they expire the price reverts.
+        $flashPrice = FlashSale::activePriceMap()[$this->id] ?? null;
+
+        if ($flashPrice !== null && $flashPrice < $base) {
+            return $flashPrice;
+        }
+
+        return $base;
+    }
+
+    public function flashPrice(): ?int
+    {
+        $flashPrice = FlashSale::activePriceMap()[$this->id] ?? null;
+
+        if ($flashPrice === null || $flashPrice >= $this->effectiveBasePrice()) {
+            return null;
+        }
+
+        return $flashPrice;
+    }
+
+    public function effectiveBasePrice(): int
+    {
         return $this->sale_price && $this->sale_price < $this->price
             ? (int) $this->sale_price
             : (int) $this->price;
@@ -145,12 +173,20 @@ class Product extends Model
 
     public function hasDiscount(): bool
     {
+        if ($this->flashPrice() !== null) {
+            return true;
+        }
+
         return $this->sale_price && $this->sale_price < $this->price;
     }
 
     public function discountPercent(): int
     {
-        if (! $this->hasDiscount()) {
+        if ($flash = $this->flashPrice()) {
+            return (int) round((1 - $flash / $this->price) * 100);
+        }
+
+        if (! ($this->sale_price && $this->sale_price < $this->price)) {
             return 0;
         }
 

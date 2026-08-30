@@ -47,6 +47,10 @@ Route::post('/newsletter', [NewsletterController::class, 'subscribe'])
     ->middleware('throttle:10,1')
     ->name('newsletter.subscribe');
 
+Route::get('/newsletter/berhenti/{token}', [NewsletterController::class, 'unsubscribe'])
+    ->middleware('throttle:10,1')
+    ->name('newsletter.unsubscribe');
+
 /*
 |--------------------------------------------------------------------------
 | CMS pages

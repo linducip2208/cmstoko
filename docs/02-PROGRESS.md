@@ -44,6 +44,8 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
   - Header nav categories cached 5 min + CategoryObserver invalidation.
   - ShopController mojibake fixed; price filter separator.
 - Tests: +34 (TrackOrder 5, Seo 10, OrderNotification 3, AuditAndSettings 7, ConcurrencyAdversarial 6, CartDrawer 3) + ApiTest(9) → 98 passing. Sanctum migrations published; personal_access_tokens table.
+- B6 REMAINDER DONE (core): Flash sales (flash_sales + flash_sale_products pivot, server-authoritative pricing via cached 30s price map wired into Product::effectivePrice/hasDiscount/discountPercent; FlashSaleResource admin w/ product repeater + price/limit; FlashSaleTest 5 — expiry revert, cheapest-overlap, checkout server recompute); Newsletter admin (NewsletterSubscriber model ADDED — controller referenced it but model was missing/500; token+source columns; tokenized unsubscribe /newsletter/berhenti/{token}; NewsletterSubscriberResource read-only + CSV + SelectFilter; NewsletterTest 4).
+- Tests: 107 passing.
 - API v1 details: `routes/api.php` (prefix /api/v1). Public catalog read endpoints (throttle 60/min) + auth/token (throttle 5/min) + auth:me/refresh/revoke + orders (ownership-filtered), addresses, wishlist. API Resources: Product/Category/Brand/Collection/Order/Address/Profile/Wishlist. Product has approvedReviews() relation for real rating aggregates; OrderResource excludes notes/refunds. Auth guard resets needed between in-process test requests (see ApiTest::resetAuth).
 
 ## NEXT QUEUE (in order)

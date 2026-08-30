@@ -24,9 +24,25 @@ class NewsletterController extends Controller
 
         NewsletterSubscriber::updateOrCreate(
             ['email' => strtolower($validated['email'])],
-            ['subscribed_at' => now(), 'unsubscribed_at' => null],
+            ['subscribed_at' => now(), 'unsubscribed_at' => null, 'source' => 'storefront'],
         );
 
         return back()->with('newsletter_status', 'Terima kasih! Kamu akan menerima kabar dari kami.');
+    }
+
+    /**
+     * Tokenized unsubscribe — safe link, no auth required, cannot unsubscribe others.
+     */
+    public function unsubscribe(string $token)
+    {
+        $subscriber = NewsletterSubscriber::where('token', $token)->first();
+
+        if (! $subscriber) {
+            abort(404);
+        }
+
+        $subscriber->update(['unsubscribed_at' => $subscriber->unsubscribed_at ?? now()]);
+
+        return redirect()->route('home')->with('newsletter_status', 'Kamu berhasil berhenti berlangganan.');
     }
 }
