@@ -10,7 +10,8 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        // Search abstraction: swap for Meilisearch/Typesense driver later.
+        $this->app->bind(\App\Contracts\SearchEngine::class, \App\Services\DatabaseSearchEngine::class);
     }
 
     public function boot(): void

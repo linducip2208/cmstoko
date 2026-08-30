@@ -242,13 +242,25 @@
                             <dd class="font-medium tabular-nums text-positive">−{{ rupiah($discount) }}</dd>
                         </div>
                     @endif
+                    @if ($ruleDiscount > 0)
+                        <div class="flex justify-between">
+                            <dt class="text-ink-2">Promo{{ $ruleNames->isNotEmpty() ? ' ('.$ruleNames->implode(', ').')' : '' }}</dt>
+                            <dd class="font-medium tabular-nums text-positive">−{{ rupiah($ruleDiscount) }}</dd>
+                        </div>
+                    @endif
                     <div class="flex justify-between">
                         <dt class="text-ink-2">Ongkir</dt>
-                        <dd class="font-medium tabular-nums">{{ $service ? rupiah(collect($shippingOptions)->firstWhere('service', $service)['cost'] ?? config('shop.flat_shipping_cost')) : '—' }}</dd>
+                        <dd class="font-medium tabular-nums">
+                            @if ($freeShipping)
+                                <span class="badge bg-positive-soft text-positive">Gratis</span>
+                            @else
+                                {{ $service ? rupiah(collect($shippingOptions)->firstWhere('service', $service)['cost'] ?? config('shop.flat_shipping_cost')) : '—' }}
+                            @endif
+                        </dd>
                     </div>
                     <div class="flex justify-between border-t border-line pt-3 text-base font-bold">
                         <dt>Total</dt>
-                        <dd class="tabular-nums">{{ rupiah(max(0, $subtotal - $discount)) }}</dd>
+                        <dd class="tabular-nums">{{ rupiah(max(0, $subtotal - $discount - $ruleDiscount)) }}</dd>
                     </div>
                     <p class="text-xs text-ink-3">Total akhir termasuk ongkir dikonfirmasi saat pembayaran.</p>
                 </dl>

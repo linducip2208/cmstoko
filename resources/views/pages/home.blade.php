@@ -2,7 +2,7 @@
     <x-seo.meta :seo="$seo" />
     @forelse ($sections as $data)
         @php $section = $data['section']; @endphp
-        <x-sections.renderer :section="$section" :config="$data['config']" :products="$data['products']" :categories="$data['categories']" :faqs="$data['faqs']" :testimonials="$data['testimonials']" />
+        <x-sections.renderer :section="$section" :config="$data['config']" :products="$data['products']" :categories="$data['categories']" :faqs="$data['faqs']" :testimonials="$data['testimonials']" :posts="$data['posts']" />
     @empty
         <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center">

@@ -312,7 +312,13 @@ class CheckoutPage extends Component
                 $subtotal = $cart->subtotal();
                 $discount = $cart->discount();
                 $coupon = $cart->coupon();
+
+                // Cart rules: server-authoritative promotions (group targeting, free shipping, stacking capped at subtotal).
+                $ruleResult = \App\Models\CartRule::evaluate($items, $subtotal, auth()->user());
+                $totalDiscount = $discount + $ruleResult['discount'];
+
                 $shippingCost = $selected ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
+                $effectiveShipping = $ruleResult['free_shipping'] ? 0 : $shippingCost;
 
                 $order = Order::create([
                     'user_id' => auth()->id(),
@@ -328,8 +334,10 @@ class CheckoutPage extends Component
                     'notes' => $validated['notes'],
                     'subtotal' => $subtotal,
                     'discount' => $discount,
-                    'shipping_cost' => $shippingCost,
-                    'total' => max(0, $subtotal - $discount + $shippingCost),
+                    'rule_discount' => $ruleResult['discount'],
+                    'applied_rules' => $ruleResult['rules'],
+                    'shipping_cost' => $effectiveShipping,
+                    'total' => max(0, $subtotal - $totalDiscount + $effectiveShipping),
                     'coupon_code' => $coupon?->code,
                     'weight' => $cart->weight(),
                     'shipping_courier' => $selected['description'] ?? null,
@@ -378,6 +386,8 @@ class CheckoutPage extends Component
                     }
                 }
 
+                \App\Models\CartRule::consume($ruleResult['rule_ids']);
+
                 $order->histories()->create([
                     'from' => null,
                     'to' => Order::STATUS_PENDING,
@@ -417,12 +427,17 @@ class CheckoutPage extends Component
 
     public function render(CartService $cart)
     {
+        $ruleResult = \App\Models\CartRule::evaluate($cart->items(), $cart->subtotal(), auth()->user());
+
         return view('livewire.checkout-page', [
             'items' => $cart->items(),
             'subtotal' => $cart->subtotal(),
             'discount' => $cart->discount(),
             'coupon' => $cart->coupon(),
             'weight' => $cart->weight(),
+            'ruleDiscount' => $ruleResult['discount'],
+            'freeShipping' => $ruleResult['free_shipping'],
+            'ruleNames' => collect($ruleResult['rules'])->pluck('name'),
             'savedAddresses' => auth()->check()
                 ? auth()->user()->addresses()->orderByDesc('is_default')->orderBy('id')->get()
                 : collect(),

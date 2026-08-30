@@ -18,6 +18,7 @@ class HomepageSection extends Model
         'cta' => 'Seruan Aksi (CTA)',
         'faq' => 'Pertanyaan Umum (FAQ)',
         'testimonials' => 'Testimoni',
+        'blog_posts' => 'Artikel Blog',
     ];
 
     protected $fillable = [

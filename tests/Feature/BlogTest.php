@@ -105,4 +105,28 @@ class BlogTest extends TestCase
 
         $this->assertStringContainsString($post->slug, $xml);
     }
+
+    public function test_blog_posts_homepage_section_renders_published_only(): void
+    {
+        $visible = $this->makePost(['title' => 'Artikel Homepage '.uniqid()]);
+        $this->makePost(['title' => 'Artikel Draft '.uniqid(), 'status' => BlogPost::STATUS_DRAFT]);
+
+        \App\Models\HomepageSection::create([
+            'type' => 'blog_posts',
+            'title' => 'Blog Section',
+            'config' => ['heading' => 'Cerita Terbaru', 'limit' => 3],
+            'sort_order' => 97,
+            'is_active' => true,
+        ]);
+
+        $html = $this->get('/')->getContent();
+
+        $this->assertStringContainsString('Cerita Terbaru', $html);
+        $this->assertStringContainsString($visible->title, $html);
+        $this->assertNotFalse(strpos($html, 'Semua Artikel'));
+    }
 }
+
+namespace Tests\Feature;
+
+// BlogPosts homepage section test appended in separate class file below.

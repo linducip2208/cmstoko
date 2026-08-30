@@ -25,7 +25,7 @@ class ShopController extends Controller
         $category = null;
         $brand = null;
 
-        $products = Product::active()
+        $products = app(\App\Contracts\SearchEngine::class)->products((string) $request->q)
             ->with(['category', 'brand', 'variants'])
             ->when($request->filled('category'), function ($q) use ($request, &$category) {
                 $category = Category::active()->where('slug', $request->category)->first();

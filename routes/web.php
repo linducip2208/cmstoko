@@ -28,6 +28,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', HomeController::class)->name('home');
 
+Route::get('/pencarian/saran', \App\Http\Controllers\Api\SearchSuggestController::class)
+    ->middleware('throttle:30,1')
+    ->name('search.suggest');
+
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 
 Route::get('/robots.txt', \App\Http\Controllers\RobotsController::class)->name('robots');

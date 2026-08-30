@@ -195,13 +195,43 @@ $whatsapp = Settings::get('store.whatsapp');
         </div>
 
         <!-- Search bar (expandable) -->
-        <div x-cloak x-show="searchOpen" x-transition.ease-out.duration.200ms>
+        <div x-cloak x-show="searchOpen" x-transition.ease-out.duration.200ms x-data="{ q: '', results: null, loading: false }"
+             x-effect="if (searchOpen && q.length >= 2) { loading = true; clearTimeout(window.__searchT); window.__searchT = setTimeout(async () => { try { const res = await fetch('{{ route('search.suggest') }}?q=' + encodeURIComponent(q)); results = await res.json(); } finally { loading = false; } }, 250); } else if (q.length < 2) { results = null; }">
             <div class="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
                 <form action="{{ route('shop') }}" method="GET" role="search" class="flex gap-2">
-                    <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari produk, merek, atau kategori…"
-                           class="input" aria-label="Kata kunci pencarian" autofocus>
+                    <input type="search" name="q" value="{{ request('q') }}" x-model.debounce.250ms="q"
+                           placeholder="Cari produk, merek, atau kategori…"
+                           class="input" aria-label="Kata kunci pencarian" role="combobox" aria-expanded="false" autocomplete="off">
                     <button type="submit" class="btn btn-primary">Cari</button>
                 </form>
+
+                <div x-cloak x-show="results !== null" class="card mt-2 divide-y divide-line overflow-hidden" role="listbox" aria-label="Saran pencarian">
+                    <template x-if="results && results.products.length === 0 && results.categories.length === 0 && results.brands.length === 0">
+                        <p class="px-4 py-3 text-sm text-ink-3">Tidak ada saran. Coba kata kunci lain.</p>
+                    </template>
+
+                    <template x-for="product in (results?.products || [])" :key="product.url">
+                        <a :href="product.url" wire:navigate class="flex items-center gap-3 px-4 py-2.5 hover:bg-surface-2" role="option">
+                            <img :src="product.cover" alt="" class="h-10 w-8 rounded object-cover" loading="lazy">
+                            <span class="min-w-0 flex-1">
+                                <span class="block truncate text-sm font-medium text-ink" x-text="product.name"></span>
+                                <span class="text-xs text-ink-3" x-text="'Rp ' + product.price.toLocaleString('id-ID')"></span>
+                            </span>
+                        </a>
+                    </template>
+
+                    <template x-for="category in (results?.categories || [])" :key="category.url">
+                        <a :href="category.url" wire:navigate class="block px-4 py-2 text-sm text-ink-2 hover:bg-surface-2" role="option">
+                            <span class="overline mr-2">Kategori</span><span x-text="category.name"></span>
+                        </a>
+                    </template>
+
+                    <template x-for="brand in (results?.brands || [])" :key="brand.url">
+                        <a :href="brand.url" wire:navigate class="block px-4 py-2 text-sm text-ink-2 hover:bg-surface-2" role="option">
+                            <span class="overline mr-2">Merek</span><span x-text="brand.name"></span>
+                        </a>
+                    </template>
+                </div>
             </div>
         </div>
     </header>

@@ -23,7 +23,27 @@ class SectionResolver
             'categories' => $this->categories($section),
             'faqs' => $this->faqs($section),
             'testimonials' => $this->testimonials($section),
+            'posts' => $this->posts($section),
         ];
+    }
+
+    protected function posts(HomepageSection $section): SupportCollection
+    {
+        if ($section->type !== 'blog_posts') {
+            return collect();
+        }
+
+        $limit = (int) $section->config('limit', 3);
+
+        $query = \App\Models\BlogPost::published()
+            ->with(['category:id,name,slug'])
+            ->select(['id', 'title', 'slug', 'excerpt', 'cover', 'blog_category_id', 'published_at', 'created_at']);
+
+        if ($slug = $section->config('category_slug')) {
+            $query->whereHas('category', fn ($q) => $q->where('slug', $slug));
+        }
+
+        return $query->latest('published_at')->limit($limit)->get();
     }
 
     protected function products(HomepageSection $section): SupportCollection

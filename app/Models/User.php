@@ -18,7 +18,7 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'phone', 'password', 'role_id'];
+    protected $fillable = ['name', 'email', 'phone', 'password', 'role_id', 'customer_group_id'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -38,6 +38,11 @@ class User extends Authenticatable implements FilamentUser
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function customerGroup(): BelongsTo
+    {
+        return $this->belongsTo(CustomerGroup::class);
     }
 
     public function addresses(): HasMany

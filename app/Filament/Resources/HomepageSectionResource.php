@@ -218,6 +218,15 @@ class HomepageSectionResource extends Resource
                         TextInput::make('config.limit')->label('Jumlah Testimoni')->numeric()->default(6)->minValue(1)->maxValue(12),
                         TextInput::make('config.padding')->label('Padding')->default('normal')->maxLength(10)->hidden(),
                     ],
+                    'blog_posts' => [
+                        TextInput::make('config.overline')->label('Eyebrow')->maxLength(40)->default('Blog'),
+                        TextInput::make('config.heading')->label('Judul Section')->maxLength(80),
+                        Select::make('config.category_slug')->label('Kategori (opsional)')
+                            ->options(fn () => \App\Models\BlogCategory::orderBy('name')->pluck('name', 'slug'))
+                            ->native(false)->searchable(),
+                        TextInput::make('config.limit')->label('Jumlah Artikel')->numeric()->default(3)->minValue(1)->maxValue(6),
+                        TextInput::make('config.padding')->label('Padding')->default('normal')->maxLength(10)->hidden(),
+                    ],
                     default => [],
                 })
                 ->columns(2)

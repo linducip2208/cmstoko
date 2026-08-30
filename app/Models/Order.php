@@ -85,13 +85,14 @@ class Order extends Model
     protected $fillable = [
         'order_number', 'user_id', 'customer_name', 'customer_email', 'customer_phone',
         'province_id', 'city_id', 'province_name', 'city_name', 'address', 'postal_code',
-        'notes', 'subtotal', 'discount', 'shipping_cost', 'total', 'coupon_code', 'weight',
-        'shipping_courier', 'shipping_service', 'shipping_etd', 'status',
+        'notes', 'subtotal', 'discount', 'rule_discount', 'applied_rules', 'shipping_cost', 'total',
+        'coupon_code', 'weight', 'shipping_courier', 'shipping_service', 'shipping_etd', 'status',
         'payment_method', 'payment_type', 'transaction_id', 'paid_at',
     ];
 
     protected $casts = [
         'paid_at' => 'datetime',
+        'applied_rules' => 'array',
     ];
 
     protected $attributes = [
