@@ -51,6 +51,7 @@ $whatsapp = Settings::get('store.whatsapp');
             @endforeach
         }
     </style>
+    @include('partials.analytics-head')
     @livewireStyles
     @stack('styles')
     <script>document.documentElement.classList.add('js');</script>

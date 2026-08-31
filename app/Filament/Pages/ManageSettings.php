@@ -74,6 +74,12 @@ class ManageSettings extends Page implements HasSchemas
                 'home_description' => Settings::get('seo.home_description'),
                 'og_image' => Settings::get('seo.og_image'),
             ],
+            'analytics' => [
+                'ga4_id' => Settings::get('analytics.ga4_id'),
+                'gtm_id' => Settings::get('analytics.gtm_id'),
+                'meta_pixel_id' => Settings::get('analytics.meta_pixel_id'),
+                'tiktok_pixel_id' => Settings::get('analytics.tiktok_pixel_id'),
+            ],
             'policy' => [
                 'return_days' => Settings::get('policy.return_days', 7),
                 'free_shipping_min' => Settings::get('policy.free_shipping_min'),
@@ -175,6 +181,24 @@ class ManageSettings extends Page implements HasSchemas
                                         FileUpload::make('seo.og_image')->label('Gambar OG Default')->image()->directory('branding')->maxSize(2048)->columnSpanFull(),
                                     ])
                                     ->columns(1),
+                            ]),
+                        Tab::make('Analytics')
+                            ->schema([
+                                Section::make('Pelacak (opsional)')
+                                    ->description('ID dari dashboard masing-masing layanan. Kosong = script tidak dimuat. Script hanya dirender di storefront, tidak pernah di admin.')
+                                    ->schema([
+                                        TextInput::make('analytics.ga4_id')->label('Google Analytics 4 ID')
+                                            ->placeholder('G-XXXXXXXXXX')->maxLength(30)
+                                            ->regex('/^G-[A-Z0-9]+$/i'),
+                                        TextInput::make('analytics.gtm_id')->label('Google Tag Manager ID')
+                                            ->placeholder('GTM-XXXXXXX')->maxLength(30)
+                                            ->regex('/^GTM-[A-Z0-9]+$/i'),
+                                        TextInput::make('analytics.meta_pixel_id')->label('Meta (Facebook) Pixel ID')
+                                            ->numeric()->minValue(0),
+                                        TextInput::make('analytics.tiktok_pixel_id')->label('TikTok Pixel ID')
+                                            ->maxLength(40),
+                                    ])
+                                    ->columns(2),
                             ]),
                         Tab::make('Kebijakan')
                             ->schema([
