@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\SearchEngine;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Product;
+use App\Support\Seo;
 use App\Support\Settings;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class ShopController extends Controller
         $category = null;
         $brand = null;
 
-        $products = app(\App\Contracts\SearchEngine::class)->products((string) $request->q)
+        $products = app(SearchEngine::class)->products((string) $request->q)
             ->with(['category', 'brand', 'variants'])
             ->when($request->filled('category'), function ($q) use ($request, &$category) {
                 $category = Category::active()->where('slug', $request->category)->first();
@@ -102,9 +103,9 @@ class ShopController extends Controller
             ->contains(fn (string $param) => $request->filled($param));
 
         $seo = match (true) {
-            $category !== null => \App\Support\Seo::forCategory($category),
-            $brand !== null => \App\Support\Seo::forBrand($brand),
-            default => \App\Support\Seo::meta(
+            $category !== null => Seo::forCategory($category),
+            $brand !== null => Seo::forBrand($brand),
+            default => Seo::meta(
                 title: 'Katalog',
                 description: $request->filled('q')
                     ? 'Hasil pencarian "'.strip_tags((string) $request->q).'"'

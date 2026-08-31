@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Livewire\CheckoutPage;
+use App\Models\Category;
 use App\Models\FlashSale;
+use App\Models\Order;
 use App\Models\Product;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,7 +28,7 @@ class FlashSaleTest extends TestCase
     protected function product(int $price = 200000, ?int $salePrice = null): Product
     {
         return Product::create([
-            'category_id' => \App\Models\Category::create(['name' => 'Flash '.uniqid()])->id,
+            'category_id' => Category::create(['name' => 'Flash '.uniqid()])->id,
             'name' => 'Flash Product '.uniqid(),
             'price' => $price,
             'sale_price' => $salePrice,
@@ -120,7 +122,7 @@ class FlashSaleTest extends TestCase
             'service' => '',
         ])->call('placeOrder')->assertHasNoErrors();
 
-        $order = \App\Models\Order::first();
+        $order = Order::first();
 
         // 2 × flash 80000 — server recomputed at checkout time, not cart time.
         $this->assertSame(160000, $order->subtotal);

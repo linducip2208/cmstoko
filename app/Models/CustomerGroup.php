@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class CustomerGroup extends Model
 {
@@ -25,7 +26,7 @@ class CustomerGroup extends Model
     {
         static::creating(function (CustomerGroup $group) {
             if (blank($group->slug)) {
-                $group->slug = \Illuminate\Support\Str::slug($group->name);
+                $group->slug = Str::slug($group->name);
             }
         });
     }

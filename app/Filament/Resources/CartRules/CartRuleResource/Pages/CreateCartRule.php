@@ -9,4 +9,3 @@ class CreateCartRule extends CreateRecord
 {
     protected static string $resource = CartRuleResource::class;
 }
-

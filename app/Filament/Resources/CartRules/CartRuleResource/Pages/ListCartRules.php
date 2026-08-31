@@ -9,4 +9,3 @@ class ListCartRules extends ListRecords
 {
     protected static string $resource = CartRuleResource::class;
 }
-

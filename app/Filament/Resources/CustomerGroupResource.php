@@ -13,6 +13,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class CustomerGroupResource extends Resource
@@ -36,7 +37,7 @@ class CustomerGroupResource extends Resource
                 ->description('Grup dipakai untuk targeting aturan promosi. Grup Guest tidak dipakai sebagai grup pengguna — mewakili checkout tanpa akun.')
                 ->schema([
                     TextInput::make('name')->label('Nama')->required()->maxLength(80)->live(onBlur: true)
-                        ->afterStateUpdated(fn ($state, $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                        ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
                     TextInput::make('slug')->required()->maxLength(100)->unique(ignoreRecord: true),
                     TextInput::make('description')->label('Deskripsi')->maxLength(300)->columnSpanFull(),
                     Toggle::make('is_active')->label('Aktif')->default(true),

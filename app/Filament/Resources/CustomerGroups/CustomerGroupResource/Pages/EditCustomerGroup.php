@@ -9,4 +9,3 @@ class EditCustomerGroup extends EditRecord
 {
     protected static string $resource = CustomerGroupResource::class;
 }
-

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class TaxClass extends Model
 {
@@ -19,7 +20,7 @@ class TaxClass extends Model
     {
         static::creating(function (TaxClass $class) {
             if (blank($class->slug)) {
-                $class->slug = \Illuminate\Support\Str::slug($class->name);
+                $class->slug = Str::slug($class->name);
             }
         });
 

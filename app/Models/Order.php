@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\OrderStatusChanged;
 use App\Services\InventoryService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -221,7 +222,11 @@ class Order extends Model
     /**
      * Guarded status transition with history recording.
      *
-     * @throws InvalidArgumentException on invalid transition
+     * Concurrency-safe: the status flip is a compare-and-swap update
+     * (`where status = $from`), so two racing transitions cannot both
+     * succeed — the loser re-reads the current status and fails loudly.
+     *
+     * @throws InvalidArgumentException on invalid transition or lost race
      */
     public function transitionTo(string $to, ?string $note = null, ?int $userId = null, bool $force = false): static
     {
@@ -229,18 +234,33 @@ class Order extends Model
             throw new InvalidArgumentException("Unknown order status [{$to}].");
         }
 
+        $from = $this->status;
+
         if (! $force && ! $this->canTransitionTo($to)) {
             throw new InvalidArgumentException(
-                "Transisi status tidak valid dari [{$this->status}] ke [{$to}]."
+                "Transisi status tidak valid dari [{$from}] ke [{$to}]."
             );
         }
 
-        $from = $this->status;
+        // Atomic compare-and-swap: only the process that sees $from wins.
+        $affected = static::query()
+            ->whereKey($this->id)
+            ->where('status', $from)
+            ->update([
+                'status' => $to,
+                'paid_at' => $to === self::STATUS_PAID ? ($this->paid_at ?? now()) : $this->paid_at,
+                'updated_at' => now(),
+            ]);
 
-        $this->forceFill([
-            'status' => $to,
-            'paid_at' => $to === self::STATUS_PAID ? ($this->paid_at ?? now()) : $this->paid_at,
-        ])->save();
+        if ($affected === 0) {
+            // Lost the race: another transition already changed the status.
+            throw new InvalidArgumentException(
+                "Status pesanan sudah berubah oleh proses lain [{$this->fresh()->status}] — transisi ke [{$to}] gagal."
+            );
+        }
+
+        $this->status = $to;
+        $this->paid_at = $to === self::STATUS_PAID ? ($this->paid_at ?? now()) : $this->paid_at;
 
         if ($to === self::STATUS_CANCELLED) {
             $this->restock();
@@ -253,7 +273,7 @@ class Order extends Model
             'user_id' => $userId,
         ]);
 
-        \App\Events\OrderStatusChanged::dispatch($this, $from, $to);
+        OrderStatusChanged::dispatch($this, $from, $to);
 
         return $this;
     }

@@ -9,4 +9,3 @@ class ListTestimonials extends ListRecords
 {
     protected static string $resource = TestimonialResource::class;
 }
-

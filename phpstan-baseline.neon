@@ -1,0 +1,3625 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method App\\Services\\ShippingService\:\:hasApi\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Console/Commands/SyncOngkir.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\City\:\:count\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Console/Commands/SyncOngkir.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Province\:\:count\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Console/Commands/SyncOngkir.php
+
+		-
+			message: '#^Access to an undefined property App\\Filament\\Pages\\ManageSettings\:\:\$form\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Filament/Pages/ManageSettings.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Filament/Pages/ManageSettings.php
+
+		-
+			message: '#^Access to an undefined property App\\Filament\\Pages\\ManageTheme\:\:\$form\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Filament/Pages/ManageTheme.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Filament/Pages/ManageTheme.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$discount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$order_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$shipping_cost\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$subtotal\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Filament/Pages/SalesReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\AuditLog\:\:\$subject_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/AuditLogResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogPost\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/BlogPostResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Filament/Resources/BlogPostResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogCategory\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/BlogPostResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogPost\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/BlogPostResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\User\:\:whereNotNull\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/BlogPostResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CartRule\:\:\$action_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/CartRuleResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CartRule\:\:\$usage_limit\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/CartRuleResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/CartRuleResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/CartRuleResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CustomerGroup\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/CartRuleResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/CartRuleResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 3
+			path: app/Filament/Resources/CartRuleResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:products\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Filament/Resources/Collections/CollectionResource/Pages/CreateCollection.php
+
+		-
+			message: '#^Cannot access property \$type on Illuminate\\Database\\Eloquent\\Model\|int\|string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/Collections/CollectionResource/Pages/EditCollection.php
+
+		-
+			message: '#^Cannot call method products\(\) on Illuminate\\Database\\Eloquent\\Model\|int\|string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/Collections/CollectionResource/Pages/EditCollection.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/CustomerGroupResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/FaqResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\FlashSale\:\:\$starts_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/FlashSaleResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/FlashSaleResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\HomepageSection\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Homepage/HomepageSectionResource/Pages/EditHomepageSection.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\HomepageSection\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Homepage/HomepageSectionResource/Pages/EditHomepageSection.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogCategory\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/HomepageSectionResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/HomepageSectionResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Collection\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/HomepageSectionResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/HomepageSectionResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Group\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/HomepageSectionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Media\:\:\$height\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/MediaResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Media\:\:\$width\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/MediaResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 2
+			path: app/Filament/Resources/MediaResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Filament/Resources/Medias/MediaResource/Pages/CreateMedia.php
+
+		-
+			message: '#^Parameter \#1 \$media of method App\\Services\\MediaService\:\:delete\(\) expects App\\Models\\Media, array\<string, mixed\>\|Illuminate\\Database\\Eloquent\\Model\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/Medias/MediaResource/Pages/EditMedia.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/MenuResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/MenuResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CmsPage\:\:published\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/MenuResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 2
+			path: app/Filament/Resources/MenuResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\NewsletterSubscriber\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/NewsletterSubscriberResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\NewsletterSubscriber\:\:\$source\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/NewsletterSubscriberResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\NewsletterSubscriber\:\:\$subscribed_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/NewsletterSubscriberResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\NewsletterSubscriber\:\:\$unsubscribed_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/NewsletterSubscriberResource.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\LazyCollection\<int,stdClass\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Filament/Resources/NewsletterSubscriberResource.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\LazyCollection\<int,stdClass\>\:\:map\(\) expects callable\(stdClass, int\)\: array\{mixed, ''Aktif''\|''Berhenti'', mixed, mixed, mixed\}, Closure\(App\\Models\\NewsletterSubscriber\)\: array\{mixed, ''Aktif''\|''Berhenti'', mixed, mixed, mixed\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/NewsletterSubscriberResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$shipping_etd\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$shipping_service\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Shipment\:\:\$service\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Shipment\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/OrderResource.php
+
+		-
+			message: '#^Access to constant Large on an unknown class Filament\\Infolists\\Components\\TextEntry\\TextEntrySize\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/OrderResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Filament/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$shipping_courier\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Orders/OrderResource/Pages/ViewOrder.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$shipping_service\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Orders/OrderResource/Pages/ViewOrder.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Orders/OrderResource/Pages/ViewOrder.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Filament/Resources/Orders/OrderResource/Pages/ViewOrder.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$quantity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Orders/OrderResource/Pages/ViewOrder.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\:\:hasPermission\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: app/Filament/Resources/Orders/OrderResource/Pages/ViewOrder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\TaxClass\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$sku\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$attributeValues\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$weight\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:isConfigurable\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:variants\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Attribute\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\AttributeOption\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Parameter \#1 \$product of method App\\Filament\\Resources\\Products\\ProductResource\\RelationManagers\\VariantsRelationManager\:\:variantSku\(\) expects App\\Models\\Product, Illuminate\\Database\\Eloquent\\Model\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/Products/ProductResource/RelationManagers/VariantsRelationManager.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ReturnRequest\:\:\$return_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/ReturnRequestResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ReturnRequest\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Filament/Resources/ReturnRequestResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$orderItem\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Filament/Resources/ReturnRequestResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$quantity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/ReturnRequestResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Support\\HigherOrderTapProxy\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Filament/Resources/ReturnRequestResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Role\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/RoleResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$note\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$quantity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$stock_after\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$stock_before\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockMovement\:\:\$variant\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\LazyCollection\<int,stdClass\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\LazyCollection\<int,stdClass\>\:\:map\(\) expects callable\(stdClass, int\)\: array\{mixed, mixed, mixed, mixed, mixed, mixed, mixed, mixed, mixed\}, Closure\(App\\Models\\StockMovement\)\: array\{mixed, mixed, mixed, mixed, mixed, mixed, mixed, mixed, mixed\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/StockMovements/StockMovementResource/Pages/ListStockMovements.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/StockTransferResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ProductVariant\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/StockTransferResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Warehouse\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Filament/Resources/StockTransferResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/StockTransferResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockTransfer\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Filament/Resources/StockTransfers/StockTransferResource/Pages/ViewStockTransfer.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: app/Filament/Resources/StockTransfers/StockTransferResource/Pages/ViewStockTransfer.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/TaxClassResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$city_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/TaxRateResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$province_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/TaxRateResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\City\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/TaxRateResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Province\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/TaxRateResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\TaxClass\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/TaxRateResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 3
+			path: app/Filament/Resources/TaxRateResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/TestimonialResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CustomerGroup\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Role\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Role\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Filament\\Forms\\Components\\Section\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Filament/Resources/WarehouseResource.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Widgets/OrdersChart.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:status\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Widgets/SalesStats.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Filament/Widgets/SalesStats.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/Widgets/SalesStats.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CustomerAddress\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountAddressController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CustomerAddress\:\:\$is_default\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/Account/AccountAddressController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CustomerAddress\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountAddressController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\:\:addresses\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: app/Http/Controllers/Account/AccountAddressController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Contracts\\Auth\\Authenticatable\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 7
+			path: app/Http/Controllers/Account/AccountController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Controllers/Account/AccountController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: app/Http/Controllers/Account/AccountController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ReturnRequest\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Review\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Wishlist\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountOrderController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountOrderController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\:\:reviews\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountOrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/Account/AccountOrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Review\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountOrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Review\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/AccountOrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/ReturnController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ReturnItem\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/ReturnController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ReturnItem\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/ReturnController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ReturnRequest\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/ReturnController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Wishlist\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Account/WishlistController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Wishlist\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Account/WishlistController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/WishlistController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Wishlist\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Account/WishlistController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Wishlist\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/Account/WishlistController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CustomerAddress\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Api/AccountController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\User\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Api/AuthController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Api/BrandController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Api/CategoryController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Collection\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Api/CollectionController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Api/OrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/Api/OrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/Api/ProductController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Api/WishlistController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Wishlist\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Api/WishlistController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Wishlist\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/Api/WishlistController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Authenticatable\:\:isStaff\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/Auth/LoginController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Guard\:\:logout\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/Auth/LoginController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$password\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Auth/NewPasswordController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CustomerGroup\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Auth/RegisterController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Role\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Auth/RegisterController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\User\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/Auth/RegisterController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$kategori\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$q\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$tag\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogCategory\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogCategory\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogPost\:\:published\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogTag\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogTag\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\BlogController\:\:index\(\) should return Illuminate\\View\\View but returns Illuminate\\Contracts\\View\\View\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\BlogController\:\:show\(\) should return Illuminate\\View\\View but returns Illuminate\\Contracts\\View\\View\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Http/Controllers/BlogController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CmsPage\:\:published\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/CmsPageController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\HomepageSection\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\NewsletterSubscriber\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/NewsletterController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\NewsletterSubscriber\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/NewsletterController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$order_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/OrderController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/OrderController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:check\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/OrderController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/OrderController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/OrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/OrderController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/ProductController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Review\:\:approved\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/ProductController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$brand\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$category\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$max\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$min\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$q\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$sort\.$#'
+			identifier: property.notFound
+			count: 5
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Http\\Request\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Product\>\:\:search\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Controllers/ShopController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogPost\:\:published\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/SitemapController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/SitemapController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/SitemapController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CmsPage\:\:published\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/SitemapController.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Http/Controllers/SitemapController.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$address\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$city_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$city_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$is_default\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$label\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$phone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$postal_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$province_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\AddressResource\:\:\$province_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/AddressResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\BrandResource\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/BrandResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\BrandResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/BrandResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\BrandResource\:\:\$logo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/BrandResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\BrandResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/BrandResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\BrandResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/BrandResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CategoryResource\:\:\$activeChildren\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CategoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CategoryResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CategoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CategoryResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CategoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CategoryResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CategoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CollectionResource\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CollectionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CollectionResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CollectionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CollectionResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CollectionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CollectionResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CollectionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$address\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$city_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$customer_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$customer_phone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$discount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$histories\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$items\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$order_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$paid_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$payment_method\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$postal_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$province_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$shipments\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$shipping_cost\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$subtotal\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\OrderResource\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\OrderResource\:\:statusLabel\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/OrderResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$brand\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$category\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$price\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$short_description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$sku\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$variants\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$weight\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:coverImage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:discountPercent\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:effectivePrice\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:hasDiscount\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:inStock\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:isConfigurable\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProfileResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProfileResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProfileResource\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProfileResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProfileResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProfileResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProfileResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProfileResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProfileResource\:\:\$phone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProfileResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\WishlistResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/WishlistResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\WishlistResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/WishlistResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\WishlistResource\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/WishlistResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Livewire\\AddToCart\:\:\$variant\.$#'
+			identifier: property.notFound
+			count: 6
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$price\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$variants\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$attributeValues\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/AddToCart.php
+
+		-
+			message: '#^Property App\\Livewire\\CartBadge\:\:\$count \(int\) on left side of \?\?\= is not nullable\.$#'
+			identifier: nullCoalesce.property
+			count: 1
+			path: app/Livewire/CartBadge.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/CartDrawer.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/CartPage.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:layout\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Livewire/CartPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$attributeValues\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Support\\Optional\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:check\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:layout\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Coupon\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ProductVariant\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Offset ''rule_ids'' does not exist on array\{discount\: int, free_shipping\: bool, rules\: array\<int, array\{name\: string, discount\: int, free_shipping\: bool\}\>\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: app/Livewire/CheckoutPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/TrackOrder.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Livewire/TrackOrder.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:check\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Livewire/TrackOrder.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Livewire/TrackOrder.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Livewire/TrackOrder.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:layout\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Livewire/TrackOrder.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Attribute\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Attribute.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Attribute\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Attribute.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Attribute\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Attribute.php
+
+		-
+			message: '#^Method App\\Models\\Attribute\:\:options\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Attribute.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\AuditLog\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/AuditLog.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\AuditLog\:\:\$subject_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/AuditLog.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogCategory\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogCategory.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogCategory\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogCategory.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogPost\:\:\$blog_category_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/BlogPost.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogPost\:\:\$content\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogPost.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogPost\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogPost.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogPost\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogPost.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogPost\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogPost.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogPost\:\:published\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/BlogPost.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogPost\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/BlogPost.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogTag\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogTag.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\BlogTag\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/BlogTag.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Brand.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Brand.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Brand.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CartRule\:\:\$customerGroup\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CartRule\:\:\$customer_group_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$brand_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$category_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$customer_group_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(App\\Models\\CartRule\)\>\:\:active\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:find\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CustomerGroup\:\:find\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/CartRule.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$children\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Method App\\Models\\Category\:\:activeChildren\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Method App\\Models\\Category\:\:activeProducts\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\Product\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Method App\\Models\\Category\:\:children\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Method App\\Models\\Category\:\:scopeRoot\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Category.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CmsPage\:\:\$content\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CmsPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CmsPage\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CmsPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CmsPage\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CmsPage.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CmsPage\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/CmsPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Collection\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Collection.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Collection\:\:\$rules\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/Collection.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Collection\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Collection.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Collection\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Collection.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Collection\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Collection.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Models/Collection.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$expires_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$max_uses\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$min_purchase\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$starts_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$used_count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Coupon\:\:\$value\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/Coupon.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CustomerGroup\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CustomerGroup.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CustomerGroup\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/CustomerGroup.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\FlashSale\:\:\$ends_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/FlashSale.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\FlashSale\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/FlashSale.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\FlashSale\:\:\$products\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/FlashSale.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\FlashSale\:\:\$starts_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/FlashSale.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(App\\Models\\FlashSale\)\>\:\:activeNow\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Models/FlashSale.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\HomepageSection\:\:\$config\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/HomepageSection.php
+
+		-
+			message: '#^Method App\\Models\\HomepageSection\:\:scopeActive\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/HomepageSection.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Invoice\:\:\$invoice_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Invoice.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Invoice\:\:\$issued_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Invoice.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Invoice\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Invoice.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Media\:\:\$disk\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Media.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Media\:\:\$path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Media.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Filesystem\\Filesystem\:\:url\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Models/Media.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\MenuItem\:\:\$label\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/Menu.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\MenuItem\:\:\$open_in_new\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/Menu.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:with\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Models/Menu.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,array\<string, mixed\>\>\:\:filter\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Models/Menu.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 2
+			path: app/Models/Menu.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:map\(\) expects callable\(stdClass, int\)\: array\{label\: mixed, url\: string\|null, open_in_new\: mixed, children\: array\<int, array\{label\: mixed, url\: string\|null, open_in_new\: mixed\}\>\}, Closure\(App\\Models\\MenuItem\)\: array\{label\: mixed, url\: string\|null, open_in_new\: mixed, children\: array\<int, array\{label\: mixed, url\: string\|null, open_in_new\: mixed\}\>\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Models/Menu.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:map\(\) expects callable\(stdClass, int\)\: array\{label\: mixed, url\: string\|null, open_in_new\: mixed\}, Closure\(App\\Models\\MenuItem\)\: array\{label\: mixed, url\: string\|null, open_in_new\: mixed\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Models/Menu.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\MenuItem\:\:\$target_id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Models/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\MenuItem\:\:\$target_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\MenuItem\:\:\$url\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/MenuItem.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:find\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/MenuItem.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:find\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/MenuItem.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CmsPage\:\:find\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/MenuItem.php
+
+		-
+			message: '#^Method App\\Models\\MenuItem\:\:children\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/MenuItem.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\NewsletterSubscriber\:\:\$subscribed_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/NewsletterSubscriber.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\NewsletterSubscriber\:\:\$token\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/NewsletterSubscriber.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$order_number\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$paid_at\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 9
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Shipment\:\:\$items\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Order.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Order.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:flatMap\(\) expects callable\(Illuminate\\Database\\Eloquent\\Model, int\)\: \(array\<mixed\>\|Illuminate\\Support\\Collection\<int\|string, mixed\>\), Closure\(App\\Models\\Shipment\)\: mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Models/Order.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\OrderNote\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/OrderNote.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\OrderStatusHistory\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/OrderStatusHistory.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\PaymentTransaction\:\:firstOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/PaymentTransaction.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$price\.$#'
+			identifier: property.notFound
+			count: 7
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$sale_price\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$variants\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Method App\\Models\\Product\:\:activeVariants\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Method App\\Models\\Product\:\:approvedReviews\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Method App\\Models\\Product\:\:variants\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/ProductVariant.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$attributeValues\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/ProductVariant.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Models/ProductVariant.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariantAttributeValue\:\:\$option\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/ProductVariant.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Attribute\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/ProductVariant.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Refund\:\:\$refund_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Refund.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Refund\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Refund.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ReturnRequest\:\:\$return_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/ReturnRequest.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ReturnRequest\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/ReturnRequest.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Role\:\:\$permissions\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Role.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\SeoRedirect\:\:\$destination\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/SeoRedirect.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\SeoRedirect\:\:\$source\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/SeoRedirect.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\SeoRedirect\:\:\$status_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/SeoRedirect.php
+
+		-
+			message: '#^Offset 2 does not exist on array\{string, int\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: app/Models/SeoRedirect.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,static\(App\\Models\\SeoRedirect\)\>\:\:mapWithKeys\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Models/SeoRedirect.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Shipment\:\:\$shipment_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Shipment.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Shipment\:\:\$shipped_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Shipment.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Shipment\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Shipment.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockTransfer\:\:\$transfer_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/StockTransfer.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\StockTransfer\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/StockTransfer.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxClass\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxClass.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxClass\:\:\$is_default\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxClass.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxClass\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxClass.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxClass\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxClass.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$applies_to_shipping\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$city_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$priority\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$province_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$rate_bp\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$tax_class_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\TaxRate\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<static\(App\\Models\\TaxRate\)\>\:\:active\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Method App\\Models\\TaxRate\:\:scopeActive\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/TaxRate.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Testimonial\:\:\$rating\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Testimonial.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:defaultAddress\(\) should return App\\Models\\CustomerAddress\|null but returns Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Warehouse\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Warehouse.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Warehouse\:\:\$is_default\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Warehouse.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$order_number\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$payment_method\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$courier\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$service\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$tracking_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 5
+			path: app/Notifications/OrderStatusMail.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Role\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Observers/RoleObserver.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Role\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Observers/RoleObserver.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Role\:\:\$is_system\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Policies/RolePolicy.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Role\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Policies/RolePolicy.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$weight\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/CartService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Coupon\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Services/CartService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/CartService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\InventoryLevel\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\InventoryLevel\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$order_number\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ProductVariant\:\:\$sku\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\|App\\Models\\ProductVariant\:\:\$stock\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\StockTransfer\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Anonymous function has an unused use \$userId\.$#'
+			identifier: closure.unusedUse
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\InventoryLevel\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ProductVariant\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ProductVariant\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\StockMovement\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\StockMovement\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\StockTransfer\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Warehouse\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Cannot call method update\(\) on stdClass\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Services/InventoryService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Media\:\:\$disk\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/MediaService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Media\:\:\$file_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/MediaService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Media\:\:\$path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/MediaService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Media\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/MediaService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\OrderItem\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ShipmentItem\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Method App\\Services\\OrderFulfillmentService\:\:createInvoice\(\) should return App\\Models\\Invoice but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Offset ''quantity'' on array\{order_item_id\: int, quantity\: int\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: app/Services/OrderFulfillmentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$coupon_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$customer_phone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$discount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$items\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$order_number\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$shipping_cost\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Order\:\:whereKey\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\PaymentTransaction\:\:firstOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\PaymentTransaction\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Call to method getMessage\(\) on an unknown class App\\Services\\InvalidArgumentException\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Caught class App\\Services\\InvalidArgumentException not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: app/Services/PaymentService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Order\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/Payments/ManualTransferGateway.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\City\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/ShippingService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\City\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/ShippingService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Province\:\:count\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/ShippingService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Province\:\:orderBy\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/ShippingService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Province\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/ShippingService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\HomepageSection\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Shop/SectionResolver.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\BlogPost\:\:published\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Shop/SectionResolver.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Shop/SectionResolver.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Collection\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Shop/SectionResolver.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Faq\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Shop/SectionResolver.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Shop/SectionResolver.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Testimonial\:\:active\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Shop/SectionResolver.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Support/Audit.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\AuditLog\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Support/Audit.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type Illuminate\\Http\\Request\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: app/Support/Audit.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$cover\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$seo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Brand\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$cover_image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$seo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$short_description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Category\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CmsPage\:\:\$content\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CmsPage\:\:\$seo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CmsPage\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\CmsPage\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Collection\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Collection\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Collection\:\:\$seo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$brand\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$seo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$short_description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$sku\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Support/Seo.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Product\:\:\$weight\.$#'
+			identifier: property.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Attribute\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\AttributeOption\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\AttributeOption\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:pluck\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Brand\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Category\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Collection\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Collection\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Coupon\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Product\:\:whereIn\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ProductVariantAttributeValue\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Parameter \#1 \$string of function str_pad expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: database/seeders/CatalogSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CmsPage\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: database/seeders/CmsSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\User\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CmsSeeder.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:whereHas\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: database/seeders/CustomerGroupSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CustomerGroup\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CustomerGroupSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\CustomerGroup\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/CustomerGroupSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Role\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: database/seeders/DatabaseSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\User\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: database/seeders/DatabaseSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\HomepageSection\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 6
+			path: database/seeders/HomepageSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Permission\:\:pluck\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/RbacSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Permission\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/RbacSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Role\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/RbacSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Role\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/RbacSeeder.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\Warehouse\:\:updateOrCreate\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: database/seeders/SettingsSeeder.php
+
+		-
+			message: '#^Undefined variable\: \$this$#'
+			identifier: variable.undefined
+			count: 1
+			path: routes/console.php

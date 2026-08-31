@@ -6,6 +6,7 @@ use App\Events\OrderPlaced;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Notifications\OrderStatusMail;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -57,7 +58,7 @@ class OrderNotificationTest extends TestCase
 
         OrderPlaced::dispatch($order);
 
-        Notification::assertSentTo($order, \App\Notifications\OrderStatusMail::class, function (\App\Notifications\OrderStatusMail $mail) use ($order) {
+        Notification::assertSentTo($order, OrderStatusMail::class, function (OrderStatusMail $mail) use ($order) {
             $rendered = $mail->toMail($order)->toArray();
 
             return str_contains($rendered['subject'], $order->order_number)
@@ -84,7 +85,7 @@ class OrderNotificationTest extends TestCase
         $order->transitionTo(Order::STATUS_CANCELLED, 'test', null, true);
 
         // paid + shipped + completed + cancelled (processing noise excluded).
-        Notification::assertSentTo($order, \App\Notifications\OrderStatusMail::class, 4);
+        Notification::assertSentTo($order, OrderStatusMail::class, 4);
     }
 
     public function test_guest_order_mail_targets_customer_email(): void
@@ -93,7 +94,7 @@ class OrderNotificationTest extends TestCase
 
         $order->transitionTo(Order::STATUS_PAID);
 
-        Notification::assertSentTo($order, \App\Notifications\OrderStatusMail::class, function (\App\Notifications\OrderStatusMail $mail) use ($order) {
+        Notification::assertSentTo($order, OrderStatusMail::class, function (OrderStatusMail $mail) use ($order) {
             $mailMessage = $mail->toMail($order);
 
             return $mailMessage->subject !== null

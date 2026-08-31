@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Order;
+use App\Support\Settings;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -26,7 +27,7 @@ class OrderStatusMail extends Notification implements ShouldQueue
 
     public function toMail($notifiable): MailMessage
     {
-        $storeName = \App\Support\Settings::get('store.name', config('shop.name', 'TokoKita'));
+        $storeName = Settings::get('store.name', config('shop.name', 'TokoKita'));
 
         $mail = (new MailMessage)
             ->subject("[{$storeName}] {$this->heading} — {$this->order->order_number}")
@@ -40,7 +41,7 @@ class OrderStatusMail extends Notification implements ShouldQueue
         if ($this->order->isPending() && $this->order->payment_method === 'manual_transfer') {
             $mail->line('Silakan transfer tepat sejumlah '.rupiah($this->order->total).' ke:');
 
-            foreach (\App\Support\Settings::get('payments.bank_accounts', config('shop.bank_accounts')) as $account) {
+            foreach (Settings::get('payments.bank_accounts', config('shop.bank_accounts')) as $account) {
                 $mail->line("{$account['bank']} {$account['number']} — a.n. {$account['holder']}");
             }
         }

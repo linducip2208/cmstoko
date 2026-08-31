@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Filament\Pages\ManageSettings;
 use App\Models\AuditLog;
 use App\Models\Category;
 use App\Models\Order;
@@ -10,7 +11,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Services\InventoryService;
 use App\Services\OrderFulfillmentService;
+use App\Support\Audit;
 use App\Support\Csv;
+use App\Support\Settings;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -38,15 +41,15 @@ class AuditAndSettingsTest extends TestCase
 
         $this->actingAs($admin);
 
-        Livewire::test(\App\Filament\Pages\ManageSettings::class)
+        Livewire::test(ManageSettings::class)
             ->fillForm([
                 'store.name' => 'Toko Audit',
                 'store.tagline' => 'Tagline baru.',
             ])
             ->call('save');
 
-        $this->assertSame('Toko Audit', \App\Support\Settings::get('store.name'));
-        $this->assertSame('Tagline baru.', \App\Support\Settings::get('store.tagline'));
+        $this->assertSame('Toko Audit', Settings::get('store.name'));
+        $this->assertSame('Tagline baru.', Settings::get('store.tagline'));
 
         $this->assertDatabaseHas('audit_logs', [
             'action' => 'settings.update',
@@ -119,7 +122,7 @@ class AuditAndSettingsTest extends TestCase
 
     public function test_audit_secrets_are_redacted(): void
     {
-        $redacted = \App\Support\Audit::redact([
+        $redacted = Audit::redact([
             'name' => 'safe',
             'password' => 'hunter2',
             'server_key' => 'sk-xyz',

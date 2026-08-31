@@ -9,4 +9,3 @@ class EditFaq extends EditRecord
 {
     protected static string $resource = FaqResource::class;
 }
-

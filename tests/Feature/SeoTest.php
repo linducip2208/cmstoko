@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CmsPage;
 use App\Models\Product;
+use App\Models\Role;
 use App\Models\SeoRedirect;
 use App\Models\User;
 use Database\Seeders\RbacSeeder;
@@ -171,7 +172,7 @@ class SeoTest extends TestCase
     {
         // Content Editor HAS redirects grant; finance does NOT.
         $finance = User::factory()->create([
-            'role_id' => \App\Models\Role::where('slug', \App\Models\Role::FINANCE)->value('id'),
+            'role_id' => Role::where('slug', Role::FINANCE)->value('id'),
         ]);
 
         $this->actingAs($finance)

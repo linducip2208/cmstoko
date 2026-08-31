@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\Taxes\TaxRateResource\Pages;
+use App\Models\City;
+use App\Models\Province;
 use App\Models\TaxClass;
 use App\Models\TaxRate;
 use BackedEnum;
@@ -58,12 +60,12 @@ class TaxRateResource extends Resource
             Section::make('Zona')
                 ->schema([
                     Select::make('province_id')->label('Provinsi')
-                        ->options(fn () => \App\Models\Province::orderBy('name')->pluck('name', 'id'))
+                        ->options(fn () => Province::orderBy('name')->pluck('name', 'id'))
                         ->searchable()->native(false)
                         ->helperText('Kosong = seluruh Indonesia'),
                     Select::make('city_id')->label('Kota')
                         ->options(fn ($get) => $get('province_id')
-                            ? \App\Models\City::where('province_id', $get('province_id'))->orderBy('name')->pluck('name', 'id')
+                            ? City::where('province_id', $get('province_id'))->orderBy('name')->pluck('name', 'id')
                             : [])
                         ->searchable()->native(false),
                 ])

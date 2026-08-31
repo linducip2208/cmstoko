@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class SeoRedirect extends Model
 {
@@ -25,7 +26,7 @@ class SeoRedirect extends Model
 
     public static function flushLookupCache(): void
     {
-        \Illuminate\Support\Facades\Cache::forget(static::CACHE_KEY);
+        Cache::forget(static::CACHE_KEY);
     }
 
     public const CACHE_KEY = 'seo.redirects';
@@ -37,7 +38,7 @@ class SeoRedirect extends Model
      */
     public static function lookupTable(): array
     {
-        return \Illuminate\Support\Facades\Cache::rememberForever(static::CACHE_KEY, function () {
+        return Cache::rememberForever(static::CACHE_KEY, function () {
             try {
                 return static::query()
                     ->where('is_active', true)

@@ -8,6 +8,7 @@ use App\Models\Product;
 use BackedEnum;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -16,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class FlashSaleResource extends Resource
@@ -39,7 +41,7 @@ class FlashSaleResource extends Resource
                 ->description('Harga flash sale bersifat server-authoritative: berlaku saat jendela aktif dan otomatis kembali setelah berakhir. Harga final = harga termurah antara flash price dan sale price produk.')
                 ->schema([
                     TextInput::make('name')->label('Nama')->required()->maxLength(120)->live(onBlur: true)
-                        ->afterStateUpdated(fn ($state, $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                        ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
                     TextInput::make('slug')->required()->maxLength(140)->unique(ignoreRecord: true),
                     DateTimePicker::make('starts_at')->label('Mulai')->required(),
                     DateTimePicker::make('ends_at')->label('Berakhir')->required()->after('starts_at'),
@@ -52,7 +54,7 @@ class FlashSaleResource extends Resource
                         ->label('Item')
                         ->relationship()
                         ->schema([
-                            \Filament\Forms\Components\Select::make('product_id')
+                            Select::make('product_id')
                                 ->label('Produk')
                                 ->options(fn () => Product::active()->orderBy('name')->pluck('name', 'id'))
                                 ->searchable()

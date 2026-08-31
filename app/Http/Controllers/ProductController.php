@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Review;
+use App\Support\Seo;
 
 class ProductController extends Controller
 {
@@ -39,7 +40,7 @@ class ProductController extends Controller
             'reviews' => $reviews,
             'ratingAverage' => (float) ($ratingAggregate->average ?? 0),
             'ratingTotal' => (int) ($ratingAggregate->total ?? 0),
-            'seo' => \App\Support\Seo::forProduct(
+            'seo' => Seo::forProduct(
                 $product,
                 (float) ($ratingAggregate->average ?? 0),
                 (int) ($ratingAggregate->total ?? 0),

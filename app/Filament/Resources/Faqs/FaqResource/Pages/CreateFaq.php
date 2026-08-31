@@ -9,4 +9,3 @@ class CreateFaq extends CreateRecord
 {
     protected static string $resource = FaqResource::class;
 }
-

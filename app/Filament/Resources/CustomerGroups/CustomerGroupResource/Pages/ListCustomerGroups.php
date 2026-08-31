@@ -9,4 +9,3 @@ class ListCustomerGroups extends ListRecords
 {
     protected static string $resource = CustomerGroupResource::class;
 }
-

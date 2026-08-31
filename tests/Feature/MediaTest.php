@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Media;
+use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\MediaService;
@@ -96,8 +98,8 @@ class MediaTest extends TestCase
         $user = User::factory()->create();
         $media = $this->service()->store(UploadedFile::fake()->image('used.png'), $user->id);
 
-        \App\Models\Product::create([
-            'category_id' => \App\Models\Category::create(['name' => 'Cat '.uniqid()])->id,
+        Product::create([
+            'category_id' => Category::create(['name' => 'Cat '.uniqid()])->id,
             'name' => 'P',
             'price' => 1000,
             'stock' => 1,

@@ -55,7 +55,7 @@ return new class extends Migration
             $now = now();
 
             $rows = [];
-            foreach (DB::table('products')->whereNull('deleted_at')->get(['id', 'stock']) as $product) {
+            foreach (DB::table('products')->get(['id', 'stock']) as $product) {
                 $rows[] = [
                     'warehouse_id' => $defaultWarehouseId,
                     'product_id' => $product->id,

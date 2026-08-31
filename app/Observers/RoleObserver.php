@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Support\Audit;
 use App\Models\Role;
+use App\Support\Audit;
 
 class RoleObserver
 {

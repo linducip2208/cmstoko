@@ -2,7 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\BlogPost;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\CmsPage;
 use App\Models\Media;
+use App\Models\Product;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
@@ -90,19 +95,19 @@ class MediaService
         $needle = $media->file_name;
 
         foreach (['images', 'seo', 'attribute_values'] as $column) {
-            if (\App\Models\Product::query()->where($column, 'like', "%{$needle}%")->exists()) {
+            if (Product::query()->where($column, 'like', "%{$needle}%")->exists()) {
                 return true;
             }
         }
 
         foreach (
             [
-                [new \App\Models\Category, 'cover_image'],
-                [new \App\Models\Category, 'icon'],
-                [new \App\Models\Brand, 'logo'],
-                [new \App\Models\Brand, 'cover'],
-                [new \App\Models\BlogPost, 'cover'],
-                [new \App\Models\CmsPage, 'featured_image'],
+                [new Category, 'cover_image'],
+                [new Category, 'icon'],
+                [new Brand, 'logo'],
+                [new Brand, 'cover'],
+                [new BlogPost, 'cover'],
+                [new CmsPage, 'featured_image'],
             ] as [$model, $column]
         ) {
             if ($model->newQuery()->where($column, 'like', "%{$needle}%")->exists()) {

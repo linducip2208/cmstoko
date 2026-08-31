@@ -3,8 +3,6 @@
 // Theme presets: one component system, token overrides only.
 // Each preset overrides CSS custom properties defined in resources/css/app.css.
 
-use Illuminate\Support\Js;
-
 return [
     'default' => 'editorial',
 

@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class BlogCategoryResource extends Resource
@@ -31,7 +32,7 @@ class BlogCategoryResource extends Resource
     {
         return $schema->components([
             TextInput::make('name')->label('Nama')->required()->maxLength(120)->live(onBlur: true)
-                ->afterStateUpdated(fn ($state, $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
             TextInput::make('slug')->required()->maxLength(140)->unique(ignoreRecord: true),
             Textarea::make('description')->label('Deskripsi')->maxLength(500)->columnSpanFull(),
         ])->columns(2);

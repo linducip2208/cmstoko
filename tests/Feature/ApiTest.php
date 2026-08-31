@@ -8,10 +8,8 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Wishlist;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ApiTest extends TestCase

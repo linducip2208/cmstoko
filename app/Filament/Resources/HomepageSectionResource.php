@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\Homepage\HomepageSectionResource\Pages;
+use App\Models\BlogCategory;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\HomepageSection;
@@ -222,7 +223,7 @@ class HomepageSectionResource extends Resource
                         TextInput::make('config.overline')->label('Eyebrow')->maxLength(40)->default('Blog'),
                         TextInput::make('config.heading')->label('Judul Section')->maxLength(80),
                         Select::make('config.category_slug')->label('Kategori (opsional)')
-                            ->options(fn () => \App\Models\BlogCategory::orderBy('name')->pluck('name', 'slug'))
+                            ->options(fn () => BlogCategory::orderBy('name')->pluck('name', 'slug'))
                             ->native(false)->searchable(),
                         TextInput::make('config.limit')->label('Jumlah Artikel')->numeric()->default(3)->minValue(1)->maxValue(6),
                         TextInput::make('config.padding')->label('Padding')->default('normal')->maxLength(10)->hidden(),

@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Data\ShippingContext;
+use App\Events\OrderPlaced;
+use App\Models\CartRule;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
@@ -10,7 +13,9 @@ use App\Models\StockMovement;
 use App\Services\CartService;
 use App\Services\InventoryService;
 use App\Services\PaymentService;
+use App\Services\Shipping\ShippingManager;
 use App\Services\ShippingService;
+use App\Services\TaxCalculator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
@@ -67,7 +72,7 @@ class CheckoutPage extends Component
 
     public bool $useApiShipping = false;
 
-    public function mount(CartService $cart, ShippingService $shipping, \App\Services\Shipping\ShippingManager $shippingManager): void
+    public function mount(CartService $cart, ShippingService $shipping, ShippingManager $shippingManager): void
     {
         if ($cart->count() === 0) {
             $this->redirect(route('cart'), navigate: true);
@@ -169,8 +174,8 @@ class CheckoutPage extends Component
      */
     protected function loadShippingOptions(ShippingService $shipping, CartService $cart): void
     {
-        $manager = app(\App\Services\Shipping\ShippingManager::class);
-        $context = new \App\Data\ShippingContext(
+        $manager = app(ShippingManager::class);
+        $context = new ShippingContext(
             provinceId: $this->province_id,
             cityId: $this->city_id,
             weightGram: $cart->weight(),
@@ -190,11 +195,11 @@ class CheckoutPage extends Component
      */
     protected function resolveSelectedShipping(CartService $cart): ?array
     {
-        $manager = app(\App\Services\Shipping\ShippingManager::class);
+        $manager = app(ShippingManager::class);
 
         return $manager->resolve(
             $this->shippingKey ?: null,
-            new \App\Data\ShippingContext(
+            new ShippingContext(
                 provinceId: $this->province_id,
                 cityId: $this->city_id,
                 weightGram: $cart->weight(),
@@ -332,14 +337,14 @@ class CheckoutPage extends Component
                 $coupon = $cart->coupon();
 
                 // Cart rules: server-authoritative promotions (group targeting, free shipping, stacking capped at subtotal).
-                $ruleResult = \App\Models\CartRule::evaluate($items, $subtotal, auth()->user());
+                $ruleResult = CartRule::evaluate($items, $subtotal, auth()->user());
                 $totalDiscount = $discount + $ruleResult['discount'];
 
                 $shippingCost = $selected !== null ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
                 $effectiveShipping = $ruleResult['free_shipping'] ? 0 : $shippingCost;
 
                 // Tax: server-authoritative, on the discounted base + shipping.
-                $taxResult = app(\App\Services\TaxCalculator::class)->calculate(
+                $taxResult = app(TaxCalculator::class)->calculate(
                     $items->map(fn ($item) => [
                         'price' => $item['price'],
                         'qty' => $item['qty'],
@@ -418,7 +423,7 @@ class CheckoutPage extends Component
                     }
                 }
 
-                \App\Models\CartRule::consume($ruleResult['rule_ids']);
+                CartRule::consume($ruleResult['rule_ids']);
 
                 $order->histories()->create([
                     'from' => null,
@@ -442,7 +447,7 @@ class CheckoutPage extends Component
 
         session()->push('shop.orders', $order->order_number);
 
-        \App\Events\OrderPlaced::dispatch($order);
+        OrderPlaced::dispatch($order);
 
         if ($payment->configured()) {
             $token = $payment->snapToken($order->load('items'));
@@ -459,13 +464,13 @@ class CheckoutPage extends Component
 
     public function render(CartService $cart)
     {
-        $ruleResult = \App\Models\CartRule::evaluate($cart->items(), $cart->subtotal(), auth()->user());
+        $ruleResult = CartRule::evaluate($cart->items(), $cart->subtotal(), auth()->user());
 
         $items = $cart->items();
         $totalDiscount = $cart->discount() + $ruleResult['discount'];
         $previewShipping = $ruleResult['free_shipping'] ? 0 : (collect($this->shippingOptions)->firstWhere('service', $this->service)['cost'] ?? config('shop.flat_shipping_cost'));
 
-        $taxPreview = app(\App\Services\TaxCalculator::class)->calculate(
+        $taxPreview = app(TaxCalculator::class)->calculate(
             $items->map(fn ($item) => [
                 'price' => $item['price'],
                 'qty' => $item['qty'],

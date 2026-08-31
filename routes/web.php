@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AccountOrderController;
 use App\Http\Controllers\Account\ReturnController;
 use App\Http\Controllers\Account\WishlistController;
+use App\Http\Controllers\Api\SearchSuggestController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -15,7 +16,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\SitemapController;
 use App\Livewire\CartPage;
 use App\Livewire\CheckoutPage;
 use App\Livewire\TrackOrder;
@@ -28,13 +31,13 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', HomeController::class)->name('home');
 
-Route::get('/pencarian/saran', \App\Http\Controllers\Api\SearchSuggestController::class)
+Route::get('/pencarian/saran', SearchSuggestController::class)
     ->middleware('throttle:30,1')
     ->name('search.suggest');
 
-Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
-Route::get('/robots.txt', \App\Http\Controllers\RobotsController::class)->name('robots');
+Route::get('/robots.txt', RobotsController::class)->name('robots');
 
 Route::get('/produk', ShopController::class)->name('shop');
 

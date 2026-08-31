@@ -9,4 +9,3 @@ class ListWarehouses extends ListRecords
 {
     protected static string $resource = WarehouseResource::class;
 }
-

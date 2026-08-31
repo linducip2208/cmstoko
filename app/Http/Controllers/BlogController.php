@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\BlogTag;
+use App\Support\Seo;
+use App\Support\Settings;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -52,7 +54,7 @@ class BlogController extends Controller
             'tags' => $tags,
             'activeCategory' => $activeCategory,
             'activeTag' => $activeTag,
-            'seo' => \App\Support\Seo::meta(
+            'seo' => Seo::meta(
                 title: 'Blog',
                 description: 'Cerita, panduan, dan kabar terbaru dari toko kami.',
                 canonical: route('blog'),
@@ -69,7 +71,7 @@ class BlogController extends Controller
             ->firstOrFail();
 
         $schema = [
-            \App\Support\Seo::breadcrumb([
+            Seo::breadcrumb([
                 ['name' => 'Beranda', 'url' => route('home')],
                 ['name' => 'Blog', 'url' => route('blog')],
                 ['name' => $post->title],
@@ -85,17 +87,17 @@ class BlogController extends Controller
             'datePublished' => $post->published_at?->toIso8601String(),
             'dateModified' => $post->updated_at?->toIso8601String(),
             'author' => $post->author ? ['@type' => 'Person', 'name' => $post->author->name] : null,
-            'publisher' => ['@type' => 'Organization', 'name' => \App\Support\Settings::get('store.name', config('shop.name', 'TokoKita'))],
+            'publisher' => ['@type' => 'Organization', 'name' => Settings::get('store.name', config('shop.name', 'TokoKita'))],
             'mainEntityOfPage' => route('blog.show', $post->slug),
         ];
 
         return view('pages.blog-show', [
             'post' => $post,
             'related' => $post->relatedPosts(),
-            'seo' => \App\Support\Seo::entityMeta(
+            'seo' => Seo::entityMeta(
                 defaultTitle: $post->title,
                 entitySeo: $post->seo,
-                fallbackDescription: $post->excerpt ?: \App\Support\Seo::safeText((string) $post->content, 160),
+                fallbackDescription: $post->excerpt ?: Seo::safeText((string) $post->content, 160),
                 canonical: route('blog.show', $post->slug),
                 image: $post->cover,
                 schema: array_values(array_filter($schema)),

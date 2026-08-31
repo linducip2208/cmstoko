@@ -2,11 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\InventoryLevel;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\StockMovement;
+use App\Models\StockTransfer;
 use App\Models\Warehouse;
+use App\Support\Audit;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
@@ -98,7 +101,7 @@ class InventoryService
 
             $this->record($productId, $variantId, StockMovement::TYPE_ADJUSTMENT, $delta, $before, $after, null, $note, $userId);
 
-            \App\Support\Audit::record(
+            Audit::record(
                 'inventory.adjust',
                 subject: $target,
                 before: ['stock' => $before],
@@ -135,7 +138,7 @@ class InventoryService
      */
     public function level(int $productId, ?int $variantId, int $warehouseId): int
     {
-        return (int) \App\Models\InventoryLevel::findOrCreate($warehouseId, $productId, $variantId)->stock;
+        return (int) InventoryLevel::findOrCreate($warehouseId, $productId, $variantId)->stock;
     }
 
     /**
@@ -149,9 +152,9 @@ class InventoryService
         }
 
         DB::transaction(function () use ($productId, $variantId, $warehouseId, $delta, $note, $userId) {
-            $level = \App\Models\InventoryLevel::findOrCreate($warehouseId, $productId, $variantId);
+            $level = InventoryLevel::findOrCreate($warehouseId, $productId, $variantId);
 
-            $level = \App\Models\InventoryLevel::whereKey($level->id)->lockForUpdate()->first();
+            $level = InventoryLevel::whereKey($level->id)->lockForUpdate()->first();
             $before = (int) $level->stock;
             $after = $before + $delta;
 
@@ -163,7 +166,7 @@ class InventoryService
 
             $this->record($productId, $variantId, StockMovement::TYPE_ADJUSTMENT, $delta, $before, $after, null, $note, $userId, $warehouseId);
 
-            \App\Support\Audit::record('inventory.adjust', subject: $level, before: ['stock' => $before], after: ['stock' => $after, 'delta' => $delta, 'warehouse_id' => $warehouseId]);
+            Audit::record('inventory.adjust', subject: $level, before: ['stock' => $before], after: ['stock' => $after, 'delta' => $delta, 'warehouse_id' => $warehouseId]);
         });
     }
 
@@ -195,8 +198,8 @@ class InventoryService
                         break;
                     }
 
-                    $level = \App\Models\InventoryLevel::findOrCreate($warehouse->id, $productId, $variantId);
-                    $level = \App\Models\InventoryLevel::query()->whereKey($level->id)->lockForUpdate()->first();
+                    $level = InventoryLevel::findOrCreate($warehouse->id, $productId, $variantId);
+                    $level = InventoryLevel::query()->whereKey($level->id)->lockForUpdate()->first();
 
                     $take = min($remaining, (int) $level->stock);
 
@@ -232,22 +235,22 @@ class InventoryService
      * `receive` adds the destination. Flat total stock never changes during
      * a transfer — goods only move between locations.
      */
-    public function shipTransfer(\App\Models\StockTransfer $transfer, ?int $userId = null): void
+    public function shipTransfer(StockTransfer $transfer, ?int $userId = null): void
     {
         DB::transaction(function () use ($transfer, $userId) {
-            $transfer = \App\Models\StockTransfer::whereKey($transfer->id)->lockForUpdate()->first();
+            $transfer = StockTransfer::whereKey($transfer->id)->lockForUpdate()->first();
 
-            if ($transfer->status !== \App\Models\StockTransfer::STATUS_PENDING) {
+            if ($transfer->status !== StockTransfer::STATUS_PENDING) {
                 throw new InvalidArgumentException('Transfer hanya bisa dikirim dari status Menunggu.');
             }
 
             foreach ($transfer->items()->with('product')->get() as $item) {
-                $level = \App\Models\InventoryLevel::findOrCreate(
+                $level = InventoryLevel::findOrCreate(
                     $transfer->from_warehouse_id,
                     (int) $item->product_id,
                     $item->variant_id !== null ? (int) $item->variant_id : null,
                 );
-                $level = \App\Models\InventoryLevel::query()->whereKey($level->id)->lockForUpdate()->first();
+                $level = InventoryLevel::query()->whereKey($level->id)->lockForUpdate()->first();
 
                 $before = (int) $level->stock;
 
@@ -272,28 +275,28 @@ class InventoryService
             }
 
             $transfer->update([
-                'status' => \App\Models\StockTransfer::STATUS_IN_TRANSIT,
+                'status' => StockTransfer::STATUS_IN_TRANSIT,
                 'shipped_at' => now(),
             ]);
         });
     }
 
-    public function receiveTransfer(\App\Models\StockTransfer $transfer, ?int $userId = null): void
+    public function receiveTransfer(StockTransfer $transfer, ?int $userId = null): void
     {
         DB::transaction(function () use ($transfer, $userId) {
-            $transfer = \App\Models\StockTransfer::whereKey($transfer->id)->lockForUpdate()->first();
+            $transfer = StockTransfer::whereKey($transfer->id)->lockForUpdate()->first();
 
-            if ($transfer->status !== \App\Models\StockTransfer::STATUS_IN_TRANSIT) {
+            if ($transfer->status !== StockTransfer::STATUS_IN_TRANSIT) {
                 throw new InvalidArgumentException('Transfer harus berstatus Dalam Perjalanan untuk diterima.');
             }
 
             foreach ($transfer->items()->with('product')->get() as $item) {
-                $level = \App\Models\InventoryLevel::findOrCreate(
+                $level = InventoryLevel::findOrCreate(
                     $transfer->to_warehouse_id,
                     (int) $item->product_id,
                     $item->variant_id !== null ? (int) $item->variant_id : null,
                 );
-                $level = \App\Models\InventoryLevel::query()->whereKey($level->id)->lockForUpdate()->first();
+                $level = InventoryLevel::query()->whereKey($level->id)->lockForUpdate()->first();
 
                 $before = (int) $level->stock;
                 $level->update(['stock' => $before + (int) $item->quantity]);
@@ -313,23 +316,23 @@ class InventoryService
             }
 
             $transfer->update([
-                'status' => \App\Models\StockTransfer::STATUS_RECEIVED,
+                'status' => StockTransfer::STATUS_RECEIVED,
                 'received_at' => now(),
             ]);
         });
     }
 
-    public function cancelTransfer(\App\Models\StockTransfer $transfer, ?string $reason = null, ?int $userId = null): void
+    public function cancelTransfer(StockTransfer $transfer, ?string $reason = null, ?int $userId = null): void
     {
-        DB::transaction(function () use ($transfer, $reason, $userId) {
-            $transfer = \App\Models\StockTransfer::whereKey($transfer->id)->lockForUpdate()->first();
+        DB::transaction(function () use ($transfer, $reason) {
+            $transfer = StockTransfer::whereKey($transfer->id)->lockForUpdate()->first();
 
-            if ($transfer->status !== \App\Models\StockTransfer::STATUS_PENDING) {
+            if ($transfer->status !== StockTransfer::STATUS_PENDING) {
                 throw new InvalidArgumentException('Hanya transfer Menunggu yang bisa dibatalkan.');
             }
 
             $transfer->update([
-                'status' => \App\Models\StockTransfer::STATUS_CANCELLED,
+                'status' => StockTransfer::STATUS_CANCELLED,
                 'note' => trim(($transfer->note ? $transfer->note.' — ' : '').($reason ?? 'Dibatalkan')),
             ]);
         });

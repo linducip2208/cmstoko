@@ -5,25 +5,24 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\Blog\BlogPostResource\Pages;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
-use App\Models\BlogTag;
 use App\Models\User;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class BlogPostResource extends Resource
@@ -52,7 +51,7 @@ class BlogPostResource extends Resource
                 Tab::make('Konten')
                     ->schema([
                         TextInput::make('title')->label('Judul')->required()->maxLength(200)->live(onBlur: true)
-                            ->afterStateUpdated(fn ($state, $set, $operation) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
+                            ->afterStateUpdated(fn ($state, $set, $operation) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                         TextInput::make('slug')->required()->maxLength(220)->unique(ignoreRecord: true),
                         Textarea::make('excerpt')->label('Ringkasan')->maxLength(500)->rows(2)->columnSpanFull(),
                         RichEditor::make('content')->label('Isi Artikel')->required()->columnSpanFull()->toolbarButtons([
@@ -111,7 +110,7 @@ class BlogPostResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->recordActions([
-                \Filament\Actions\Action::make('publish')
+                Action::make('publish')
                     ->label('Terbitkan')
                     ->color('success')
                     ->requiresConfirmation()

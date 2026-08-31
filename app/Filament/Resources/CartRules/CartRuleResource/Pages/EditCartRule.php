@@ -9,4 +9,3 @@ class EditCartRule extends EditRecord
 {
     protected static string $resource = CartRuleResource::class;
 }
-

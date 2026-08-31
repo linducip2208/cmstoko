@@ -8,11 +8,12 @@ use App\Support\Theme;
 use BackedEnum;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Radio;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Schemas\Concerns\InteractsWithSchemas;
-use Filament\Schemas\Schema;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Schemas\Schema;
 use UnitEnum;
 
 class ManageTheme extends Page implements HasSchemas
@@ -106,7 +107,7 @@ class ManageTheme extends Page implements HasSchemas
             'preset' => $state['preset'],
         ]);
 
-        \Filament\Notifications\Notification::make()->title('Tema tersimpan')->success()->send();
+        Notification::make()->title('Tema tersimpan')->success()->send();
     }
 
     public function title(): string

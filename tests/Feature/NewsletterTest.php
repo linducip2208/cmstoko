@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\NewsletterSubscriber;
+use App\Models\Role;
+use App\Models\User;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -57,12 +59,12 @@ class NewsletterTest extends TestCase
 
     public function test_newsletter_admin_listing_accessible_to_marketing_only(): void
     {
-        $marketing = \App\Models\User::factory()->create([
-            'role_id' => \App\Models\Role::where('slug', \App\Models\Role::MARKETING)->value('id'),
+        $marketing = User::factory()->create([
+            'role_id' => Role::where('slug', Role::MARKETING)->value('id'),
         ]);
 
-        $finance = \App\Models\User::factory()->create([
-            'role_id' => \App\Models\Role::where('slug', \App\Models\Role::FINANCE)->value('id'),
+        $finance = User::factory()->create([
+            'role_id' => Role::where('slug', Role::FINANCE)->value('id'),
         ]);
 
         $this->actingAs($marketing)->get('/admin/newsletter-subscribers')->assertOk();

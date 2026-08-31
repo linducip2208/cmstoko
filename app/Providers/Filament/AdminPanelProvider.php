@@ -18,6 +18,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\View;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -30,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName(config('shop.name', 'TokoKita'))
-            ->brandLogo(fn () => \Illuminate\Support\Facades\View::make('filament.admin.brand'))
+            ->brandLogo(fn () => View::make('filament.admin.brand'))
             ->brandLogoHeight('2.25rem')
             ->favicon(asset('favicon.ico'))
             ->colors([

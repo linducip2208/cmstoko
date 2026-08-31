@@ -6,6 +6,7 @@ use App\Contracts\SearchEngine;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\DatabaseSearchEngine;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -37,7 +38,7 @@ class SearchTest extends TestCase
     public function test_database_driver_finds_products_by_name_and_sku(): void
     {
         $engine = app(SearchEngine::class);
-        $this->assertInstanceOf(\App\Services\DatabaseSearchEngine::class, $engine);
+        $this->assertInstanceOf(DatabaseSearchEngine::class, $engine);
 
         $this->product('Kabel USB-C Unik', brand: Brand::create(['name' => 'Kabelku', 'slug' => 'kabelku-'.uniqid(), 'is_active' => true]));
 

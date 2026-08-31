@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\Refund;
 use App\Models\Shipment;
 use App\Models\ShipmentItem;
+use App\Support\Audit;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
@@ -153,7 +154,7 @@ class OrderFulfillmentService
                 }
             }
 
-            \App\Support\Audit::record(
+            Audit::record(
                 'refund.create',
                 subject: $refund,
                 after: ['order' => $order->order_number, 'amount' => $amount, 'reason' => $reason],

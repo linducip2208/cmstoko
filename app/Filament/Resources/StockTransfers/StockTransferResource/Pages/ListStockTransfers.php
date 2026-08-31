@@ -9,4 +9,3 @@ class ListStockTransfers extends ListRecords
 {
     protected static string $resource = StockTransferResource::class;
 }
-

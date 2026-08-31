@@ -4,8 +4,10 @@ namespace App\Filament\Pages;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Support\Csv;
 use BackedEnum;
 use Carbon\CarbonInterface;
+use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Schemas\Contracts\HasSchemas;
 use UnitEnum;
@@ -86,14 +88,14 @@ class SalesReport extends Page implements HasSchemas
     public function getHeaderActions(): array
     {
         return [
-            \Filament\Actions\Action::make('export')
+            Action::make('export')
                 ->label('Export CSV')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('gray')
                 ->action(function () {
                     $from = $this->from();
 
-                    return \App\Support\Csv::streamDownload(
+                    return Csv::streamDownload(
                         'laporan-penjualan-'.now()->format('Ymd-His').'.csv',
                         ['Nomor Pesanan', 'Tanggal', 'Pelanggan', 'Email', 'Status', 'Subtotal', 'Diskon', 'Ongkir', 'Total'],
                         Order::whereIn('status', Order::PAID_STATUSES)

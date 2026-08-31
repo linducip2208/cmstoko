@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Medias\MediaResource\Pages;
 
 use App\Filament\Resources\MediaResource;
+use App\Services\MediaService;
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -17,7 +18,7 @@ class EditMedia extends EditRecord
             DeleteAction::make()
                 ->before(function (DeleteAction $action) {
                     try {
-                        app(\App\Services\MediaService::class)->delete($action->getRecord());
+                        app(MediaService::class)->delete($action->getRecord());
                     } catch (\Throwable $e) {
                         Notification::make()->title('Tidak dapat dihapus')->body($e->getMessage())->danger()->send();
 

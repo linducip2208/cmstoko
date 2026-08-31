@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\SeoRedirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class Redirects
@@ -87,7 +88,7 @@ class Redirects
         SeoRedirect::query()
             ->where('source', $match['source'])
             ->update([
-                'hit_count' => \Illuminate\Support\Facades\DB::raw('hit_count + 1'),
+                'hit_count' => DB::raw('hit_count + 1'),
                 'last_hit_at' => now(),
             ]);
 

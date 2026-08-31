@@ -2,9 +2,8 @@
 
 namespace App\Contracts;
 
-use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 /**
@@ -16,7 +15,7 @@ interface SearchEngine
     /**
      * Product search for catalog pages.
      *
-     * @return \Illuminate\Database\Eloquent\Builder<Product>
+     * @return Builder<Product>
      */
     public function products(string $term);
 

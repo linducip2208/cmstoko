@@ -9,4 +9,3 @@ class ListFaqs extends ListRecords
 {
     protected static string $resource = FaqResource::class;
 }
-

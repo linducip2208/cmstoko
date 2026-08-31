@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\Users\UserResource\Pages;
+use App\Models\CustomerGroup;
 use App\Models\Role;
 use App\Models\User;
 use BackedEnum;
@@ -80,11 +81,11 @@ class UserResource extends Resource
                             ->helperText('Super Admin memiliki akses penuh. Gunakan peran spesifik untuk operasional.'),
                         Select::make('customer_group_id')
                             ->label('Grup Pelanggan')
-                            ->options(fn () => \App\Models\CustomerGroup::where('slug', '!=', \App\Models\CustomerGroup::SLUG_GUEST)->orderBy('sort_order')->pluck('name', 'id'))
+                            ->options(fn () => CustomerGroup::where('slug', '!=', CustomerGroup::SLUG_GUEST)->orderBy('sort_order')->pluck('name', 'id'))
                             ->searchable()
                             ->native(false)
                             ->helperText('Untuk pelanggan — menentukan aturan promosi yang berlaku (mis. VIP).')
-                            ->visible(fn ($get) => $get('role_id') == \App\Models\Role::where('slug', \App\Models\Role::CUSTOMER)->value('id')),
+                            ->visible(fn ($get) => $get('role_id') == Role::where('slug', Role::CUSTOMER)->value('id')),
                     ]),
             ]);
     }

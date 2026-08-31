@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Brand;
+use App\Models\Category;
 use App\Models\CmsPage;
 use App\Models\Menu;
 use App\Models\MenuItem;
@@ -66,7 +66,7 @@ class MenuTest extends TestCase
 
         $parent = MenuItem::create(['menu_id' => $menu->id, 'label' => 'Belanja', 'target_type' => 'custom', 'url' => '/produk', 'sort_order' => 1]);
 
-        $category = \App\Models\Category::create(['name' => 'Menu Cat '.uniqid(), 'slug' => 'menu-cat-'.uniqid(), 'is_active' => true]);
+        $category = Category::create(['name' => 'Menu Cat '.uniqid(), 'slug' => 'menu-cat-'.uniqid(), 'is_active' => true]);
 
         MenuItem::create(['menu_id' => $menu->id, 'parent_id' => $parent->id, 'label' => $category->name, 'target_type' => 'category', 'target_id' => $category->id, 'sort_order' => 1]);
 

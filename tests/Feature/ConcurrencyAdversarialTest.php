@@ -3,21 +3,23 @@
 namespace Tests\Feature;
 
 use App\Livewire\CheckoutPage;
+use App\Models\Attribute;
+use App\Models\AttributeOption;
 use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantAttributeValue;
-use App\Models\Attribute;
-use App\Models\AttributeOption;
-use App\Models\ReturnRequest;
+use App\Models\ReturnItem;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\OrderFulfillmentService;
 use App\Support\Settings;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
+use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -45,7 +47,7 @@ class ConcurrencyAdversarialTest extends TestCase
         ]);
     }
 
-    protected function checkoutAs(?User $user = null): \Livewire\Features\SupportTesting\Testable
+    protected function checkoutAs(?User $user = null): Testable
     {
         $test = Livewire::withQueryParams([]);
         $component = $user ? Livewire::actingAs($user)->test(CheckoutPage::class) : Livewire::test(CheckoutPage::class);
@@ -67,7 +69,7 @@ class ConcurrencyAdversarialTest extends TestCase
         $product->update(['type' => 'configurable']);
 
         $attribute = Attribute::create(['name' => 'Warna', 'slug' => 'warna-'.uniqid(), 'type' => 'select']);
-        $red =         AttributeOption::create(['attribute_id' => $attribute->id, 'label' => 'Merah', 'value' => 'merah', 'slug' => 'merah-'.uniqid(), 'sort_order' => 1]);
+        $red = AttributeOption::create(['attribute_id' => $attribute->id, 'label' => 'Merah', 'value' => 'merah', 'slug' => 'merah-'.uniqid(), 'sort_order' => 1]);
 
         $variant = ProductVariant::create([
             'product_id' => $product->id,
@@ -229,7 +231,7 @@ class ConcurrencyAdversarialTest extends TestCase
             'items' => [['order_item_id' => $item->id, 'quantity' => 3]],
         ])->assertRedirect();
 
-        $totals = \App\Models\ReturnItem::where('order_item_id', $item->id)->sum('quantity');
+        $totals = ReturnItem::where('order_item_id', $item->id)->sum('quantity');
 
         $this->assertSame(3, $totals);
     }
@@ -255,6 +257,6 @@ class ConcurrencyAdversarialTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        app(\App\Services\OrderFulfillmentService::class)->refund($order, 999999, 'over');
+        app(OrderFulfillmentService::class)->refund($order, 999999, 'over');
     }
 }

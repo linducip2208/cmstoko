@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HomepageSection;
 use App\Shop\SectionResolver;
+use App\Support\Seo;
 
 class HomeController extends Controller
 {
@@ -30,6 +31,6 @@ class HomeController extends Controller
                 return true;
             });
 
-        return view('pages.home', ['sections' => $resolved, 'seo' => \App\Support\Seo::forHome()]);
+        return view('pages.home', ['sections' => $resolved, 'seo' => Seo::forHome()]);
     }
 }

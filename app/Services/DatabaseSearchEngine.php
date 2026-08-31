@@ -7,7 +7,6 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 
 class DatabaseSearchEngine implements SearchEngine
 {

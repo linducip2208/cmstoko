@@ -2,16 +2,21 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\CheckoutPage;
 use App\Models\CartRule;
+use App\Models\Category;
 use App\Models\CustomerGroup;
 use App\Models\Menu;
 use App\Models\MenuItem;
 use App\Models\NewsletterSubscriber;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Role;
+use App\Models\StockMovement;
 use App\Models\TaxClass;
 use App\Models\TaxRate;
 use App\Models\User;
+use Database\Seeders\CustomerGroupSeeder;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
@@ -27,7 +32,7 @@ class DataIntegrityTest extends TestCase
         parent::setUp();
 
         $this->seed(RbacSeeder::class);
-        $this->seed(\Database\Seeders\CustomerGroupSeeder::class);
+        $this->seed(CustomerGroupSeeder::class);
     }
 
     // ---------- Registration ----------
@@ -62,7 +67,7 @@ class DataIntegrityTest extends TestCase
             'phone' => '081200000000',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-            'role_id' => \App\Models\Role::where('slug', \App\Models\Role::SUPER_ADMIN)->value('id'),
+            'role_id' => Role::where('slug', Role::SUPER_ADMIN)->value('id'),
             'customer_group_id' => CustomerGroup::where('slug', CustomerGroup::SLUG_VIP)->value('id'),
         ])->assertRedirect();
 
@@ -125,7 +130,7 @@ class DataIntegrityTest extends TestCase
     public function test_order_persist_exact_rows_and_no_duplicates(): void
     {
         $product = Product::create([
-            'category_id' => \App\Models\Category::create(['name' => 'Cat '.uniqid()])->id,
+            'category_id' => Category::create(['name' => 'Cat '.uniqid()])->id,
             'name' => 'Order Product',
             'price' => 150000,
             'stock' => 5,
@@ -135,7 +140,7 @@ class DataIntegrityTest extends TestCase
 
         Session::put('shop.cart', [$product->id => 1]); // 150000 — below free-shipping min
 
-        Livewire::test(\App\Livewire\CheckoutPage::class)->fill([
+        Livewire::test(CheckoutPage::class)->fill([
             'customer_name' => 'Order Integrity',
             'customer_email' => 'order@example.com',
             'customer_phone' => '0812',
@@ -161,8 +166,8 @@ class DataIntegrityTest extends TestCase
 
         // Stock deducted exactly once: 5 - 1 = 4, and ONE ledger row.
         $this->assertSame(4, $product->fresh()->stock);
-        $this->assertSame(1, \App\Models\StockMovement::where('product_id', $product->id)->count());
-        $this->assertSame(-1, \App\Models\StockMovement::where('product_id', $product->id)->value('quantity'));
+        $this->assertSame(1, StockMovement::where('product_id', $product->id)->count());
+        $this->assertSame(-1, StockMovement::where('product_id', $product->id)->value('quantity'));
     }
 
     // ---------- Menus ----------
@@ -198,7 +203,7 @@ class DataIntegrityTest extends TestCase
         TaxRate::create(['tax_class_id' => $class->id, 'name' => 'PPN 11%', 'rate_bp' => 1100, 'type' => 'exclusive']);
 
         $product = Product::create([
-            'category_id' => \App\Models\Category::create(['name' => 'Cat '.uniqid()])->id,
+            'category_id' => Category::create(['name' => 'Cat '.uniqid()])->id,
             'name' => 'Taxed Product',
             'price' => 100000,
             'stock' => 5,
@@ -208,7 +213,7 @@ class DataIntegrityTest extends TestCase
 
         Session::put('shop.cart', [$product->id => 1]);
 
-        Livewire::test(\App\Livewire\CheckoutPage::class)->fill([
+        Livewire::test(CheckoutPage::class)->fill([
             'customer_name' => 'Tax Buyer',
             'customer_email' => 'tax@example.com',
             'customer_phone' => '0812',

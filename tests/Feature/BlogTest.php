@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\BlogTag;
+use App\Models\HomepageSection;
 use App\Models\User;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -111,7 +112,7 @@ class BlogTest extends TestCase
         $visible = $this->makePost(['title' => 'Artikel Homepage '.uniqid()]);
         $this->makePost(['title' => 'Artikel Draft '.uniqid(), 'status' => BlogPost::STATUS_DRAFT]);
 
-        \App\Models\HomepageSection::create([
+        HomepageSection::create([
             'type' => 'blog_posts',
             'title' => 'Blog Section',
             'config' => ['heading' => 'Cerita Terbaru', 'limit' => 3],

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CustomerGroup;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CustomerGroupSeeder extends Seeder
@@ -21,7 +22,7 @@ class CustomerGroupSeeder extends Seeder
         $retail = CustomerGroup::where('slug', CustomerGroup::SLUG_RETAIL)->value('id');
 
         if ($retail) {
-            \App\Models\User::query()
+            User::query()
                 ->whereNull('customer_group_id')
                 ->whereHas('role', fn ($q) => $q->where('slug', 'customer'))
                 ->update(['customer_group_id' => $retail]);

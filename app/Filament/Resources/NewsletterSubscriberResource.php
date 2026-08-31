@@ -10,7 +10,7 @@ use Filament\Actions\Action;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use UnitEnum;
 
@@ -63,7 +63,7 @@ class NewsletterSubscriberResource extends Resource
                 TextColumn::make('unsubscribed_at')->label('Berhenti')->since()->placeholder('—'),
             ])
             ->filters([
-                \Filament\Tables\Filters\SelectFilter::make('status')
+                SelectFilter::make('status')
                     ->label('Status')
                     ->options([
                         'active' => 'Aktif',

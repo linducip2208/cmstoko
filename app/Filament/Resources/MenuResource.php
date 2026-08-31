@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\Menus\MenuResource\Pages;
 use App\Models\Brand;
-use App\Models\CmsPage;
 use App\Models\Category;
+use App\Models\CmsPage;
 use App\Models\Menu;
 use App\Models\MenuItem;
 use BackedEnum;

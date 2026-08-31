@@ -7,17 +7,17 @@ use App\Support\Settings;
 use BackedEnum;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\FontWeight;
-use Filament\Support\Exceptions\Halt;
 use UnitEnum;
 
 class ManageSettings extends Page implements HasSchemas
@@ -161,7 +161,7 @@ class ManageSettings extends Page implements HasSchemas
                                     ->columns(1),
                                 Section::make('Footer')
                                     ->schema([
-                                        \Filament\Forms\Components\Textarea::make('footer.about')->label('Tentang Toko')->maxLength(300)->rows(3)->columnSpanFull(),
+                                        Textarea::make('footer.about')->label('Tentang Toko')->maxLength(300)->rows(3)->columnSpanFull(),
                                         TextInput::make('footer.copyright')->label('Copyright')->maxLength(120),
                                     ])
                                     ->columns(1),
@@ -171,7 +171,7 @@ class ManageSettings extends Page implements HasSchemas
                                 Section::make('Beranda')
                                     ->schema([
                                         TextInput::make('seo.home_title')->label('Judul Beranda')->maxLength(120),
-                                        \Filament\Forms\Components\Textarea::make('seo.home_description')->label('Meta Deskripsi Beranda')->maxLength(320)->rows(2)->columnSpanFull(),
+                                        Textarea::make('seo.home_description')->label('Meta Deskripsi Beranda')->maxLength(320)->rows(2)->columnSpanFull(),
                                         FileUpload::make('seo.og_image')->label('Gambar OG Default')->image()->directory('branding')->maxSize(2048)->columnSpanFull(),
                                     ])
                                     ->columns(1),
@@ -258,7 +258,7 @@ class ManageSettings extends Page implements HasSchemas
             'keys' => array_keys($this->flatten($state)),
         ]);
 
-        \Filament\Notifications\Notification::make()
+        Notification::make()
             ->title('Pengaturan tersimpan')
             ->success()
             ->send();

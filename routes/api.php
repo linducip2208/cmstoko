@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CollectionController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -31,10 +33,10 @@ Route::prefix('v1')->group(function () {
         Route::post('auth/refresh', [AuthController::class, 'refresh']);
         Route::delete('auth/token', [AuthController::class, 'revoke']);
 
-        Route::get('orders', [\App\Http\Controllers\Api\OrderController::class, 'index']);
-        Route::get('orders/{orderNumber}', [\App\Http\Controllers\Api\OrderController::class, 'show']);
+        Route::get('orders', [OrderController::class, 'index']);
+        Route::get('orders/{orderNumber}', [OrderController::class, 'show']);
 
-        Route::get('addresses', [\App\Http\Controllers\Api\AccountController::class, 'addresses']);
+        Route::get('addresses', [AccountController::class, 'addresses']);
 
         Route::get('wishlist', [WishlistController::class, 'index']);
         Route::post('wishlist', [WishlistController::class, 'toggle']);

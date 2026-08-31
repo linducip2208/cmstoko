@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Filament\Pages\ManageTheme;
 use App\Models\Role;
 use App\Models\User;
+use App\Support\Settings;
 use App\Support\Theme;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -37,7 +38,7 @@ class ThemeTest extends TestCase
 
     public function test_switching_preset_changes_tokens_immediately(): void
     {
-        \App\Support\Settings::set('theme.preset', 'bold', 'appearance');
+        Settings::set('theme.preset', 'bold', 'appearance');
         Theme::flush();
 
         $html = $this->get('/')->getContent();
@@ -48,7 +49,7 @@ class ThemeTest extends TestCase
 
     public function test_custom_color_overrides_preset(): void
     {
-        \App\Support\Settings::set('theme.custom', ['--color-accent' => '#00ff41'], 'appearance');
+        Settings::set('theme.custom', ['--color-accent' => '#00ff41'], 'appearance');
         Theme::flush();
 
         $html = $this->get('/')->getContent();
@@ -62,7 +63,7 @@ class ThemeTest extends TestCase
 
         $this->actingAs($admin);
 
-        Livewire::test(\App\Filament\Pages\ManageTheme::class)
+        Livewire::test(ManageTheme::class)
             ->fillForm(['preset' => 'minimal'])
             ->call('save');
 

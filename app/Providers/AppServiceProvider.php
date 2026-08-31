@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\Contracts\SearchEngine;
+use App\Models\Category;
+use App\Models\Role;
 use App\Models\User;
+use App\Observers\CategoryObserver;
+use App\Observers\RoleObserver;
+use App\Services\DatabaseSearchEngine;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -11,15 +17,15 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Search abstraction: swap for Meilisearch/Typesense driver later.
-        $this->app->bind(\App\Contracts\SearchEngine::class, \App\Services\DatabaseSearchEngine::class);
+        $this->app->bind(SearchEngine::class, DatabaseSearchEngine::class);
     }
 
     public function boot(): void
     {
         $this->registerPermissionGates();
 
-        \App\Models\Role::observe(\App\Observers\RoleObserver::class);
-        \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
+        Role::observe(RoleObserver::class);
+        Category::observe(CategoryObserver::class);
     }
 
     protected function registerPermissionGates(): void

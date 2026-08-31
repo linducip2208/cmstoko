@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\InventoryLevel;
+use App\Models\Product;
 use App\Models\StockTransfer;
 use App\Models\Warehouse;
 use App\Services\InventoryService;
@@ -32,10 +34,10 @@ class WarehouseTest extends TestCase
         $this->branch = Warehouse::create(['name' => 'Gudang Cabang', 'code' => 'BRANCH', 'is_active' => true]);
     }
 
-    protected function product(int $mainStock = 0, int $branchStock = 0): \App\Models\Product
+    protected function product(int $mainStock = 0, int $branchStock = 0): Product
     {
-        $product = \App\Models\Product::create([
-            'category_id' => \App\Models\Category::create(['name' => 'Wh Cat '.uniqid()])->id,
+        $product = Product::create([
+            'category_id' => Category::create(['name' => 'Wh Cat '.uniqid()])->id,
             'name' => 'Wh Product '.uniqid(),
             'price' => 100000,
             'stock' => $mainStock,

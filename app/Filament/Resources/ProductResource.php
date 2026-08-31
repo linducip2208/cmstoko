@@ -7,6 +7,7 @@ use App\Filament\Resources\Products\ProductResource\RelationManagers\VariantsRel
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\TaxClass;
 use BackedEnum;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
@@ -81,7 +82,7 @@ class ProductResource extends Resource
                                     ->helperText('Untuk produk varian, SKU diisi pada tiap varian.'),
                                 Select::make('tax_class_id')
                                     ->label('Kelas Pajak')
-                                    ->options(fn () => \App\Models\TaxClass::orderBy('name')->pluck('name', 'id'))
+                                    ->options(fn () => TaxClass::orderBy('name')->pluck('name', 'id'))
                                     ->searchable()
                                     ->native(false)
                                     ->helperText('Kosong = kelas default (mis. PPN). Pilih kelas tanpa tarif agar produk tidak kena pajak.'),

@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Services\Shipping\ShippingManager;
 use App\Support\Settings;
+use Database\Seeders\CustomerGroupSeeder;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
@@ -24,7 +25,7 @@ class ShippingTest extends TestCase
         parent::setUp();
 
         $this->seed(RbacSeeder::class);
-        $this->seed(\Database\Seeders\CustomerGroupSeeder::class);
+        $this->seed(CustomerGroupSeeder::class);
         config(['shop.midtrans.server_key' => null]);
         config(['shop.rajaongkir.api_key' => null]);
     }

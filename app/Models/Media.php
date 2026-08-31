@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Media extends Model
@@ -22,7 +23,7 @@ class Media extends Model
 
     public function url(): string
     {
-        return \Illuminate\Support\Facades\Storage::disk($this->disk)->url($this->path);
+        return Storage::disk($this->disk)->url($this->path);
     }
 
     /**

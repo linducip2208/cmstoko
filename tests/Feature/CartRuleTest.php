@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
+use Database\Seeders\CustomerGroupSeeder;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
@@ -25,7 +26,7 @@ class CartRuleTest extends TestCase
         parent::setUp();
 
         $this->seed(RbacSeeder::class);
-        $this->seed(\Database\Seeders\CustomerGroupSeeder::class);
+        $this->seed(CustomerGroupSeeder::class);
         config(['shop.midtrans.server_key' => null]);
     }
 
@@ -42,7 +43,7 @@ class CartRuleTest extends TestCase
         ]);
     }
 
-    protected function customer(string $groupSlug = null): User
+    protected function customer(?string $groupSlug = null): User
     {
         $user = User::factory()->create([
             'role_id' => Role::where('slug', Role::CUSTOMER)->value('id'),

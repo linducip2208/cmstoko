@@ -2,10 +2,13 @@
 
 namespace App\Shop;
 
+use App\Models\BlogPost;
 use App\Models\Category;
 use App\Models\Collection;
+use App\Models\Faq;
 use App\Models\HomepageSection;
 use App\Models\Product;
+use App\Models\Testimonial;
 use Illuminate\Support\Collection as SupportCollection;
 
 /**
@@ -35,7 +38,7 @@ class SectionResolver
 
         $limit = (int) $section->config('limit', 3);
 
-        $query = \App\Models\BlogPost::published()
+        $query = BlogPost::published()
             ->with(['category:id,name,slug'])
             ->select(['id', 'title', 'slug', 'excerpt', 'cover', 'blog_category_id', 'published_at', 'created_at']);
 
@@ -102,7 +105,7 @@ class SectionResolver
             return collect();
         }
 
-        $query = \App\Models\Faq::active()->orderBy('sort_order');
+        $query = Faq::active()->orderBy('sort_order');
 
         if ($group = $section->config('group')) {
             $query->where('group', $group);
@@ -117,7 +120,7 @@ class SectionResolver
             return collect();
         }
 
-        return \App\Models\Testimonial::active()
+        return Testimonial::active()
             ->orderBy('sort_order')
             ->limit((int) $section->config('limit', 6))
             ->get();

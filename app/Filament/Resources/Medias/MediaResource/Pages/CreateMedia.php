@@ -3,10 +3,10 @@
 namespace App\Filament\Resources\Medias\MediaResource\Pages;
 
 use App\Filament\Resources\MediaResource;
-use App\Models\Media;
 use App\Services\MediaService;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class CreateMedia extends CreateRecord
@@ -41,7 +41,7 @@ class CreateMedia extends CreateRecord
             try {
                 $fullPath = Storage::disk('temp')->path($tempPath);
 
-                $file = new \Illuminate\Http\UploadedFile(
+                $file = new UploadedFile(
                     $fullPath,
                     basename($tempPath),
                     null,

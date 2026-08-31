@@ -9,4 +9,3 @@ class EditTestimonial extends EditRecord
 {
     protected static string $resource = TestimonialResource::class;
 }
-

@@ -9,4 +9,3 @@ class CreateWarehouse extends CreateRecord
 {
     protected static string $resource = WarehouseResource::class;
 }
-

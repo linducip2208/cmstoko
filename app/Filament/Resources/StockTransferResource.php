@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StockTransfers\StockTransferResource\Pages;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\StockTransfer;
 use App\Models\Warehouse;
 use BackedEnum;
@@ -55,7 +56,7 @@ class StockTransferResource extends Resource
                                 ->searchable()->required()->live(),
                             Select::make('variant_id')->label('Varian')
                                 ->options(fn ($get) => $get('product_id')
-                                    ? \App\Models\ProductVariant::where('product_id', $get('product_id'))->pluck('sku', 'id')
+                                    ? ProductVariant::where('product_id', $get('product_id'))->pluck('sku', 'id')
                                     : [])
                                 ->searchable()->native(false),
                             TextInput::make('quantity')->label('Jumlah')->numeric()->minValue(1)->required(),

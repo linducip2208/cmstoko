@@ -13,6 +13,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use UnitEnum;
 
 class TaxClassResource extends Resource
@@ -36,7 +37,7 @@ class TaxClassResource extends Resource
                 ->description('Kelas dipilih per produk (Produk → tab Organisasi). Kelas default dipakai bila produk tidak memilih.')
                 ->schema([
                     TextInput::make('name')->label('Nama')->required()->maxLength(120)->live(onBlur: true)
-                        ->afterStateUpdated(fn ($state, $set) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                        ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
                     TextInput::make('slug')->required()->maxLength(140)->unique(ignoreRecord: true),
                     Toggle::make('is_default')->label('Kelas Default')
                         ->helperText('Hanya satu kelas default. Kelas tanpa tarif aktif = produk tidak kena pajak.'),
