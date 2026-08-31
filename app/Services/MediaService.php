@@ -81,7 +81,33 @@ class MediaService
             throw new InvalidArgumentException('Berkas masih dipakai oleh konten katalog. Lepaskan referensinya dulu.');
         }
 
-        Storage::disk($media->disk)->delete($media->path);
+        // Remove all pipeline derivatives along with the original.
+        $pipeline = new ImagePipeline;
+        $disk = Storage::disk($media->disk);
+        $dir = dirname($media->path);
+        $name = pathinfo($media->file_name, PATHINFO_FILENAME);
+
+        $candidates = array_merge(
+            [ImagePipeline::THUMB],
+            ImagePipeline::WIDTHS,
+            [$media->width ?? 0],
+        );
+
+        foreach ($candidates as $width) {
+            if ($width <= 0) {
+                continue;
+            }
+
+            foreach (['webp', $media->extension] as $ext) {
+                $variantPath = "{$dir}/{$name}-{$width}w.{$ext}";
+
+                if ($disk->exists($variantPath)) {
+                    $disk->delete($variantPath);
+                }
+            }
+        }
+
+        $disk->delete($media->path);
         $media->delete();
     }
 
