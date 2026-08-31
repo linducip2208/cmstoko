@@ -46,8 +46,30 @@
                 @endif
 
                 <div class="mt-6">
-                    @livewire('add-to-cart', ['product' => $product], key('add-'.$product->id))
+                    @if ($product->isGrouped())
+                        <div class="rounded-md bg-surface-2 px-4 py-3 text-sm text-ink-2">
+                            Produk ini adalah grup — pilih salah satu varian produk di bawah untuk dibeli.
+                        </div>
+                    @else
+                        @livewire('add-to-cart', ['product' => $product], key('add-'.$product->id))
+                    @endif
                 </div>
+
+                @if ($product->isGrouped() && $product->groupedChildren->isNotEmpty())
+                    <div class="mt-6 border-t border-line pt-5">
+                        <p class="overline">Produk dalam Grup</p>
+                        <ul class="mt-3 space-y-3">
+                            @foreach ($product->groupedChildren as $child)
+                                <li class="flex items-center justify-between gap-3">
+                                    <a href="{{ route('product.show', $child->slug) }}" class="text-sm font-medium text-ink hover:text-accent">
+                                        {{ $child->name }}
+                                    </a>
+                                    <span class="text-sm font-bold tabular-nums text-ink">{{ rupiah($child->effectivePrice()) }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="mt-6 border-t border-line pt-5">
                     <form method="POST" action="{{ route('account.wishlist.toggle') }}">

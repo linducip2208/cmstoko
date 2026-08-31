@@ -149,7 +149,12 @@
             <section class="card p-6">
                 <h2 class="text-sm font-semibold text-ink">Pengiriman</h2>
 
-                @if ($useApiShipping)
+                @if (! $needsShipping)
+                    <p class="mt-3 text-sm text-ink-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mr-1 inline h-4 w-4 text-positive" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd"/></svg>
+                        Pesanan digital — tidak perlu pengiriman. Tautan unduhan muncul di akun setelah pembayaran.
+                    </p>
+                @elseif ($useApiShipping)
                     <div class="mt-4 flex flex-wrap gap-2">
                         @foreach (config('shop.couriers') as $code)
                             <button type="button" wire:click="$set('courier', '{{ $code }}')"
@@ -259,8 +264,8 @@
                     <div class="flex justify-between">
                         <dt class="text-ink-2">Ongkir</dt>
                         <dd class="font-medium tabular-nums">
-                    @if ($freeShipping)
-                        <span class="badge bg-positive-soft text-positive">Gratis</span>
+                    @if ($freeShipping || ! $needsShipping)
+                        <span class="badge bg-positive-soft text-positive">{{ $needsShipping ? 'Gratis' : 'Digital' }}</span>
                     @else
                         {{ $shippingKey ? rupiah(collect($shippingOptions)->firstWhere('key', $shippingKey)['cost'] ?? config('shop.flat_shipping_cost')) : '—' }}
                     @endif

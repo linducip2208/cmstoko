@@ -159,7 +159,18 @@ class CartService
 
     public function weight(): int
     {
-        return (int) $this->items()->sum(fn (array $item) => ($item['variant']->weight ?? $item['product']->weight) * $item['qty']);
+        return (int) $this->items()->sum(
+            fn (array $item) => ($item['product']->requiresShipping() ? ($item['variant']->weight ?? $item['product']->weight) : 0) * $item['qty']
+        );
+    }
+
+    /**
+     * True when at least one line needs physical shipping. A fully digital
+     * cart skips shipping selection entirely (cost 0).
+     */
+    public function requiresShipping(): bool
+    {
+        return $this->items()->contains(fn (array $item) => $item['product']->requiresShipping());
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Models\TaxClass;
 use BackedEnum;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -69,7 +70,7 @@ class ProductResource extends Resource
                                     ->default(Product::TYPE_SIMPLE)
                                     ->native(false)
                                     ->live()
-                                    ->helperText('Produk dengan varian (mis. ukuran/warna) memakai tipe "Dengan Varian".'),
+                                    ->helperText('Virtual/Downloadable tidak memerlukan pengiriman; Downloadable memakai berkas privat + batas unduh.'),
                                 TextInput::make('name')
                                     ->label('Nama Produk')
                                     ->required()
@@ -125,9 +126,51 @@ class ProductResource extends Resource
                                     ->numeric()
                                     ->minValue(1)
                                     ->default(1000)
-                                    ->required(),
+                                    ->required()
+                                    ->visible(fn (Get $get) => in_array($get('type'), [Product::TYPE_SIMPLE, Product::TYPE_CONFIGURABLE], true)),
                             ])
                             ->columns(2),
+                        Tabs\Tab::make('Unduhan')
+                            ->visible(fn (Get $get) => $get('type') === Product::TYPE_DOWNLOADABLE)
+                            ->schema([
+                                Repeater::make('downloads')
+                                    ->label('Berkas')
+                                    ->relationship()
+                                    ->schema([
+                                        FileUpload::make('file_path')
+                                            ->label('Berkas')
+                                            ->disk('downloads') // PRIVAT — never web-accessible
+                                            ->directory('files')
+                                            ->maxSize(51200)
+                                            ->required()
+                                            ->columnSpan(2),
+                                        TextInput::make('file_name')->label('Nama Saat Diunduh')->required()->maxLength(255),
+                                        TextInput::make('label')->label('Label')->maxLength(200),
+                                        TextInput::make('sort_order')->label('Urutan')->numeric()->default(0),
+                                    ])
+                                    ->columns(2)
+                                    ->defaultItems(0)
+                                    ->columnSpanFull(),
+                                TextInput::make('download_limit')
+                                    ->label('Batas Unduh (per pembelian)')
+                                    ->numeric()->minValue(1)->nullable()
+                                    ->helperText('Kosong = tanpa batas'),
+                                TextInput::make('download_expiry_days')
+                                    ->label('Masa Berlaku Unduh (hari)')
+                                    ->numeric()->minValue(1)->nullable()
+                                    ->helperText('Kosong = selamanya'),
+                            ])
+                            ->columns(2),
+                        Tabs\Tab::make('Produk Grup')
+                            ->visible(fn (Get $get) => $get('type') === Product::TYPE_GROUPED)
+                            ->schema([
+                                Select::make('groupedChildren')
+                                    ->label('Produk Anggota')
+                                    ->relationship('groupedChildren', 'name')
+                                    ->multiple()->searchable()->preload()
+                                    ->columnSpanFull()
+                                    ->helperText('Setiap anggota dibeli terpisah oleh pelanggan di halaman grup ini.'),
+                            ]),
                         Tabs\Tab::make('Atribut')
                             ->schema([
                                 KeyValue::make('attribute_values')

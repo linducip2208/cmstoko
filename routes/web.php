@@ -3,6 +3,7 @@
 use App\Http\Controllers\Account\AccountAddressController;
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AccountOrderController;
+use App\Http\Controllers\Account\DownloadController;
 use App\Http\Controllers\Account\ReturnController;
 use App\Http\Controllers\Account\WishlistController;
 use App\Http\Controllers\Api\SearchSuggestController;
@@ -122,6 +123,10 @@ Route::middleware('auth')->prefix('akun')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('account.wishlist');
     Route::post('/wishlist', [WishlistController::class, 'toggle'])->name('account.wishlist.toggle');
     Route::delete('/wishlist/{wishlist}', [WishlistController::class, 'destroy'])->name('account.wishlist.destroy');
+
+    Route::get('/downloads/{orderItem}', [DownloadController::class, 'show'])
+        ->middleware('throttle:20,1')
+        ->name('account.download');
 
     Route::get('/pengembalian', [ReturnController::class, 'index'])->name('account.returns');
     Route::post('/pengembalian', [ReturnController::class, 'store'])->name('account.returns.store');

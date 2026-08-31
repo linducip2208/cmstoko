@@ -174,6 +174,15 @@ class CheckoutPage extends Component
      */
     protected function loadShippingOptions(ShippingService $shipping, CartService $cart): void
     {
+        // Fully digital cart (virtual/downloadable only) — no shipping step.
+        if (! $cart->requiresShipping()) {
+            $this->shippingOptions = [];
+            $this->shippingKey = '';
+            $this->service = '';
+
+            return;
+        }
+
         $manager = app(ShippingManager::class);
         $context = new ShippingContext(
             provinceId: $this->province_id,
@@ -195,6 +204,10 @@ class CheckoutPage extends Component
      */
     protected function resolveSelectedShipping(CartService $cart): ?array
     {
+        if (! $cart->requiresShipping()) {
+            return null;
+        }
+
         $manager = app(ShippingManager::class);
 
         return $manager->resolve(
@@ -340,8 +353,10 @@ class CheckoutPage extends Component
                 $ruleResult = CartRule::evaluate($items, $subtotal, auth()->user());
                 $totalDiscount = $discount + $ruleResult['discount'];
 
+                // Fully digital cart (virtual/downloadable only) needs no shipping at all.
+                $needsShipping = $cart->requiresShipping();
                 $shippingCost = $selected !== null ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
-                $effectiveShipping = $ruleResult['free_shipping'] ? 0 : $shippingCost;
+                $effectiveShipping = $needsShipping && ! $ruleResult['free_shipping'] ? $shippingCost : 0;
 
                 // Tax: server-authoritative, on the discounted base + shipping.
                 $taxResult = app(TaxCalculator::class)->calculate(
@@ -467,8 +482,9 @@ class CheckoutPage extends Component
         $ruleResult = CartRule::evaluate($cart->items(), $cart->subtotal(), auth()->user());
 
         $items = $cart->items();
+        $needsShipping = $cart->requiresShipping();
         $totalDiscount = $cart->discount() + $ruleResult['discount'];
-        $previewShipping = $ruleResult['free_shipping'] ? 0 : (collect($this->shippingOptions)->firstWhere('service', $this->service)['cost'] ?? config('shop.flat_shipping_cost'));
+        $previewShipping = $needsShipping && ! $ruleResult['free_shipping'] ? (collect($this->shippingOptions)->firstWhere('key', $this->shippingKey)['cost'] ?? config('shop.flat_shipping_cost')) : 0;
 
         $taxPreview = app(TaxCalculator::class)->calculate(
             $items->map(fn ($item) => [
@@ -487,6 +503,7 @@ class CheckoutPage extends Component
             'discount' => $cart->discount(),
             'coupon' => $cart->coupon(),
             'weight' => $cart->weight(),
+            'needsShipping' => $needsShipping,
             'ruleDiscount' => $ruleResult['discount'],
             'freeShipping' => $ruleResult['free_shipping'],
             'ruleNames' => collect($ruleResult['rules'])->pluck('name'),

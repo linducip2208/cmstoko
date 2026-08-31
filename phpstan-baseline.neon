@@ -2583,7 +2583,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property App\\Models\\Product\:\:\$type\.$#'
 			identifier: property.notFound
-			count: 1
+			count: 5
 			path: app/Models/Product.php
 
 		-
@@ -3017,6 +3017,42 @@ parameters:
 			identifier: staticMethod.notFound
 			count: 2
 			path: app/Services/DatabaseSearchEngine.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\OrderItem\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Services/DownloadService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\OrderItem\:\:\$order\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DownloadService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\OrderItem\:\:\$order_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DownloadService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\OrderItem\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/DownloadService.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\OrderItem\:\:\$product_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Services/DownloadService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\ProductDownload\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/DownloadService.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\Filesystem\\Filesystem\:\:url\(\)\.$#'

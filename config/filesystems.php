@@ -36,6 +36,13 @@ return [
             'throw' => false,
         ],
 
+        'downloads' => [
+            'driver' => 'local',
+            'root' => storage_path('app/downloads'),
+            'visibility' => 'private',
+            'throw' => false,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

@@ -18,15 +18,25 @@ class Product extends Model
 
     public const TYPE_CONFIGURABLE = 'configurable';
 
+    public const TYPE_VIRTUAL = 'virtual';
+
+    public const TYPE_DOWNLOADABLE = 'downloadable';
+
+    public const TYPE_GROUPED = 'grouped';
+
     public const TYPES = [
         self::TYPE_SIMPLE => 'Sederhana',
         self::TYPE_CONFIGURABLE => 'Dengan Varian',
+        self::TYPE_VIRTUAL => 'Virtual (tanpa kirim)',
+        self::TYPE_DOWNLOADABLE => 'Downloadable',
+        self::TYPE_GROUPED => 'Grup (merchandising)',
     ];
 
     protected $fillable = [
         'category_id', 'brand_id', 'type', 'name', 'slug', 'sku', 'short_description', 'description',
         'price', 'sale_price', 'stock', 'weight', 'images', 'is_active', 'is_featured',
         'seo', 'attribute_values', 'published_at', 'tax_class_id',
+        'requires_shipping', 'download_limit', 'download_expiry_days',
     ];
 
     protected $casts = [
@@ -213,8 +223,48 @@ class Product extends Model
         return $this->type === self::TYPE_CONFIGURABLE;
     }
 
+    public function isVirtual(): bool
+    {
+        return $this->type === self::TYPE_VIRTUAL;
+    }
+
+    public function isDownloadable(): bool
+    {
+        return $this->type === self::TYPE_DOWNLOADABLE;
+    }
+
+    public function isGrouped(): bool
+    {
+        return $this->type === self::TYPE_GROUPED;
+    }
+
+    /**
+     * Product-type strategy: does this type require physical shipping?
+     * Centralised here — checkout, cart and shipping providers all ask this.
+     */
+    public function requiresShipping(): bool
+    {
+        return ! in_array($this->type, [self::TYPE_VIRTUAL, self::TYPE_DOWNLOADABLE], true);
+    }
+
+    public function downloads()
+    {
+        return $this->hasMany(ProductDownload::class)->orderBy('sort_order');
+    }
+
+    public function groupedChildren()
+    {
+        return $this->belongsToMany(self::class, 'grouped_products', 'parent_id', 'child_id')
+            ->withPivot('sort_order')
+            ->orderBy('grouped_products.sort_order');
+    }
+
     public function inStock(): bool
     {
+        if ($this->isGrouped()) {
+            return true; // children are purchased individually
+        }
+
         if ($this->isConfigurable()) {
             return $this->variants->contains(fn (ProductVariant $v) => $v->is_active && $v->stock > 0);
         }
