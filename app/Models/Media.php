@@ -7,6 +7,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+/**
+ * @property int $id
+ * @property string $file_name
+ * @property string $original_name
+ * @property string $path
+ * @property string $disk
+ * @property string $mime
+ * @property string $extension
+ * @property int $size
+ * @property int|null $width
+ * @property int|null $height
+ * @property string|null $title
+ * @property string|null $alt
+ * @property string|null $caption
+ * @property int|null $uploaded_by
+ * @property \Carbon\CarbonInterface $created_at
+ * @property \Carbon\CarbonInterface $updated_at
+ */
 class Media extends Model
 {
     protected $table = 'media';
