@@ -20,7 +20,7 @@ Skala 0-10, berbasis bukti (bukan aspirasi). 9.9 hanya bila seluruh DoD checklis
 | Media Library | 9.2 | OPEN — pipeline done; folder/replace belum |
 | Blog | 9.4 | |
 | Catalog | 9.2 | OPEN — product types baru simple/configurable |
-| Product Types | 8.8 | OPEN HIGH — virtual/downloadable/bundle/grouped belum |
+| Product Types | 9.2 | OPEN — virtual/downloadable/grouped DONE (secure delivery tested); bundle belum |
 | Attributes | 9.4 | |
 | Variants | 9.4 | |
 | Collections | 9.4 | |

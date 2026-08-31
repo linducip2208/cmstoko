@@ -10,7 +10,7 @@ Format: AREA — GAP — SEVERITY — CARA MENUJU 9.9
 6. Returns: katalog alasan fixed — LOW — tabel return_reasons admin-managed.
 7. Media: belum ada folder/grouping + replace-file workflow — LOW.
 8. Menu builder: UI satu level — LOW (model mendukung nested).
-9. Produk types: virtual/downloadable/bundle/grouped belum ada — HIGH untuk klaim "general-purpose CMS" — butuh ProductType strategy + secure download delivery.
+9. Produk types: virtual/downloadable/grouped DONE (secure download delivery tested); BUNDLE belum — MEDIUM — ProductType strategy + component pricing + multi-line inventory deduct.
 10. Notifications: belum ada event Processing/Refund/ReturnRequested mail (paid/shipped/completed/cancelled/placed sudah) — LOW.
 11. Visual QA: otomatis via DOM; belum screenshot human-review loop terinTEGRASI — LOW (disarankan manual go-live check).
 12. Reports: belum per-variant/category/brand breakdown + period comparison — LOW.

@@ -60,10 +60,14 @@ RbacTest(8), AdminPanelTest(7), CheckoutSecurityTest(6), MidtransWebhookTest(8),
 - Tests: 148 passing.
 - API v1 details: `routes/api.php` (prefix /api/v1). Public catalog read endpoints (throttle 60/min) + auth/token (throttle 5/min) + auth:me/refresh/revoke + orders (ownership-filtered), addresses, wishlist. API Resources: Product/Category/Brand/Collection/Order/Address/Profile/Wishlist. Product has approvedReviews() relation for real rating aggregates; OrderResource excludes notes/refunds. Auth guard resets needed between in-process test requests (see ApiTest::resetAuth).
 
+- SESSION 3 (2026-08-31): Admin polish (terracotta theme verified selectors, brand letter-mark, dark mode, Ctrl+K, db notifications + migrasi); SHIPPING architecture (4 provider + manager + key-based server-authoritative resolve — menutup spoofing harga ongkir; tab Pengiriman settings); MULTI-WAREHOUSE (inventory_levels migrasi dari flat stock, transfer lifecycle ship/receive/cancel, alokasi default-dulu, single-default enforce); P29 concurrency harness multi-proses MySQL (stock/coupon/transition-CAS race — 3 PASS, CAS fix di transitionTo); P31 CI (Pint+Larastan level5 baseline + GitHub Actions mysql); P8 image pipeline (WebP derivatives 320-1280w on-demand, x-img srcset lazy/eager/preload, cleanup on delete); P24 analytics head (GA4/GTM/Meta/TikTok settings-driven tervalidasi); P7 reports (Customers/Inventory/Tax + CSV); P4 product types (virtual/downloadable secure delivery auth+paid+expiry+limit+logs, grouped merchandising, checkout digital tanpa ongkir).
+- TOTAL 196 tests passing. Pint ✔ · PHPStan level5 ✔ (baseline) · concurrency suite ✔.
+- SCORECARD docs/18: ~9.3 (jujur). GAP terbesar tersisa: bundle type, checkout allotment per gudang, payment driver kedua, PHPStan level 8, Meilisearch driver.
+
 ## NEXT QUEUE (in order)
-1. B6 REMAINDER: flash sales (server-validated pricing), banners, cart rules, newsletter admin listing + safe unsubscribe.
-2. B9/B8: theme presets (settings-driven CSS var overrides), menu builder, media library, blog.
-3. B15 hostile audit round 2 (mobile widths via rendered DOM checks, a11y pass) + docs finalization (README/INSTALLATION/etc).
+1. Payment driver kedua (bukti abstraksi) + PHPStan level 8.
+2. Bundle product type + checkout allotment per gudang.
+3. Visual QA loop manual 320–1920 + a11y penuh.
 
 ## Batch log (session 2 delta)
 | Item | Status | Evidence |
