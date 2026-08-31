@@ -133,7 +133,7 @@ class DataIntegrityTest extends TestCase
             'is_active' => true,
         ]);
 
-        Session::put('shop.cart', [$product->id => 2]);
+        Session::put('shop.cart', [$product->id => 1]); // 150000 — below free-shipping min
 
         Livewire::test(\App\Livewire\CheckoutPage::class)->fill([
             'customer_name' => 'Order Integrity',
@@ -152,17 +152,17 @@ class DataIntegrityTest extends TestCase
         $this->assertSame(1, $order->histories()->count());
 
         // Totals are exact — no hidden additions.
-        $this->assertSame(300000, $order->subtotal);
+        $this->assertSame(150000, $order->subtotal);
         $this->assertSame(0, $order->discount);
         $this->assertSame(0, $order->rule_discount);
         $this->assertSame(0, $order->tax_amount);
         $this->assertSame(20000, $order->shipping_cost);
-        $this->assertSame(320000, $order->total);
+        $this->assertSame(170000, $order->total);
 
-        // Stock deducted exactly once: 5 - 2 = 3, and ONE ledger row.
-        $this->assertSame(3, $product->fresh()->stock);
+        // Stock deducted exactly once: 5 - 1 = 4, and ONE ledger row.
+        $this->assertSame(4, $product->fresh()->stock);
         $this->assertSame(1, \App\Models\StockMovement::where('product_id', $product->id)->count());
-        $this->assertSame(-2, \App\Models\StockMovement::where('product_id', $product->id)->value('quantity'));
+        $this->assertSame(-1, \App\Models\StockMovement::where('product_id', $product->id)->value('quantity'));
     }
 
     // ---------- Menus ----------

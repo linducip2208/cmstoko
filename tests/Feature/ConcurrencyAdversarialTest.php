@@ -14,6 +14,7 @@ use App\Models\AttributeOption;
 use App\Models\ReturnRequest;
 use App\Models\Role;
 use App\Models\User;
+use App\Support\Settings;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
@@ -106,6 +107,9 @@ class ConcurrencyAdversarialTest extends TestCase
 
     public function test_checkout_price_is_server_authoritative_not_client_cached(): void
     {
+        // Disable free shipping so flat cost applies and totals are predictable.
+        Settings::set('shipping.free.enabled', false, 'shipping');
+
         $product = $this->product(stock: 5, price: 100000);
 
         Session::put('shop.cart', [$product->id => 2]);

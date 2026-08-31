@@ -44,6 +44,9 @@ class CheckoutPage extends Component
 
     public string $courier = 'jne';
 
+    /** Selected shipping option key "provider:service" — cost resolved server-side. */
+    public string $shippingKey = '';
+
     public string $service = '';
 
     public string $couponCode = '';
@@ -64,7 +67,7 @@ class CheckoutPage extends Component
 
     public bool $useApiShipping = false;
 
-    public function mount(CartService $cart, ShippingService $shipping): void
+    public function mount(CartService $cart, ShippingService $shipping, \App\Services\Shipping\ShippingManager $shippingManager): void
     {
         if ($cart->count() === 0) {
             $this->redirect(route('cart'), navigate: true);
@@ -87,16 +90,12 @@ class CheckoutPage extends Component
             $this->addresses = collect();
         }
 
-        $this->useApiShipping = $shipping->hasApi();
+        $this->useApiShipping = $shippingManager->usesRajaOngkir();
         $this->provinces = $this->useApiShipping ? $shipping->provinces() : collect();
         $this->cities = collect();
 
         // Re-run option loading after potential saved-address prefill.
-        if ($this->useApiShipping && $this->city_id) {
-            $this->loadShippingOptions($shipping, $cart);
-        } elseif (! $this->useApiShipping) {
-            $this->loadShippingOptions($shipping, $cart);
-        }
+        $this->loadShippingOptions($shipping, $cart);
     }
 
     /**
@@ -141,12 +140,8 @@ class CheckoutPage extends Component
         $this->postal_code = '';
         $this->address = '';
         $this->cities = collect();
-        $this->shippingOptions = [];
-        $this->service = '';
 
-        if (! $this->useApiShipping) {
-            $this->loadShippingOptions(app(ShippingService::class), app(CartService::class));
-        }
+        $this->loadShippingOptions(app(ShippingService::class), app(CartService::class));
     }
 
     public function updatedProvinceId(ShippingService $shipping): void
@@ -155,6 +150,7 @@ class CheckoutPage extends Component
         $this->city_id = null;
         $this->shippingOptions = [];
         $this->service = '';
+        $this->shippingKey = '';
     }
 
     public function updatedCityId(ShippingService $shipping, CartService $cart): void
@@ -167,25 +163,45 @@ class CheckoutPage extends Component
         $this->loadShippingOptions($shipping, $cart);
     }
 
+    /**
+     * Rebuild options server-side via ShippingManager. The client only ever
+     * sends back the option KEY — costs are never trusted from the client.
+     */
     protected function loadShippingOptions(ShippingService $shipping, CartService $cart): void
     {
-        $this->shippingOptions = [];
-        $this->service = '';
+        $manager = app(\App\Services\Shipping\ShippingManager::class);
+        $context = new \App\Data\ShippingContext(
+            provinceId: $this->province_id,
+            cityId: $this->city_id,
+            weightGram: $cart->weight(),
+            subtotal: $cart->subtotal(),
+            courier: $this->courier,
+        );
 
-        if (! $this->useApiShipping) {
-            $this->shippingOptions = $shipping->fallback();
-            $this->service = $this->shippingOptions[0]['service'];
+        $this->shippingOptions = $manager->options($context);
 
-            return;
-        }
+        // Keep the old key-shaped service for view compatibility.
+        $this->service = $this->shippingOptions[0]['service'] ?? '';
+        $this->shippingKey = $this->shippingOptions[0]['key'] ?? '';
+    }
 
-        if ($this->city_id) {
-            $this->shippingOptions = $shipping->cost($this->city_id, $cart->weight(), $this->courier);
+    /**
+     * Resolve the authoritative shipping option from the client-supplied key.
+     */
+    protected function resolveSelectedShipping(CartService $cart): ?array
+    {
+        $manager = app(\App\Services\Shipping\ShippingManager::class);
 
-            if ($this->shippingOptions !== []) {
-                $this->service = $this->shippingOptions[0]['service'];
-            }
-        }
+        return $manager->resolve(
+            $this->shippingKey ?: null,
+            new \App\Data\ShippingContext(
+                provinceId: $this->province_id,
+                cityId: $this->city_id,
+                weightGram: $cart->weight(),
+                subtotal: $cart->subtotal(),
+                courier: $this->courier,
+            ),
+        );
     }
 
     public function applyCoupon(CartService $cart): void
@@ -269,9 +285,11 @@ class CheckoutPage extends Component
 
         $validated = $this->validate();
 
-        $selected = collect($this->shippingOptions)->firstWhere('service', $this->service);
+        // Server-authoritative: resolve cost from the option KEY, never from
+        // client-hydrated arrays (anti shipping-price spoofing).
+        $selected = $this->resolveSelectedShipping($cart);
 
-        if ($this->useApiShipping && ! $selected) {
+        if ($this->useApiShipping && $selected === null) {
             $this->addError('service', 'Pilih layanan pengiriman terlebih dahulu.');
 
             return;
@@ -317,7 +335,7 @@ class CheckoutPage extends Component
                 $ruleResult = \App\Models\CartRule::evaluate($items, $subtotal, auth()->user());
                 $totalDiscount = $discount + $ruleResult['discount'];
 
-                $shippingCost = $selected ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
+                $shippingCost = $selected !== null ? (int) $selected['cost'] : (int) config('shop.flat_shipping_cost');
                 $effectiveShipping = $ruleResult['free_shipping'] ? 0 : $shippingCost;
 
                 // Tax: server-authoritative, on the discounted base + shipping.
@@ -354,7 +372,7 @@ class CheckoutPage extends Component
                     'total' => max(0, $subtotal - $totalDiscount + $effectiveShipping + $taxResult['amount']),
                     'coupon_code' => $coupon?->code,
                     'weight' => $cart->weight(),
-                    'shipping_courier' => $selected['description'] ?? null,
+                    'shipping_courier' => $selected['provider'] ?? ($selected['description'] ?? null),
                     'shipping_service' => $selected['service'] ?? config('shop.flat_shipping_service'),
                     'shipping_etd' => $selected['etd'] ?? config('shop.flat_shipping_etd'),
                     'status' => Order::STATUS_PENDING,

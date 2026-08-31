@@ -162,11 +162,11 @@
 
                     <div class="mt-4 space-y-3" wire:loading.class="opacity-50" wire:target="updatedCityId, updatedCourier">
                         @foreach ($shippingOptions as $option)
-                            <label class="flex cursor-pointer items-center justify-between gap-3 rounded-md border p-4 transition-colors {{ $service === $option['service'] ? 'border-ink bg-surface-2' : 'border-line hover:border-line-strong' }}">
+                            <label class="flex cursor-pointer items-center justify-between gap-3 rounded-md border p-4 transition-colors {{ $shippingKey === $option['key'] ? 'border-ink bg-surface-2' : 'border-line hover:border-line-strong' }}">
                                 <span class="flex items-center gap-3">
-                                    <input type="radio" wire:model="service" value="{{ $option['service'] }}" class="h-4 w-4 accent-accent">
+                                    <input type="radio" wire:model="shippingKey" value="{{ $option['key'] }}" class="h-4 w-4 accent-accent">
                                     <span>
-                                        <span class="block text-sm font-semibold text-ink">{{ $option['service'] }} — {{ $option['description'] }}</span>
+                                        <span class="block text-sm font-semibold text-ink">{{ $option['description'] }}</span>
                                         <span class="block text-xs text-ink-3">Estimasi {{ $option['etd'] }} hari</span>
                                     </span>
                                 </span>
@@ -181,12 +181,20 @@
                         @endif
                     </div>
                 @else
-                    @foreach ($shippingOptions as $option)
-                        <p class="mt-4 text-sm text-ink-2">
-                            {{ $option['service'] }} — estimasi {{ $option['etd'] }} hari:
-                            <strong class="text-ink">{{ rupiah($option['cost']) }}</strong>
-                        </p>
-                    @endforeach
+                    <div class="mt-4 space-y-3">
+                        @foreach ($shippingOptions as $option)
+                            <label class="flex cursor-pointer items-center justify-between gap-3 rounded-md border p-4 transition-colors {{ $shippingKey === $option['key'] ? 'border-ink bg-surface-2' : 'border-line hover:border-line-strong' }}">
+                                <span class="flex items-center gap-3">
+                                    <input type="radio" wire:model="shippingKey" value="{{ $option['key'] }}" class="h-4 w-4 accent-accent">
+                                    <span>
+                                        <span class="block text-sm font-semibold text-ink">{{ $option['description'] }}</span>
+                                        <span class="block text-xs text-ink-3">Estimasi {{ $option['etd'] }} hari</span>
+                                    </span>
+                                </span>
+                                <span class="text-sm font-bold tabular-nums text-ink">{{ rupiah($option['cost']) }}</span>
+                            </label>
+                        @endforeach
+                    </div>
                 @endif
             </section>
         </div>
@@ -251,11 +259,11 @@
                     <div class="flex justify-between">
                         <dt class="text-ink-2">Ongkir</dt>
                         <dd class="font-medium tabular-nums">
-                            @if ($freeShipping)
-                                <span class="badge bg-positive-soft text-positive">Gratis</span>
-                            @else
-                                {{ $service ? rupiah(collect($shippingOptions)->firstWhere('service', $service)['cost'] ?? config('shop.flat_shipping_cost')) : '—' }}
-                            @endif
+                    @if ($freeShipping)
+                        <span class="badge bg-positive-soft text-positive">Gratis</span>
+                    @else
+                        {{ $shippingKey ? rupiah(collect($shippingOptions)->firstWhere('key', $shippingKey)['cost'] ?? config('shop.flat_shipping_cost')) : '—' }}
+                    @endif
                         </dd>
                     </div>
                     @if ($taxAmount > 0)

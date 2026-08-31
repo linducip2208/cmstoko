@@ -78,6 +78,28 @@ class ManageSettings extends Page implements HasSchemas
                 'return_days' => Settings::get('policy.return_days', 7),
                 'free_shipping_min' => Settings::get('policy.free_shipping_min'),
             ],
+            'shipping' => [
+                'flat' => [
+                    'enabled' => (bool) Settings::get('shipping.flat.enabled', true),
+                    'display_name' => Settings::get('shipping.flat.display_name', 'Reguler'),
+                    'cost' => Settings::get('shipping.flat.cost', config('shop.flat_shipping_cost')),
+                    'etd' => Settings::get('shipping.flat.etd', config('shop.flat_shipping_etd')),
+                ],
+                'free' => [
+                    'enabled' => (bool) Settings::get('shipping.free.enabled', true),
+                    'display_name' => Settings::get('shipping.free.display_name', 'Gratis Ongkir'),
+                    'min_subtotal' => Settings::get('shipping.free.min_subtotal', Settings::get('policy.free_shipping_min', 300000)),
+                ],
+                'pickup' => [
+                    'enabled' => (bool) Settings::get('shipping.pickup.enabled', false),
+                    'display_name' => Settings::get('shipping.pickup.display_name', 'Ambil di Toko'),
+                    'address' => Settings::get('shipping.pickup.address'),
+                ],
+                'rajaongkir' => [
+                    'enabled' => (bool) Settings::get('shipping.rajaongkir.enabled', true),
+                    'display_name' => Settings::get('shipping.rajaongkir.display_name', 'Kurir Ekspedisi'),
+                ],
+            ],
             'payments' => [
                 'bank_accounts' => Settings::get('payments.bank_accounts', []),
             ],
@@ -163,6 +185,39 @@ class ManageSettings extends Page implements HasSchemas
                                     ])
                                     ->columns(2),
                             ]),
+                        Tab::make('Pengiriman')
+                            ->schema([
+                                Section::make('Tarif Flat')
+                                    ->description('Opsi pengiriman nasional dengan tarif tetap.')
+                                    ->schema([
+                                        Toggle::make('shipping.flat.enabled')->label('Aktif')->live(),
+                                        TextInput::make('shipping.flat.display_name')->label('Nama Layanan')->maxLength(60),
+                                        TextInput::make('shipping.flat.cost')->label('Biaya (Rp)')->numeric()->minValue(0),
+                                        TextInput::make('shipping.flat.etd')->label('Estimasi (hari)')->maxLength(20),
+                                    ])
+                                    ->columns(2),
+                                Section::make('Gratis Ongkir')
+                                    ->schema([
+                                        Toggle::make('shipping.free.enabled')->label('Aktif')->live(),
+                                        TextInput::make('shipping.free.display_name')->label('Nama Layanan')->maxLength(60),
+                                        TextInput::make('shipping.free.min_subtotal')->label('Minimum Belanja (Rp)')->numeric()->minValue(0),
+                                    ])
+                                    ->columns(2),
+                                Section::make('Ambil di Toko')
+                                    ->schema([
+                                        Toggle::make('shipping.pickup.enabled')->label('Aktif')->live(),
+                                        TextInput::make('shipping.pickup.display_name')->label('Nama Layanan')->maxLength(60),
+                                        TextInput::make('shipping.pickup.address')->label('Alamat Pengambilan')->maxLength(300)->columnSpanFull(),
+                                    ])
+                                    ->columns(2),
+                                Section::make('RajaOngkir (Kurir Ekspedisi)')
+                                    ->description('API key diatur via env RAJAONGKIR_API_KEY. Bila API gagal, opsi lain tetap tersedia (checkout tidak mati).')
+                                    ->schema([
+                                        Toggle::make('shipping.rajaongkir.enabled')->label('Aktif'),
+                                        TextInput::make('shipping.rajaongkir.display_name')->label('Nama Layanan')->maxLength(60),
+                                    ])
+                                    ->columns(2),
+                            ]),
                         Tab::make('Pembayaran')
                             ->schema([
                                 Section::make('Rekening Transfer Manual')
@@ -238,6 +293,7 @@ class ManageSettings extends Page implements HasSchemas
             str_starts_with($key, 'seo.') => 'seo',
             str_starts_with($key, 'payments.') => 'payments',
             str_starts_with($key, 'policy.') => 'policies',
+            str_starts_with($key, 'shipping.') => 'shipping',
             default => 'branding',
         };
     }

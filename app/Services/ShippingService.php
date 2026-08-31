@@ -4,92 +4,22 @@ namespace App\Services;
 
 use App\Models\City;
 use App\Models\Province;
-use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
+/**
+ * Location data service (provinces/cities + RajaOngkir sync).
+ * Shipping cost logic moved to App\Services\Shipping\* providers.
+ */
 class ShippingService
 {
-    public function hasApi(): bool
-    {
-        return (bool) config('shop.rajaongkir.api_key');
-    }
-
     public function provinces()
     {
-        return Province::orderBy('name')->get();
+        return Province::orderBy('name')->get(['id', 'name']);
     }
 
     public function cities(int $provinceId)
     {
-        return City::where('province_id', $provinceId)->orderBy('name')->get();
-    }
-
-    /**
-     * @return list<array{service: string, description: string, cost: int, etd: string}>
-     */
-    public function cost(int $destinationCityId, int $weightInGram, string $courier): array
-    {
-        if (! $this->hasApi()) {
-            return $this->fallback();
-        }
-
-        return Cache::remember(
-            "ongkir.{$destinationCityId}.{$weightInGram}.{$courier}",
-            now()->addHours(6),
-            fn () => $this->requestCost($destinationCityId, $weightInGram, $courier),
-        );
-    }
-
-    /**
-     * @return list<array{service: string, description: string, cost: int, etd: string}>
-     */
-    protected function requestCost(int $destinationCityId, int $weightInGram, string $courier): array
-    {
-        try {
-            $response = Http::withHeaders(['key' => config('shop.rajaongkir.api_key')])
-                ->asForm()
-                ->timeout(20)
-                ->post(config('shop.rajaongkir.base_url').'/cost', [
-                    'origin' => config('shop.origin_city_id'),
-                    'destination' => $destinationCityId,
-                    'weight' => max(1000, $weightInGram),
-                    'courier' => $courier,
-                ]);
-
-            $results = $response->json('rajaongkir.results.0.costs', []);
-
-            $options = collect($results)
-                ->map(fn (array $cost) => [
-                    'service' => $cost['service'] ?? '-',
-                    'description' => $cost['description'] ?? '-',
-                    'cost' => (int) ($cost['cost'][0]['value'] ?? 0),
-                    'etd' => $cost['cost'][0]['etd'] ?? '-',
-                ])
-                ->filter(fn (array $option) => $option['cost'] > 0)
-                ->values()
-                ->all();
-
-            return $options !== [] ? $options : $this->fallback();
-        } catch (ConnectionException $e) {
-            Log::warning('RajaOngkir timeout: '.$e->getMessage());
-
-            return $this->fallback();
-        }
-    }
-
-    /**
-     * @return list<array{service: string, description: string, cost: int, etd: string}>
-     */
-    public function fallback(): array
-    {
-        return [[
-            'service' => config('shop.flat_shipping_service'),
-            'description' => 'Tarif flat nasional',
-            'cost' => (int) config('shop.flat_shipping_cost'),
-            'etd' => config('shop.flat_shipping_etd'),
-        ]];
+        return City::where('province_id', $provinceId)->orderBy('name')->get(['id', 'province_id', 'name']);
     }
 
     public function syncLocationData(): void
