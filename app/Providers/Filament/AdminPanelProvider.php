@@ -30,6 +30,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName(config('shop.name', 'TokoKita'))
+            ->brandLogo(fn () => \Illuminate\Support\Facades\View::make('filament.admin.brand'))
+            ->brandLogoHeight('2.25rem')
+            ->favicon(asset('favicon.ico'))
             ->colors([
                 'primary' => Color::hex('#9a4a2b'), // terracotta — storefront accent
                 'gray' => Color::Stone,

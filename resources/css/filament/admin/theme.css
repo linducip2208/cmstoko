@@ -1,114 +1,128 @@
 /* ============================================================
-   CMSTOKO — Filament admin theme
-   Premium polish: aligns panel with storefront editorial system
-   (paper/ink/terracotta, Instrument Sans, quiet radii).
-   Tailwind v4 + Filament CSS variables.
+   CMSTOKO — Filament admin theme (v5)
+   Selector-verified against Filament v5 markup:
+   body.fi-body.fi-panel-admin, .fi-main-sidebar, .fi-topbar,
+   .fi-sidebar-item, .fi-section, .fi-table, .fi-btn, .fi-input
+   Editorial system: paper/ink/terracotta, Instrument Sans.
    ============================================================ */
 
 @import 'tailwindcss';
 
 @source '../../views';
 
-.fi-body {
-    /* Typography parity with storefront */
+/* ---------- Global palette & typography (beats :root) ---------- */
+body.fi-body.fi-panel-admin {
     --font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
 
-    /* Palette: ink surfaces on light, warm dark mode */
-    --primary-50: #f4e6de;
-    --primary-100: #ecd6c8;
-    --primary-200: #dcb49c;
-    --primary-300: #c98f6d;
-    --primary-400: #b36c46;
-    --primary-500: #9a4a2b;
-    --primary-600: #7c3a21;
-    --primary-700: #632e1a;
-    --primary-800: #4a2314;
-    --primary-900: #33180d;
+    /* Editorial surface tint instead of pure white */
+    --gray-50: #faf8f4;
+    --gray-100: #f3f1ea;
+    --gray-200: #e7e4da;
 
     /* Quieter radii — editorial character */
     --radius-md: 0.5rem;
     --radius-lg: 0.625rem;
     --radius-xl: 0.875rem;
-
-    /* Tighter, more premium density */
-    --gap-xs: 0.25rem;
-    --gap-sm: 0.5rem;
-    --gap-md: 0.75rem;
-    --gap-lg: 1rem;
-    --gap-xl: 1.5rem;
 }
 
-/* Sidebar: ink-on-paper character */
-.fi-layout aside.fi-sidebar {
+/* ---------- Sidebar: warm paper ---------- */
+body.fi-body.fi-panel-admin .fi-main-sidebar {
     background: #faf8f4;
+    border-right: 1px solid #e7e4da;
 }
 
-.dark .fi-layout aside.fi-sidebar {
-    background: #16181d;
+.dark body.fi-body.fi-panel-admin .fi-main-sidebar {
+    background: #14161a;
+    border-right-color: #2a2e36;
 }
 
-.fi-sidebar-header {
-    border-bottom: 1px solid rgba(27, 24, 19, 0.06);
-}
-
-/* Brand: letter mark consistent with storefront header */
-.fi-topbar .fi-icon-btn,
-.fi-sidebar-header-branding {
-    letter-spacing: -0.02em;
-}
-
-/* Navigation items: calmer hover */
-.fi-sidebar-item {
-    border-radius: var(--radius-md);
-    transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.fi-sidebar-item-active {
+/* Active nav item: terracotta marker bar */
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    box-shadow: inset 3px 0 0 #9a4a2b;
     font-weight: 600;
 }
 
-/* Sections: card feel like storefront */
-.fi-section-rounded .fi-section-header,
-.fi-tile {
-    border-radius: var(--radius-lg);
+.fi-sidebar-item-btn {
+    border-radius: 0.5rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-/* Tables: subtle header, zebra-free premium density */
+/* Group labels: overline style like storefront */
+.fi-sidebar-group-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+/* ---------- Topbar ---------- */
+body.fi-body.fi-panel-admin .fi-topbar {
+    border-bottom: 1px solid #e7e4da;
+    backdrop-filter: blur(8px);
+}
+
+.dark body.fi-body.fi-panel-admin .fi-topbar {
+    border-bottom-color: #2a2e36;
+}
+
+/* ---------- Brand ---------- */
+.fi-logo .fi-logo-mark {
+    line-height: 1;
+}
+
+/* ---------- Tables ---------- */
 .fi-table th {
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--gray-500);
+    opacity: 0.7;
 }
 
-.fi-table tr:hover {
-    background: rgba(27, 24, 19, 0.02);
+.fi-table tbody tr:hover {
+    background: rgba(27, 24, 19, 0.025);
 }
 
-/* Buttons: match storefront btn feel */
+.dark .fi-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* ---------- Sections & forms ---------- */
+.fi-section {
+    border-radius: 0.625rem;
+}
+
 .fi-btn {
     font-weight: 600;
     letter-spacing: -0.01em;
 }
 
-/* Login: centered editorial card */
-.fi-simple-layout {
-    background:
-        radial-gradient(60rem 30rem at 70% -10%, rgba(154, 74, 43, 0.08), transparent),
-        #f6f4ef;
-}
-
-/* Focus ring: accent, consistent with storefront */
 .fi-input:focus,
 .fi-select-input:focus {
     --tw-ring-color: rgba(154, 74, 43, 0.35);
 }
 
-/* Reduced motion respect */
+/* ---------- Login / simple pages ---------- */
+body.fi-body.fi-panel-admin .fi-simple-layout {
+    background:
+        radial-gradient(60rem 30rem at 70% -10%, rgba(154, 74, 43, 0.1), transparent),
+        #f6f4ef;
+}
+
+body.fi-body.fi-panel-admin .fi-simple-main {
+    max-width: 26rem;
+}
+
+.fi-simple-main .fi-section {
+    box-shadow: 0 1px 2px rgba(27, 24, 19, 0.05), 0 12px 32px -20px rgba(27, 24, 19, 0.25);
+}
+
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-    .fi-transition,
-    .fi-sidebar-item {
+    .fi-sidebar-item-btn,
+    .fi-btn,
+    .fi-transition {
         transition: none !important;
     }
 }
