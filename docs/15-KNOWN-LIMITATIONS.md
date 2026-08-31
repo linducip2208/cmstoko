@@ -1,9 +1,11 @@
 # 15 — KNOWN LIMITATIONS (honest list)
 - Search default SQL LIKE dengan kontrak SearchEngine siap-swap; driver Meilisearch/Typesense belum ditulis.
 - Media: belum ada konversi responsif otomatis (srcset/WebP) — upload hardening & metadata sudah.
-- Concurrency test interleaved sequential; belum ada harness multi-proses paralel.
+- Concurrency: PHPUnit suite interleaved; TRUE multi-process harness ada di tests/Concurrency/run.php (MySQL, 3 race test PASS) — belum diintegrasikan ke CI otomatis.
+- PHPStan: level 5 + baseline 799 error lama (utang terkunci; error BARU memblokir CI).
 - RajaOngkir tetap Starter (provinsi/kota + cost); tanpa tracking/international.
 - Menu builder: satu level nesting di UI; lebih dalam butuh edit langsung.
 - WhatsApp channel = stub (log + endpoint opsional); butuh kredensial provider untuk aktif.
 - Retur: katalog alasan fixed; window dari config.
 - Visual QA via assertion DOM otomatis; review screenshot manusia (320–1920px) disarankan sebelum go-live.
+- CI (GitHub Actions) belum pernah dieksekusi pada runner sungguhan — jalur pertama push akan memverifikasi.

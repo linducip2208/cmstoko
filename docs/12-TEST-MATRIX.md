@@ -23,6 +23,9 @@
 | Media library | feature | PASS (8) — MediaTest (MIME, disguised exe, SVG sanitize, in-use guard) |
 | Theme presets | feature | PASS (5) — ThemeTest |
 | Newsletter | feature | PASS (4) — NewsletterTest |
-| Parallel true-concurrency (multi-process) | feature | TODO (sequential interleaving covered) |
+| Parallel true-concurrency (multi-process) | process-level | PASS — tests/Concurrency/run.php (stock race, coupon race, transition CAS) |
+| Static analysis | tooling | PASS — Larastan level 5 + baseline (no new debt) |
+| Style | tooling | PASS — Pint (CI-enforced) |
+| CI/CD | pipeline | READY — .github/workflows/ci.yml (mysql service, pint, phpstan, tests, npm build, composer validate/audit) |
 
-Total: 131 passing (php artisan test).
+Total: 171 passing (php artisan test) + 3 multi-process concurrency tests (php tests/Concurrency/run.php).
